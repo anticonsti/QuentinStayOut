@@ -166,6 +166,7 @@ public class Navigation {
 
 	case 2 :
 	    //appelle la classe ChercherLogement
+	    cl.printMenuChercherLogement();
 	    break;
 		
 	case 0 : 
