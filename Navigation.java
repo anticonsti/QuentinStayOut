@@ -32,7 +32,6 @@ public class Navigation {
     */
 
     public static void publierAnnonce(){
-	static int id_proprio=1;
 
 	System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
     	System.out.println("Veuillez entrer votre choix :");
@@ -70,8 +69,8 @@ public class Navigation {
 	    String mdp = readString();
 	    if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
-	    connecte.inscription(id_proprio++, nom, prenom, pseudo, mdp);
-
+	    connecte.inscription(4654684, nom, prenom, pseudo, mdp);
+	    //NOMBRE AU PIF POUR COMPILER CETTE MERDE
 
 	    /*
 	      si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
@@ -155,7 +154,7 @@ public class Navigation {
 	    }*/
 	return c;
 
-	*///////////////////////////////////////AVEC TRY CATCH
+	///////////////////////////////////////AVEC TRY CATCH
 
 
 	//SANS TRY CATCH => JE PENSE QUE C'EST INUTILE
