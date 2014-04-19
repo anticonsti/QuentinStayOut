@@ -114,7 +114,7 @@ public class Navigation {
 	    break;
 
 	case 2 :
-	    cl.printMenuChercherLogement();
+	    cl.printMenuChercherLogement(connecte.getConnection());
 	    break;
 		
 	case 0 : 
