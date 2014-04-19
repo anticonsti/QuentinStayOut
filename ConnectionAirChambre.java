@@ -24,26 +24,9 @@ class ConnectionAirChambre {
 	conn.close();
     }
 
-    public void inscription() throws SQLException {
+    public void inscription(int id_proprietaire, String nom, String prenom, String pseudo, String mdp) throws SQLException {
 	Scanner sc = new Scanner(System.in);
 	insert = conn.prepareStatement("INSERT INTO Proprietaire VALUES(?,?,?,?,?)");
-
-	
-	System.out.println("Nom entre 1~20caracteres.");
-	String nom = sc.nextLine();
-	if(!nom.matches("[a-z]{1,20}")) inscription();
-	   
-	System.out.println("Prenom entre 1~30caracteres");
-	String prenom = sc.nextLine();
-	if(!nom.matches("[a-z]{1,30}")) inscription();
-
-	System.out.println("Pseudo entre 1~30caracteres");
-	String pseudo = sc.nextLine();
-	if(!nom.matches("[a-z]{1,30}")) inscription();
-	   
-	System.out.println("Mot de entre 1~30caracteres");
-	String mdp = sc.nextLine();
-	if(!nom.matches("[a-z]{1,30}")) inscription();
 
 	insert.setInt(1,id_proprietaire);
 	insert.setString(2,nom);
@@ -52,7 +35,7 @@ class ConnectionAirChambre {
 	insert.setString(5,mdp);
 	insert.executeUpdate();
 	   
-	id_proprietaire++; //si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne : de toute facon on n'aura jamais de INT nombre de clients sur le site. 
+	//si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne : de toute facon on n'aura jamais de INT nombre de clients sur le site. 
 	System.out.println("Inscription terminee! "); 
 
     }	 
