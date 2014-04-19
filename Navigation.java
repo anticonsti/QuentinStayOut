@@ -5,30 +5,9 @@ import java.io.BufferedReader;
 
 
 public class Navigation {
-    //static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static Scanner in = new Scanner(System.in);
     static ConnectionAirChambre connecte;
 
-    /*
-    public static void affichageMenuPrincipal(){
-
-    }
-
-    public static void affichageAnnonce(){
-
-    }
-    */
-    /*
-   public void inscription() throws SQLException {
-
-
-    }
-
-
-    public void connection(){
-
-    }
-    */
 
     public static void publierAnnonce(){
 
@@ -97,12 +76,6 @@ public class Navigation {
     }
     
 
-
-
-
-
-
-
     /** Imprime le menu a l'ecran.*/
     public static int printMenu() {
 	int c = -1; // le choix de l'utilisateur
@@ -131,44 +104,16 @@ public class Navigation {
 	// traitement du choix utilisateur
 	// -------------------------------
 
-	/*////////////////////////////////////AVEC TRY CATCH
-	
-	try{
-	    switch(c){
-	    case 1 : 
-		publierAnnonce();
-		break;
 
-	    case 2 :
-		//appelle la classe ChercherLogement
-		break;
-		
-	    case 0 : 
-		System.out.println("FIN");
-		break;
-		
-	    default : affichageMenuPrincipal();
-		break;
-	    }
-	}
-	catch (SQLException e) {
-
-	    System.err.println(e.getMessage());
-	    }
-	return c;
-
-	*///////////////////////////////////////AVEC TRY CATCH
 
 	ChercherLogement cl = new ChercherLogement();
 
-	//SANS TRY CATCH => JE PENSE QUE C'EST INUTILE
 	switch(c){
 	case 1 : 
 	    publierAnnonce();
 	    break;
 
 	case 2 :
-	    //appelle la classe ChercherLogement
 	    cl.printMenuChercherLogement();
 	    break;
 		
