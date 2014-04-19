@@ -6,7 +6,7 @@ public class Navigation {
     //static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static Scanner in = new Scanner(System.in);
     static ConnectionAirChambre connecte;
-
+    static ChercherLogement cl;
 
     /** Imprime le menu a l'ecran.*/
     public static int printMenu() {
@@ -37,8 +37,8 @@ public class Navigation {
 	// traitement du choix utilisateur
 	// -------------------------------
 	
-	try 
-	    {
+	//try 
+	// {
 		switch(c){
 		case 1 : 
 		    System.out.println("Publier votre annonce");
@@ -47,6 +47,7 @@ public class Navigation {
 
 		case 2 :
 		    System.out.println("Trouvez un logement");
+		    cl.printMenuChercherLogement();
 		    //connecte.connectionProprio();
 		    break;
 		case 0 : 
@@ -56,10 +57,10 @@ public class Navigation {
 		default : 
 		    System.out.println("ERREUR!");
 		}
-	    }
-	catch (SQLException e) {
+		//}
+	/*catch (SQLException e) {
 	    System.err.println(e.getMessage());
-	}
+	    }*/
 	return c;
     }
 
@@ -105,7 +106,7 @@ public class Navigation {
 	
 	if (args.length != 1)
 	    usage();
-	
+
 	
 	try 
 	    {
