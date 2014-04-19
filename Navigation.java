@@ -8,7 +8,6 @@ public class Navigation {
     //static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static Scanner in = new Scanner(System.in);
     static ConnectionAirChambre connecte;
-    static ChercherLogement cl;
 
     /*
     public static void affichageMenuPrincipal(){
@@ -160,6 +159,7 @@ public class Navigation {
 
 	*///////////////////////////////////////AVEC TRY CATCH
 
+	ChercherLogement cl = new ChercherLogement();
 
 	//SANS TRY CATCH => JE PENSE QUE C'EST INUTILE
 	switch(c){

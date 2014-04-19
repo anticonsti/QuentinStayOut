@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class ChercherLogement {
 
+    public ChercherLogement(){
+
+    }
 
     public void printMenuChercherLogement(){
 	System.out.print("\033c");
