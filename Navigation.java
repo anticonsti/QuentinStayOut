@@ -21,8 +21,8 @@ public class Navigation {
 	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - fin");
-	System.out.println("1 - S'inscrire");
-	System.out.println("2 - Se connecter");
+	System.out.println("1 - Publier votre annonce");
+	System.out.println("2 - Trouvez un logement");
 	System.out.println("-------------------------------------------------------------");
 	
 	// ----------------------------
@@ -41,16 +41,14 @@ public class Navigation {
 	    {
 		switch(c){
 		case 1 : 
-		    
-		    System.out.println("Creation de la table Hotel");
-		    connecte.inscription();
+		    System.out.println("Publier votre annonce");
+		    //connecte.inscription();
 		    break;
 
 		case 2 :
-		    System.out.println("Suppression de la table hotel.");
-		    connecte.suppressionTable();
+		    System.out.println("Trouvez un logement");
+		    //connecte.connectionProprio();
 		    break;
-
 		case 0 : 
 		    System.out.println("FIN");
 		    break;
