@@ -41,7 +41,7 @@ public class Navigation {
 	System.out.println("2 - Se connecter");
 	System.out.println("-------------------------------------------------------------");
 	int choix = readInt();
-
+	try{
 	switch(choix){
 	case 0 :
 	    System.out.print("\033c"); //nettoyage de l'ecran
@@ -89,6 +89,10 @@ public class Navigation {
 	    System.out.println("-------------------------------------------------------------");
 	    break;
 	    
+	}
+	}catch (SQLException e) {
+
+	    System.err.println(e.getMessage());
 	}
 
     }
@@ -151,10 +155,10 @@ public class Navigation {
 	catch (SQLException e) {
 
 	    System.err.println(e.getMessage());
-	    }*/
+	    }
 	return c;
 
-	///////////////////////////////////////AVEC TRY CATCH
+	*///////////////////////////////////////AVEC TRY CATCH
 
 
 	//SANS TRY CATCH => JE PENSE QUE C'EST INUTILE
