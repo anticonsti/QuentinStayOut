@@ -37,6 +37,9 @@ class ConnectionAirChambre {
 	   
 	//si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne : de toute facon on n'aura jamais de INT nombre de clients sur le site. 
 	System.out.println("Inscription terminee! "); 
+															    
+
+
 
     }	 
 		 

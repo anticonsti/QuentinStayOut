@@ -221,7 +221,7 @@ public class Navigation {
     /**Imprime les recommandations d'usage de la classe ChaineHotels a l'ecran.*/
     public static void usage() {
 	System.out.println("Veuillez entrer votre nom identifiant pour Postgres.");
-	System.out.println("usage : java java -cp ../postgresql-9.3-1101.jdbc41.jar: Navigation <nomUtilisateur>");
+	System.out.println("usage : java -cp postgresql-9.3-1101.jdbc41.jar: Navigation <nomUtilisateur>");
 	System.exit(1);
     }
     
