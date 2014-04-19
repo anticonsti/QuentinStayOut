@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Navigation {
     //static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static Scanner in = new Scanner(System.in);
-    static ConnectionAirbnb connecte;
+    static ConnectionAirChambre connecte;
 
 
     /** Imprime le menu a l'ecran.*/
@@ -113,7 +113,7 @@ public class Navigation {
 		// Connexion a la base
 		// --------------------
 		String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
-		connecte = new ConnectionAirbnb(args[0], password);
+		connecte = new ConnectionAirChambre(args[0], password);
 		
 		
 		// ---------------------------------------

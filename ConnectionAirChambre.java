@@ -2,7 +2,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
 
-class ConnectionAirbnb {
+class ConnectionAirChambre {
     Connection conn; // la connexion a la base
     Statement st;
     PreparedStatement insert;
@@ -11,14 +11,14 @@ class ConnectionAirbnb {
     int id_proprietaire=1;
     
     // connection a la base
-    public ConnectionAirbnb(String login, String motPasse) throws SQLException, ClassNotFoundException{
+    public ConnectionAirChambre(String login, String motPasse) throws SQLException, ClassNotFoundException{
 	// -------------------
 	// Connexion a la base
 	// --------------------
 	Class.forName("org.postgresql.Driver");
 	conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb",login, motPasse);
     }
-
+    
     // fermeture de la connection
     public void close() throws SQLException{ 
 	conn.close();
