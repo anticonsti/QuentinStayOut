@@ -54,7 +54,19 @@ public class Navigation {
 		//  de toute facon on n'aura jamais de INT nombre de clients sur le site. 
 		
 		break;
-	    case 2 : //connection()
+	    case 2 :
+		System.out.print("Pseudo : ");
+		String id = readString();
+		if(!id.matches("[a-z]{1,30}")) System.out.println("Syntaxe incorrecte");
+	   
+		System.out.print("\nPassword : ");
+		String pw = readString();
+		if(!pw.matches("[a-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
+
+	
+		connecte.connection(id,pw);
+		
+		
 		break;
 	    default :
 		System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
@@ -107,6 +119,7 @@ public class Navigation {
 
 	ChercherLogement cl = new ChercherLogement();
 
+	//	try{
 	switch(c){
 	case 1 : 
 	    publierAnnonce();
@@ -129,8 +142,11 @@ public class Navigation {
 	    System.out.println("2 - Trouvez un logement");
 	    System.out.println("-------------------------------------------------------------");
 	    break;
+	}/*
+	}catch (SQLException e) {
+	    System.err.println(e.getMessage());
 	}
-       
+	 */
 	return c;
 
 

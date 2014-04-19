@@ -8,7 +8,6 @@ public class ChercherLogement {
     public ChercherLogement(){
 
     }
-
     public void printMenuChercherLogement(Connection conn){
 	System.out.print("\033c");
 	System.out.println("Veuillez entrer votre choix :");
