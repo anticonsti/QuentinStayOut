@@ -1,14 +1,13 @@
 import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
-import java.io.BufferedReader;
 
 
 public class Navigation {
     static Scanner in = new Scanner(System.in);
     static ConnectionAirChambre connecte;
 
-
+    
     public static void publierAnnonce(){
 
 	System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
@@ -20,54 +19,54 @@ public class Navigation {
 	System.out.println("-------------------------------------------------------------");
 	int choix = readInt();
 	try{
-	switch(choix){
-	case 0 :
-	    System.out.print("\033c"); //nettoyage de l'ecran
-	    System.out.println("Veuillez entrer votre choix :");
-	    System.out.println("-------------------------------------------------------------");
-	    System.out.println("0 - fin");
-	    System.out.println("1 - Publier votre annonce");
-	    System.out.println("2 - Trouvez un logement");
-	    System.out.println("-------------------------------------------------------------");
-	    break;
-	case 1 : 
-	    System.out.println("Nom entre 1~20caracteres.");
-	    String nom = readString();
-	    if(!nom.matches("[a-z]{1,20}")) System.out.println("Syntaxe incorrecte");
+	    switch(choix){
+	    case 0 :
+		System.out.print("\033c"); //nettoyage de l'ecran
+		System.out.println("Veuillez entrer votre choix :");
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("0 - fin");
+		System.out.println("1 - Publier votre annonce");
+		System.out.println("2 - Trouvez un logement");
+		System.out.println("-------------------------------------------------------------");
+		break;
+	    case 1 : 
+		System.out.println("Nom entre 1~20caracteres.");
+		String nom = readString();
+		if(!nom.matches("[a-z]{1,20}")) System.out.println("Syntaxe incorrecte");
 	   
-	    System.out.println("Prenom entre 1~30caracteres");
-	    String prenom = readString();
-	    if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Prenom entre 1~30caracteres");
+		String prenom = readString();
+		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
-	    System.out.println("Pseudo entre 1~30caracteres");
-	    String pseudo = readString();
-	    if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Pseudo entre 1~30caracteres");
+		String pseudo = readString();
+		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
 	   
-	    System.out.println("Mot de entre 1~30caracteres");
-	    String mdp = readString();
-	    if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Mot de entre 1~30caracteres");
+		String mdp = readString();
+		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
-	    connecte.inscription(4654684, nom, prenom, pseudo, mdp);
-	    //NOMBRE AU PIF POUR COMPILER CETTE MERDE
+		connecte.inscription(4654684, nom, prenom, pseudo, mdp);
+		//NOMBRE AU PIF POUR COMPILER CETTE MERDE
 
-	    /*
-	      si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
-	      de toute facon on n'aura jamais de INT nombre de clients sur le site. 
-	    */
-	    break;
-	case 2 : //connection()
-	    break;
-	default :
-	    System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
-	    System.out.println("Veuillez entrer votre choix :");
-	    System.out.println("-------------------------------------------------------------");
-	    System.out.println("0 - retour");
-	    System.out.println("1 - S'inscrire");
-	    System.out.println("2 - Se connecter");
-	    System.out.println("-------------------------------------------------------------");
-	    break;
+		
+		//  si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
+		//  de toute facon on n'aura jamais de INT nombre de clients sur le site. 
+		
+		break;
+	    case 2 : //connection()
+		break;
+	    default :
+		System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
+		System.out.println("Veuillez entrer votre choix :");
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("0 - retour");
+		System.out.println("1 - S'inscrire");
+		System.out.println("2 - Se connecter");
+		System.out.println("-------------------------------------------------------------");
+		break;
 	    
-	}
+	    }
 	}catch (SQLException e) {
 
 	    System.err.println(e.getMessage());
@@ -84,7 +83,7 @@ public class Navigation {
 	// Impression du menu
 	// -------------------
 	
-		System.out.print("\033c"); //nettoyage de l'ecran
+	System.out.print("\033c"); //nettoyage de l'ecran
 	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - fin");
@@ -122,13 +121,13 @@ public class Navigation {
 	    break;
 		
 	default : 
-	System.out.print("\033c"); //nettoyage de l'ecran
-	System.out.println("Veuillez entrer votre choix :");
-	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - fin");
-	System.out.println("1 - Publier votre annonce");
-	System.out.println("2 - Trouvez un logement");
-	System.out.println("-------------------------------------------------------------");
+	    System.out.print("\033c"); //nettoyage de l'ecran
+	    System.out.println("Veuillez entrer votre choix :");
+	    System.out.println("-------------------------------------------------------------");
+	    System.out.println("0 - fin");
+	    System.out.println("1 - Publier votre annonce");
+	    System.out.println("2 - Trouvez un logement");
+	    System.out.println("-------------------------------------------------------------");
 	    break;
 	}
        
