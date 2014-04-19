@@ -10,6 +10,10 @@ class ConnectionAirChambre {
     PreparedStatement update;
     int id_proprietaire=1;
     
+    public Connection getConnection(){
+	return conn;
+    }
+
     // connection a la base
     public ConnectionAirChambre(String login, String motPasse) throws SQLException, ClassNotFoundException{
 	Class.forName("org.postgresql.Driver");
