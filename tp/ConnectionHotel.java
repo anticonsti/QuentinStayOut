@@ -41,6 +41,8 @@ class ConnectionHotel {
 	   
     public void insertionTuplesUtilisateur
 	(int num,String nom,String ville,int etoiles,String directeur) throws SQLException{
+	
+	insert = conn.prepareStatement("INSERT INTO Hotel VALUES(?,?,?,?,?)");
 	insert.setInt(1,num);
 	insert.setString(2,nom);
 	insert.setString(3,ville);
