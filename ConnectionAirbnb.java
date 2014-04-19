@@ -1,5 +1,6 @@
 import java.io.*;
 import java.sql.*;
+import java.util.Scanner;
 
 class ConnectionAirbnb {
     Connection conn; // la connexion a la base
@@ -22,14 +23,39 @@ class ConnectionAirbnb {
 	conn.close();
     }
 
-    public  void creationTable() throws SQLException {
-	System.out.println("A implementer!");
+    public void inscription() throws SQLException {
+	Scanner sc = new Scanner(System.in);
+	
+	System.out.println("Nom entre 1~20caracteres.");
+	String nom = sc.nextLine();
+	if(!nom.matches("[a-z]{1,20}")) inscription();
+	   
+	System.out.println("Prenom entre 1~30caracteres");
+	String prenom = sc.nextLine();
+	if(!nom.matches("[a-z]{1,30}")) inscription();
+
+	System.out.println("Pseudo entre 1~30caracteres");
+	String pseudo = sc.nextLine();
+	if(!nom.matches("[a-z]{1,30}")) inscription();
+	   
+	System.out.println("Mot de entre 1~30caracteres");
+	String mdp = sc.nextLine();
+	if(!nom.matches("[a-z]{1,30}")) inscription();
+
+	insert.setString(1,nom);
+	insert.setString(2,prenom);
+	insert.setString(3,pseudo);
+	insert.setString(4,mdp);
+	insert.executeUpdate();
+	   
+	System.out.println("Inscription terminee! "); 
+
     }	 
-                    
-    public void suppressionTable() throws SQLException {
+		 
+    public void connectionProprio() throws SQLException {
 	System.out.println("A implementer!");
     }
-    
+		 
     public void insertionTuplesPredefinis() throws SQLException{
 	System.out.println("A implementer!");
     }
