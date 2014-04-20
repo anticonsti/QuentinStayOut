@@ -60,14 +60,8 @@ public class PublierAnnonce {
 		String id = Utils.readString("[A-Za-z0-9]{1,20}");
 	   
 		String pw = Utils.readPassword("Password: ");
-		//if(!pw.matches("[A-Za-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
-
-
-		//ON N'EST PAS SENSE SAVOIR SI LA SYNTAXE EST CORRECTE OU INCORRECTE, SINON
-		//CA VOUDRAIT DIRE QU'ON CONNAIT LE MOT DE PASSE DES UTILISATEURS.
-
-		if( this.connection(id,pw) == 0 ){
+		if( this.connection(id,pw) == 1 ){
 		    MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
 		    mpc.printMenuProprietaireConnexion(id);
 		}else{
@@ -96,15 +90,12 @@ public class PublierAnnonce {
     public void inscription(String nom, String prenom, String pseudo, String mdp) throws SQLException {
 
 	insert = conn.prepareStatement("INSERT INTO proprietaire(nom_proprietaire,prenom_proprietaire,pseudo,mot_de_passe) VALUES(?,?,?,?)");
-	//insert.setInt(1,id_proprio);
+
 	insert.setString(1,nom);
 	insert.setString(2,prenom);
 	insert.setString(3,pseudo);
 	insert.setString(4,mdp);
-	insert.executeUpdate();
-	   
-	//si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
-	//de toute facon on n'aura jamais de INT nombre de clients sur le site. 
+	insert.executeUpdate();  
 	System.out.println("Inscription terminee! ");
 
     }
