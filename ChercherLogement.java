@@ -43,7 +43,7 @@ public class ChercherLogement {
     }
 
     public  void afficheLogements(Connection conn)throws SQLException{
-	insert = conn.prepareStatement("SELECT * INTO Proprietaire");
+	insert = conn.prepareStatement("SELECT * FROM Proprietaire");
 	rs = insert.executeQuery();
 	while (rs.next()) {
 	    System.out.print(rs.getInt(1));
