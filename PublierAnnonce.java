@@ -61,12 +61,13 @@ public class PublierAnnonce {
 		break;
 
 	    case 2 :
-		System.out.print("Pseudo : ");
+		System.out.print("Pseudo: ");
 		String id = Utils.readString();
 		if(!id.matches("[a-z]{1,30}")) System.out.println("Syntaxe incorrecte");
 	   
-		System.out.print("\nPassword : ");
-		String pw = Utils.readString();
+		//System.out.print("\nPassword : ");
+		//String pw = Utils.readString();
+		String pw = Utils.readPassword("Password: ");
 		if(!pw.matches("[a-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
 		this.connection(id,pw);

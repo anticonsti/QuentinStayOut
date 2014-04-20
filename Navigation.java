@@ -83,7 +83,7 @@ public class Navigation {
 	try{
 
 	    // Connexion a la base
-	    String password = PasswordField.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+	    String password = Utils.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 	    connecte = new ConnectionAirChambre(args[0], password);
 
 
