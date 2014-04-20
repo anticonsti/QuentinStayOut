@@ -121,8 +121,28 @@ class Logement{
     }
 
     
-    public void tablePrixLogement(int id_logement, String dateDep, String dateFin, int prix, String prixMois ){
+    public void tablePrixLogement(int id_logement, String dateDep, String dateFin, int prix, String prixMois )throws SQLException{
 
+	int id_dispo = 0;
+	select = conn.prepareStatement("SELECT DISTINCT id_dispo FROM disponibilite WHERE date_debut_dispo = DATE "+ dateDep + " AND date_fin_dispo = DATE " + dateFin);
+	result = select.executeQuery();
+	while (result.next()) {
+	    id_dispo=result.getInt(1);
+	}
+
+	String requete = " INSERT INTO prix_logement(id_dispo, id_logement,prix ";
+	if(prixMois.equals(""))
+	    requete += ")  VALUES(?,?,?)";
+	else
+	    requete +=", prix_mois) VALUES(?,?,?,?)";
+
+	insert = conn.prepareStatement(requete);
+	insert.setInt(1, id_dispo);
+	insert.setInt(2, id_logement);
+	insert.setInt(3, prix);
+	if(!prixMois.equals(""))
+	    insert.setInt(4, Integer.parseInt(prixMois));
+	insert.executeUpdate();
 
     }
 
