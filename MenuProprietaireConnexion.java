@@ -28,25 +28,60 @@ public class MenuProprietaireConnexion{
 	System.out.println("-------------------------------------------------------------");
 	
 	int choix = Utils.readInt();
+	Logement lgm = new Logement(conn);
+
 	//try{
-	    switch(choix){
-	    case 0:
-		break;
+	switch(choix){
+	case 0:
+	    break;
 
-	    case 1:
-		System.out.println("Adresse entre 1~20caracteres.");
-		String adresse = Utils.readString("[0-9,a-z ]{1,20}");
+	case 1:
+	    System.out.println("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
+	    String adresse = Utils.readString("[0-9a-z]{1,20}");	
+	
+	    System.out.println("Adresse entre 1~20caracteres.");
+	    String adresse = Utils.readString("[0-9a-z]{1,20}");
 
-		System.out.println("Surface entre 1~30caracteres");
-		int surface= Utils.readInt();
+	    System.out.println("Surface: ");
+	    int surface= Utils.readInt();
 
-		System.out.println("Ville entre 1~30caracteres");
-		String ville = Utils.readString("[A-Z][a-z- ]{1,20}");
+	    System.out.println("Ville entre 1~30caracteres");
+	    String ville = Utils.readString("[A-Za-z]{1,20}");
 	   
-		System.out.println("Date début disponibilité de entre 1~30caracteres");
-		String ddd = Utils.readString("date");
+	    System.out.println("Date début disponibilité en format JJ/MM/AA");
+	    String ddd = Utils.readString("date");
 
-		break;
+	    System.out.println("Date fin disponibilité en format JJ/MM/AA");
+	    String ddd = Utils.readString("date");		
+
+	    System.out.println("Prix du logement par jour.");
+	    int prixJour = Utils.readString("date");		
+
+	    System.out.println("(facultatif) Prix du logement par mois (cas 27jours ou plus)");
+	    if(sc.hasNextInt()) {int prixMois = Utils.readString();}
+
+	    System.out.println("(facultatif) Suggestions");
+	    if(sc.hasNextLine()){String sugg = Utils.readString("date");}		
+
+	    System.out.println("(facultatif) Prestations");
+	    if(sc.hasNextLine()){String prest = Utils.readString("date");}		
+
+	    System.out.println("(facultatif) Photos");//boucle infini jusqu'a ce que l'utilisateur dit FALSE
+	    if(sc.hasNextLine()){String photo = Utils.readString("date");}	
+
+	    System.out.println("(facultatif) Transport");//il faut 2print pour nb vehicule,prix transport
+	    if(sc.hasNextLine()){String transport = Utils.readString("[A-Za-z]{1,20}");}	
+
+	    
+	    lgm.ajouterLogementDispo();
+	    lgm.ajouterLogementLogement();
+	    lgm.ajouterPrixLogement();
+	    if(sugg!="") lgm.ajouterLogementSuggestion();
+	    if(prest!="") lgm.ajouterLogementPrestation();
+	    if(photo!="") lgm.ajouterLogementPhoto();
+	    if(transport!="") lgm.ajouterLogementTransport();
+	    
+	    break;
 
 	    case 2: 
 		break;
