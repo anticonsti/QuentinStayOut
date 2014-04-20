@@ -108,21 +108,20 @@ public class PublierAnnonce {
 
     public void connection(String id, String pw) throws SQLException{
 
-	select = conn.prepareStatement("SELECT mot_de_passe FROM proprietaire WHERE pseudo="+id);
+	select = conn.prepareStatement("SELECT mot_de_passe FROM proprietaire WHERE pseudo='"+id+"'");
 	result = select.executeQuery();
 
-	while (result.next()) {
-	    System.out.print(result.getString(1));
-	}
-	/*
+	System.out.println( "ici "+ id + " " + pw);
+
 	if(result.next()){
-	    if(result.getString(1).toString()==pw)
+	    System.out.println( "get " + result.getString(1) );
+	    if(result.getString(1)==pw)
 		System.out.println("Connexion etablie");
 	    else
 		System.out.println("Le mot de passe est incorrecte");
 	}else
 	    System.out.print("Le pseudo n'existe pas");
-	*/
+
 
     }
 
