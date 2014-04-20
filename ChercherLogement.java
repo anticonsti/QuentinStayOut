@@ -83,10 +83,10 @@ public class ChercherLogement {
 	String ville = Utils.readString("[A-Za-z ]{0,20}");
 
 	System.out.print("Date début disponibilité: ");
-	String ddd = Utils.readString("[A-Za-z ]{0,100}");
+	String ddd = Utils.readString("date");
 
 	System.out.print("Date fin disponibilité: ");
-	String dfd = Utils.readString("[A-Za-z ]{0,100}");
+	String dfd = Utils.readString("date");
 
 	System.out.print("Suggestions: ");
 	String suggestions = Utils.readString("[A-Za-z ]{0,100}");
