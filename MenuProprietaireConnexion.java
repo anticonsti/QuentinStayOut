@@ -48,10 +48,10 @@ public class MenuProprietaireConnexion{
 	    System.out.println("Ville entre 1~30caracteres");
 	    String ville = Utils.readString("[A-Za-z]{1,20}");
 	   
-	    System.out.println("Date début disponibilité en format JJ/MM/AA");
+	    System.out.println("Date début disponibilité en format YYYY/MM/DD");//format sql annee/mois/jour
 	    String ddd = Utils.readString("date");
 
-	    System.out.println("Date fin disponibilité en format JJ/MM/AA");
+	    System.out.println("Date fin disponibilité en format YYYY/MM/DD");
 	    String ddd = Utils.readString("date");		
 
 	    System.out.println("Prix du logement par jour.");

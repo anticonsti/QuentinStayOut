@@ -61,56 +61,70 @@ class Logement{
     }    
     */
 
-    public void ajouterLogement(){
+    public void ajouterLogement() throws SQLException{
 		
-	System.out.println("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
-	String adresse = Utils.readString("[0-9a-z]{1,20}");	
-	
-	System.out.println("Adresse entre 1~20caracteres.");
-	String adresse = Utils.readString("[0-9a-z]{1,20}");
 
-	System.out.println("Surface: ");
-	int surface= Utils.readInt();
-
-	System.out.println("Ville entre 1~30caracteres");
-	String ville = Utils.readString("[A-Za-z]{1,20}");
-	   
-	System.out.println("Date début disponibilité en format JJ/MM/AA");
-	String ddd = Utils.readString("date");
-
-	System.out.println("Date fin disponibilité en format JJ/MM/AA");
-	String ddd = Utils.readString("date");		
-
-	System.out.println("Prix du logement par jour.");
-	int prixJour = Utils.readString("date");		
-
-	System.out.println("(facultatif) Prix du logement par mois (cas 27jours ou plus)");
-	if(sc.hasNextInt()) {int prixMois = Utils.readString();}
-
-	System.out.println("(facultatif) Suggestions");
-	if(sc.hasNextLine()){String sugg = Utils.readString("date");}		
-
-	System.out.println("(facultatif) Prestations");
-	if(sc.hasNextLine()){String prest = Utils.readString("date");}		
-
-	System.out.println("(facultatif) Photos");
-	if(sc.hasNextLine()){String photo = Utils.readString("date");}	
-
-
-
-
-	insert = conn.prepareStatement("INSERT INTO logement VALUES(?,?,?,?)");
 	
 	
     }
     
-    public void supprimerLogement(){
+    public void supprimerLogement() throws SQLException{
     }
     
-    public void modifierLogement(){
+    public void modifierLogement() throws SQLException{
+    }
+    //-----------------------------------------------------------//
+    public void ajouterLogementDispo(String dateDep, String dateFin) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo) VALUES(?,?)");
+
+	insert.setString(1,dateDep);
+	insert.setString(2,dateFin);
+	insert.executeUpdate();  
     }
 
+    public void ajouterLogementLogement(String adr, int surface, String ville) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO logement (adresse_logement,surface,ville) VALUES(?,?,?)");
 
+	insert.setString(1,adr);
+	insert.setString(2,surface);
+	insert.setString(3,ville);
+	insert.executeUpdate();  
+    }
+
+    public void ajouterPrixLogement(int prix) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO prix_logement (prix) VALUES(?)");
+
+	insert.setString(1,prix);
+	insert.executeUpdate();  
+    }
+    
+    public void ajouterLogementSuggestion(String type_sugg, String nom_sugg) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES(?,?)");
+
+	insert.setString(1,type_sugg);
+	insert.setString(2,nom_sugg);
+	insert.executeUpdate();  
+    }
+    public void ajouterLogementPrestation(String desc_pr, String prix_pr) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO prestation(description_prestation, prix_prestation) VALUES(?,?)");
+
+	insert.setString(1,desc_pr);
+	insert.setString(2,prix_pr);
+	insert.executeUpdate();  
+    }
+    public void ajouterLogementPhoto(String photo) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO photo (nom_photo) VALUES(?)");
+
+	insert.setString(1,photo);
+	insert.executeUpdate();  
+    }
+    public void ajouterLogementTransport(int nb, String prix) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO transport (nb_vehicule, prix_transport) VALUES(?,?)");
+
+	insert.setString(1,nb);
+	insert.setString(2,prix);
+	insert.executeUpdate();  
+    }
 
 
 
