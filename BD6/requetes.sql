@@ -84,6 +84,12 @@ id_prestation INT REFERENCES prestation(id_prestation)
 );
 
 
+CREATE TABLE propose_suggestion(
+id_logement INT REFERENCES logement(id_logement), 
+id_suggestion INT REFERENCES suggestion(id_suggestion)
+);
+
+
 CREATE TABLE service_transport(
 id_service_transport SERIAL PRIMARY KEY, 
 nb_vehicule INT NOT NULL CHECK(nb_vehicule>=0),
