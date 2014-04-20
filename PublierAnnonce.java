@@ -70,7 +70,11 @@ public class PublierAnnonce {
 		String pw = Utils.readPassword("Password: ");
 		if(!pw.matches("[a-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
-		this.connection(id,pw);
+		if( this.connection(id,pw) == 0 ){
+		    MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
+		    mpc.printMenuProprietaireConnexion();
+		}
+		    
 		break;
 
 	    default :
@@ -107,18 +111,22 @@ public class PublierAnnonce {
     }
 
 
-    public void connection(String id, String pw) throws SQLException{
+    public int connection(String id, String pw) throws SQLException{
 
 	select = conn.prepareStatement("SELECT mot_de_passe FROM proprietaire WHERE pseudo='"+id+"'");
 	result = select.executeQuery();
 
 	if(result.next()){
-	    if(result.getString(1).equals(pw))
+	    if(result.getString(1).equals(pw)){
 		System.out.println("Connexion etablie");
+		return 0;
+	    }
 	    else
 		System.out.println("Le mot de passe est incorrecte");
 	}else
 	    System.out.print("Le pseudo n'existe pas");
+
+	return 1;
 
     }
 
