@@ -71,13 +71,8 @@ public class PublierAnnonce {
 		break;
 
 	    default :
-		System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
-		System.out.println("Veuillez entrer votre choix :");
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("0 - retour");
-		System.out.println("1 - S'inscrire");
-		System.out.println("2 - Se connecter");
-		System.out.println("-------------------------------------------------------------");
+		//on recommence le switch puisque l'utilisateur a entre un nombre bizarre.
+		printMenuPublierAnnonce();
 		break;
 	    }
 	}catch (SQLException e) {
