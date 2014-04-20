@@ -16,32 +16,32 @@ ville VARCHAR(20) NOT NULL
 
 
 CREATE TABLE appartement(
-id_logement INT REFERENCES logement(id_logement), 
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE, 
 nb_pieces INT CHECK(nb_pieces>0)
 );
 
 
 CREATE TABLE chambre(
-id_logement INT REFERENCES logement(id_logement)
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE propose_logement(
-id_proprietaire INT REFERENCES proprietaire(id_proprietaire) ON DELETE CASCADE, 
-id_logement INT REFERENCES logement(id_logement) ON DELETE CASCADE
+id_proprietaire INT REFERENCES proprietaire(id_proprietaire) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE photo(
 id_photo SERIAL PRIMARY KEY,
-id_logement INT REFERENCES logement(id_logement),
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE,
 nom_photo VARCHAR(100) DEFAULT ('sans nom')
 );
 
 
 CREATE TABLE offre_promotionnelle(
 id_promo SERIAL PRIMARY KEY, 
-id_logement INT REFERENCES logement(id_logement),
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE,
 date_debut_offre_promo DATE NOT NULL, 
 date_fin_offre_promo DATE NOT NULL, 
 prix_offre_promo INT NOT NULL CHECK(prix_offre_promo>0), 
@@ -73,22 +73,22 @@ prix_prestation INT NOT NULL CHECK(prix_prestation>0)
 
 
 CREATE TABLE prix_logement(
-id_dispo INT REFERENCES disponibilite(id_dispo), 
-id_logement INT REFERENCES logement(id_logement),
+id_dispo INT REFERENCES disponibilite(id_dispo) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE,
 prix INT NOT NULL CHECK(prix>0),
 prix_mois INT CHECK(prix_mois>0)
 );
 
 
 CREATE TABLE propose_prestation(
-id_logement INT REFERENCES logement(id_logement), 
-id_prestation INT REFERENCES prestation(id_prestation)
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_prestation INT REFERENCES prestation(id_prestation) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE propose_suggestion(
-id_logement INT REFERENCES logement(id_logement), 
-id_suggestion INT REFERENCES suggestion(id_suggestion)
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_suggestion INT REFERENCES suggestion(id_suggestion) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -100,8 +100,8 @@ prix_transport INT NOT NULL CHECK(prix_transport>0)
 
 
 CREATE TABLE propose_transport(
-id_logement INT REFERENCES logement(id_logement), 
-id_service_transport INT REFERENCES service_transport(id_service_transport)
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_service_transport INT REFERENCES service_transport(id_service_transport) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -115,14 +115,14 @@ CHECK ( date_fin_location >= date_debut_location )
 
 
 CREATE TABLE concerne(
-id_logement INT REFERENCES logement(id_logement), 
-id_location INT REFERENCES location(id_location) 
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE avec_transport(
-id_location INT REFERENCES location(id_location), 
-id_service_transport INT REFERENCES service_transport(id_service_transport)
+id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_service_transport INT REFERENCES service_transport(id_service_transport) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -137,12 +137,12 @@ email VARCHAR(50) NOT NULL
 
 
 CREATE TABLE loge(
-id_location INT REFERENCES location(id_location), 
-id_locataire INT REFERENCES locataire(id_locataire)
+id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_locataire INT REFERENCES locataire(id_locataire) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE avec_prestation(
-id_location INT REFERENCES location(id_location), 
-id_prestation INT REFERENCES prestation(id_prestation)
+id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CASCADE, 
+id_prestation INT REFERENCES prestation(id_prestation) ON UPDATE CASCADE ON DELETE CASCADE
 );
