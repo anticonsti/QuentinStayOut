@@ -62,7 +62,8 @@ class Logement{
     */
 
     public void ajouterLogement() throws SQLException{
-		
+	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
+	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 
 	
 	
@@ -91,7 +92,7 @@ class Logement{
 	insert.executeUpdate();  
     }
 
-    public void ajouterPrixLogement(int prix) throws SQLException{
+    public void ajouterLogementPrix(int prix) throws SQLException{
 	insert = conn.prepareStatement("INSERT INTO prix_logement (prix) VALUES(?)");
 
 	insert.setInt(1,prix);

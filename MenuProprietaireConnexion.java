@@ -75,7 +75,7 @@ public class MenuProprietaireConnexion{
 	    
 	    lgm.ajouterLogementDispo(dateDep,dateFin);
 	    lgm.ajouterLogementLogement(adresse,surface,ville);
-	    lgm.ajouterPrixLogement(prixJour);
+	    lgm.ajouterLogementPrix(prixJour);
 
 	    /*
 	    if(sugg!="") lgm.ajouterLogementSuggestion();
