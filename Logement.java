@@ -118,13 +118,18 @@ class Logement{
 	insert.setString(1,photo);
 	insert.executeUpdate();  
     }
-    public void ajouterLogementTransport(int nb, String prix) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO transport (nb_vehicule, prix_transport) VALUES(?,?)");
+
+
+    //D'APRES LA TABLE QUE J'AI RECU DE requete.sql IL MANQUE 2 COLONNES : nb_vehicule et prix_transport
+    /*
+    public void ajouterLogementTransport(int nb, int prix) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO transport (nb_vehicule, prix_transport) VALUES (?,?)");
 
 	insert.setInt(1,nb);
 	insert.setInt(2,prix);
 	insert.executeUpdate();  
     }
+    */
 
 
 

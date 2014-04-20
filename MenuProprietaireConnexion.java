@@ -30,7 +30,7 @@ public class MenuProprietaireConnexion{
 	int choix = Utils.readInt();
 	Logement lgm = new Logement(conn);
 
-	//try{
+	try{
 	switch(choix){
 	case 0:
 	    break;
@@ -56,7 +56,7 @@ public class MenuProprietaireConnexion{
 
 	    System.out.println("Prix du logement par jour.");
 	    int prixJour = Utils.readInt();		
-	    /*
+	    /* IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE
 	    System.out.println("(facultatif) Prix du logement par mois (cas 27jours ou plus)");
 	    if(hasNextInt()) {int prixMois = Utils.readString();}
 
@@ -73,9 +73,9 @@ public class MenuProprietaireConnexion{
 	    if(hasNextLine()){String transport = Utils.readString("[A-Za-z]{1,20}");}	
 	    */
 	    
-	    lgm.ajouterLogementDispo();
-	    lgm.ajouterLogementLogement();
-	    lgm.ajouterPrixLogement();
+	    lgm.ajouterLogementDispo(dateDep,dateFin);
+	    lgm.ajouterLogementLogement(adresse,surface,ville);
+	    lgm.ajouterPrixLogement(prixJour);
 
 	    /*
 	    if(sugg!="") lgm.ajouterLogementSuggestion();
@@ -102,9 +102,9 @@ public class MenuProprietaireConnexion{
 
 		break;
 	    }
-	    /*}catch (SQLException e) {
+	    }catch (SQLException e) {
 	    System.err.println(e.getMessage());
-	    }*/
+	    }
     }
 
 
