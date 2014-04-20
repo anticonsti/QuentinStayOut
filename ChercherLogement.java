@@ -42,6 +42,7 @@ public class ChercherLogement {
 	    }
 	    catch(SQLException e){
 		e.printStackTrace();
+		//System.out.println("aucun résultat");
 	    }
 	    break;
 
@@ -98,10 +99,25 @@ public class ChercherLogement {
 
 	System.out.print("Affichage par prix croissant (O/N): ");
 	String affichage = Utils.readString("[ON]{1}");
+	System.out.println();
+	
+	if(adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && suggestions.equals("") && prestations.equals("") && prix.equals("")){
+	    System.out.println("aucun résultat");
+	    return;
+	}
 
-	String requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN prestation WHERE ";
+	String requete;
+	if( !suggestions.equals("") && prestations.equals("") ){
+	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion WHERE";
+	} else if( suggestions.equals("") && !suggestions.equals("") ){
+	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
+	} else if( !suggestions.equals("") && !suggestions.equals("") ){
+	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
+	} else {
+	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite WHERE";
+	}
+
 	int and = 0;
-
 	if(!adresse.equals("")){
 	    requete = requete + "adresse_logement ='"+adresse+"'";
 	    and=1;
@@ -169,7 +185,7 @@ public class ChercherLogement {
 	select = conn.prepareStatement(requete);
 	Utils.print("adresse_logement",15 );
 	Utils.print("| surface", 9);
-	Utils.print("| ville", 40);
+	Utils.print("| ville", 20);
 	Utils.print("| date_debut_dispo",15 );
 	Utils.print("| date_fin_dispo", 15);
 	Utils.print("| nom_suggestion", 15);
@@ -181,11 +197,22 @@ public class ChercherLogement {
 	while (rs.next()) {
 	    Utils.print(rs.getString(1), 15);
 	    Utils.print(String.valueOf(rs.getInt(2)), 9 );
-	    Utils.print(rs.getString(3), 40);
+	    Utils.print(rs.getString(3), 20);
 	    Utils.print(rs.getString(4), 15 );
 	    Utils.print(rs.getString(5), 15);
-	    Utils.print(rs.getString(6), 15 );
-	    Utils.print(String.valueOf(rs.getInt(7)), 9 );
+	    if( !suggestions.equals("") && prestations.equals("") ){
+		Utils.print(rs.getString(6), 15 );
+		Utils.print(String.valueOf(rs.getInt(7)), 9 );
+	    } else if( suggestions.equals("") && !suggestions.equals("") ){
+		Utils.print(rs.getString(6), 15 );
+		Utils.print(String.valueOf(rs.getInt(7)), 9 );
+	    } else if( !suggestions.equals("") && !suggestions.equals("") ){
+		Utils.print(rs.getString(6), 15 );
+		Utils.print(rs.getString(7), 15 );
+		Utils.print(String.valueOf(rs.getInt(8)), 9 );
+	    } else {
+		Utils.print(String.valueOf(rs.getInt(6)), 9 );
+	    }
 	}
 
     }
