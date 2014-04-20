@@ -116,13 +116,14 @@ public class Navigation {
 	// -------------------------------
 
 
-
+	PublierAnnonce pa = new PublierAnnonce(connecte.getConnection());
 	ChercherLogement cl = new ChercherLogement(connecte.getConnection());
 
 	//	try{
 	switch(c){
 	case 1 : 
-	    publierAnnonce();
+	    //publierAnnonce();
+	    pa.printMenuPublierAnnonce();
 	    break;
 
 	case 2 :
