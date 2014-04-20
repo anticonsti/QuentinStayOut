@@ -52,7 +52,8 @@ CHECK ( date_fin_offre_promo >= date_debut_offre_promo )
 CREATE TABLE disponibilite(
 id_dispo SERIAL PRIMARY KEY, 
 date_debut_dispo DATE NOT NULL, 
-date_fin_dispo DATE NOT NULL
+date_fin_dispo DATE NOT NULL,
+sejour_min INT CHECK(sejour_min>0),
 CHECK ( date_fin_dispo >= date_debut_dispo )
 );
 
@@ -74,7 +75,8 @@ prix_prestation INT NOT NULL CHECK(prix_prestation>0)
 CREATE TABLE prix_logement(
 id_dispo INT REFERENCES disponibilite(id_dispo), 
 id_logement INT REFERENCES logement(id_logement),
-prix INT NOT NULL CHECK(prix>0) 
+prix INT NOT NULL CHECK(prix>0),
+prix_mois INT CHECK(prix_mois>0)
 );
 
 
