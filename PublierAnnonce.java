@@ -111,17 +111,13 @@ public class PublierAnnonce {
 	select = conn.prepareStatement("SELECT mot_de_passe FROM proprietaire WHERE pseudo='"+id+"'");
 	result = select.executeQuery();
 
-	System.out.println( "ici "+ id + " " + pw);
-
 	if(result.next()){
-	    System.out.println( "get " + result.getString(1) );
-	    if(result.getString(1)==pw)
+	    if(result.getString(1).equals(pw))
 		System.out.println("Connexion etablie");
 	    else
 		System.out.println("Le mot de passe est incorrecte");
 	}else
 	    System.out.print("Le pseudo n'existe pas");
-
 
     }
 
