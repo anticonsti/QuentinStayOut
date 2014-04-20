@@ -2,10 +2,6 @@ import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
 
-
-
-
-
 class Logement{
     
     PreparedStatement insert=null;
@@ -76,7 +72,7 @@ class Logement{
     }
     //-----------------------------------------------------------//
     public void ajouterLogementDispo(String dateDep, String dateFin) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo) VALUES(?,?)");
+	insert = conn.prepareStatement("INSERT INTO disponibilite(date_debut_dispo, date_fin_dispo) VALUES(?,?)");
 
 	insert.setString(1,dateDep);
 	insert.setString(2,dateFin);
@@ -84,7 +80,7 @@ class Logement{
     }
 
     public void ajouterLogementLogement(String adr, int surface, String ville) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO logement (adresse_logement,surface,ville) VALUES(?,?,?)");
+	insert = conn.prepareStatement("INSERT INTO logement(adresse_logement,surface,ville) VALUES(?,?,?)");
 
 	insert.setString(1,adr);
 	insert.setInt(2,surface);
@@ -93,19 +89,20 @@ class Logement{
     }
 
     public void ajouterLogementPrix(int prix) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO prix_logement (prix) VALUES(?)");
+	insert = conn.prepareStatement("INSERT INTO prix_logement(prix) VALUES(?)");
 
 	insert.setInt(1,prix);
 	insert.executeUpdate();  
     }
     
     public void ajouterLogementSuggestion(String type_sugg, String nom_sugg) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES(?,?)");
+	insert = conn.prepareStatement("INSERT INTO suggestion(type_suggestion, nom_suggestion) VALUES(?,?)");
 
 	insert.setString(1,type_sugg);
 	insert.setString(2,nom_sugg);
 	insert.executeUpdate();  
     }
+
     public void ajouterLogementPrestation(String desc_pr, String prix_pr) throws SQLException{
 	insert = conn.prepareStatement("INSERT INTO prestation(description_prestation, prix_prestation) VALUES(?,?)");
 
@@ -113,25 +110,22 @@ class Logement{
 	insert.setString(2,prix_pr);
 	insert.executeUpdate();  
     }
+
     public void ajouterLogementPhoto(String photo) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO photo (nom_photo) VALUES(?)");
+	insert = conn.prepareStatement("INSERT INTO photo(nom_photo) VALUES(?)");
 
 	insert.setString(1,photo);
 	insert.executeUpdate();  
     }
 
 
-    //D'APRES LA TABLE QUE J'AI RECU DE requete.sql IL MANQUE 2 COLONNES : nb_vehicule et prix_transport
-    /*
     public void ajouterLogementTransport(int nb, int prix) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO transport (nb_vehicule, prix_transport) VALUES (?,?)");
+	insert = conn.prepareStatement("INSERT INTO service_transport(nb_vehicule, prix_transport) VALUES (?,?)");
 
 	insert.setInt(1,nb);
 	insert.setInt(2,prix);
 	insert.executeUpdate();  
     }
-    */
-
 
 
 }
