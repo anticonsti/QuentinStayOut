@@ -2,29 +2,67 @@ import java.util.Scanner;
 
 public class Utils{
 
-    static Scanner in = new Scanner(System.in);
+    static public String readString(String motif){
+	int erreur=0;
+	if(motif.equals("date"))
+	    motif = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
+	do{
+	    Scanner in = new Scanner(System.in);
+	    String s = in.next();
+	    if(!s.matches(motif)){
+		System.out.println("Syntaxe incorrecte, réessayer");
+		erreur=-1;
+	    }
+	    else
+		return s;
+	}while(erreur==-1);
+	return null;
 
-    static public String readString(){
-
-
+	/*
+	Scanner in = new Scanner(System.in);
 	try{
 	    return in.next();
 	}
 	catch(Exception e){
 	    e.printStackTrace();
 	    return null;
-	}
+	    }*/
+
     }
     
     static public int readInt(){
-	try{
-	    return in.nextInt();   //lecture du choix utilisateur    
-	}
-	catch(Exception e){
-	    in.nextLine();
-	    e.printStackTrace();
-	    return -1;
-	}
+	int erreur=0;
+	Scanner in;
+	do{
+	    in = new Scanner(System.in);
+	    try{
+		return in.nextInt();   //lecture du choix utilisateur    
+	    }
+	    catch(Exception e){
+		in.nextLine();
+		System.out.println("Veuillez entrer un nombre");
+		//e.printStackTrace();
+		erreur= -1;
+	    }
+	}while(erreur==-1);
+	return -1;
     }
+
+
+    /**
+     *@param prompt The prompt to display to the user
+     *@return The password as entered by the user
+     */
+    public static String readPassword (String prompt) {
+	String password = "";
+	try {
+	    password = new String(System.console().readPassword("%s", prompt));
+	}
+	catch (Exception ioe) {
+	    ioe.printStackTrace();
+	}
+	return password;
+    }
+
 
 }

@@ -37,21 +37,17 @@ public class PublierAnnonce {
 		break;
 
 	    case 1 : 
-		System.out.println("Nom entre 1~20caracteres.");
-		String nom = Utils.readString();
-		if(!nom.matches("[a-z]{1,20}")) System.out.println("Syntaxe incorrecte");
+		System.out.println("Nom (1~20caracteres)");
+		String nom = Utils.readString("[A-Z]+[a-z]{1,20}");
 	   
-		System.out.println("Prenom entre 1~30caracteres");
-		String prenom = Utils.readString();
-		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Prenom (1~30caracteres)");
+		String prenom = Utils.readString("[A-Z]+[a-z]{1,30}");
 
-		System.out.println("Pseudo entre 1~30caracteres");
-		String pseudo = Utils.readString();
-		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Pseudo (1~30caracteres)");
+		String pseudo = Utils.readString("[A-Z]+[a-z]{1,30}");
 	   
-		System.out.println("Mot de entre 1~30caracteres");
-		String mdp = Utils.readString();
-		if(!nom.matches("[a-z]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		System.out.println("Mot de passe (1~30caracteres)");
+		String mdp = Utils.readString("[A-Za-z0-9]{1,30}");
 
 		//NOMBRE AU PIF
 		this.inscription(4654684, nom, prenom, pseudo, mdp);
@@ -62,17 +58,16 @@ public class PublierAnnonce {
 
 	    case 2 :
 		System.out.print("Pseudo: ");
-		String id = Utils.readString();
-		if(!id.matches("[a-z]{1,30}")) System.out.println("Syntaxe incorrecte");
+		String id = Utils.readString("[a-z]{1,20}");
 	   
 		//System.out.print("\nPassword : ");
 		//String pw = Utils.readString();
 		String pw = Utils.readPassword("Password: ");
-		if(!pw.matches("[a-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		if(!pw.matches("[A-Za-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
 		if( this.connection(id,pw) == 0 ){
 		    MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
-		    mpc.printMenuProprietaireConnexion();
+		    mpc.printMenuProprietaireConnexion(id);
 		}
 		    
 		break;
