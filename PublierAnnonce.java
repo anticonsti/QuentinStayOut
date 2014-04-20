@@ -38,13 +38,13 @@ public class PublierAnnonce {
 
 	    case 1 : 
 		System.out.println("Nom (1~20caracteres)");
-		String nom = Utils.readString("[A-Z]+[a-z]{1,20}");
+		String nom = Utils.readString("[A-Za-z]{1,20}");
 	   
 		System.out.println("Prenom (1~30caracteres)");
-		String prenom = Utils.readString("[A-Z]+[a-z]{1,30}");
+		String prenom = Utils.readString("[A-Za-z]{1,30}");
 
 		System.out.println("Pseudo (1~30caracteres)");
-		String pseudo = Utils.readString("[A-Z]+[a-z]{1,30}");
+		String pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
 	   
 		System.out.println("Mot de passe (1~30caracteres)");
 		String mdp = Utils.readString("[A-Za-z0-9]{1,30}");
@@ -57,14 +57,21 @@ public class PublierAnnonce {
 
 	    case 2 :
 		System.out.print("Pseudo: ");
-		String id = Utils.readString("[A-Za-z]{1,20}");
+		String id = Utils.readString("[A-Za-z0-9]{1,20}");
 	   
 		String pw = Utils.readPassword("Password: ");
-		if(!pw.matches("[A-Za-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
+		//if(!pw.matches("[A-Za-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
+
+
+
+		//ON N'EST PAS SENSE SAVOIR SI LA SYNTAXE EST CORRECTE OU INCORRECTE, SINON
+		//CA VOUDRAIT DIRE QU'ON CONNAIT LE MOT DE PASSE DES UTILISATEURS.
 
 		if( this.connection(id,pw) == 0 ){
 		    MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
 		    mpc.printMenuProprietaireConnexion(id);
+		}else{
+		    System.out.println();
 		}
 		    
 		break;
