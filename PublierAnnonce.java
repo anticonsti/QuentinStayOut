@@ -88,7 +88,7 @@ public class PublierAnnonce {
 
     public void inscription(String nom, String prenom, String pseudo, String mdp) throws SQLException {
 
-	insert = conn.prepareStatement("INSERT INTO proprietaire(nom,prenom,pseudo,mdp) VALUES(?,?,?,?)");
+	insert = conn.prepareStatement("INSERT INTO proprietaire(nom_proprietaire,prenom_proprietaire,pseudo,mot_de_passe) VALUES(?,?,?,?)");
 	//insert.setInt(1,id_proprio);
 	insert.setString(1,nom);
 	insert.setString(2,prenom);
