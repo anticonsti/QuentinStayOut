@@ -49,8 +49,7 @@ public class PublierAnnonce {
 		System.out.println("Mot de passe (1~30caracteres)");
 		String mdp = Utils.readString("[A-Za-z0-9]{1,30}");
 
-		//NOMBRE AU PIF
-		this.inscription(4654684, nom, prenom, pseudo, mdp);
+		this.inscription(nom, prenom, pseudo, mdp);
 
 		//  si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
 		//  de toute facon on n'aura jamais de INT nombre de clients sur le site. 
@@ -58,10 +57,8 @@ public class PublierAnnonce {
 
 	    case 2 :
 		System.out.print("Pseudo: ");
-		String id = Utils.readString("[a-z]{1,20}");
+		String id = Utils.readString("[A-Za-z]{1,20}");
 	   
-		//System.out.print("\nPassword : ");
-		//String pw = Utils.readString();
 		String pw = Utils.readPassword("Password: ");
 		if(!pw.matches("[A-Za-z0-9]{1,30}"))  System.out.println("Syntaxe incorrecte");
 
@@ -89,14 +86,14 @@ public class PublierAnnonce {
     }
 
 
-    public void inscription(int id_proprietaire, String nom, String prenom, String pseudo, String mdp) throws SQLException {
-	insert = conn.prepareStatement("INSERT INTO Proprietaire VALUES(?,?,?,?,?)");
+    public void inscription(String nom, String prenom, String pseudo, String mdp) throws SQLException {
 
-	insert.setInt(1,id_proprietaire);
-	insert.setString(2,nom);
-	insert.setString(3,prenom);
-	insert.setString(4,pseudo);
-	insert.setString(5,mdp);
+	insert = conn.prepareStatement("INSERT INTO proprietaire(nom,prenom,pseudo,mdp) VALUES(?,?,?,?)");
+	//insert.setInt(1,id_proprio);
+	insert.setString(1,nom);
+	insert.setString(2,prenom);
+	insert.setString(3,pseudo);
+	insert.setString(4,mdp);
 	insert.executeUpdate();
 	   
 	//si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
@@ -114,14 +111,14 @@ public class PublierAnnonce {
 	if(result.next()){
 	    if(result.getString(1).equals(pw)){
 		System.out.println("Connexion etablie");
-		return 0;
+		return 1;
 	    }
 	    else
 		System.out.println("Le mot de passe est incorrecte");
 	}else
 	    System.out.print("Le pseudo n'existe pas");
 
-	return 1;
+	return 0;
 
     }
 
