@@ -8,7 +8,7 @@ public class Utils{
 	    motif = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
 	do{
 	    Scanner in = new Scanner(System.in);
-	    String s = in.next();
+	    String s = in.nextLine();
 	    if(!s.matches(motif)){
 		System.out.println("Syntaxe incorrecte, réessayer");
 		erreur=-1;
@@ -64,5 +64,9 @@ public class Utils{
 	return password;
     }
 
-
+    public static void print(String s, int i) {
+	System.out.print(s);
+	for (i -= s.length(); i >= 0; i --)
+	    System.out.print(" ");
+    }
 }
