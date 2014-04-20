@@ -86,7 +86,7 @@ class Logement{
 	insert = conn.prepareStatement("INSERT INTO logement (adresse_logement,surface,ville) VALUES(?,?,?)");
 
 	insert.setString(1,adr);
-	insert.setString(2,surface);
+	insert.setInt(2,surface);
 	insert.setString(3,ville);
 	insert.executeUpdate();  
     }
@@ -94,7 +94,7 @@ class Logement{
     public void ajouterPrixLogement(int prix) throws SQLException{
 	insert = conn.prepareStatement("INSERT INTO prix_logement (prix) VALUES(?)");
 
-	insert.setString(1,prix);
+	insert.setInt(1,prix);
 	insert.executeUpdate();  
     }
     
@@ -121,8 +121,8 @@ class Logement{
     public void ajouterLogementTransport(int nb, String prix) throws SQLException{
 	insert = conn.prepareStatement("INSERT INTO transport (nb_vehicule, prix_transport) VALUES(?,?)");
 
-	insert.setString(1,nb);
-	insert.setString(2,prix);
+	insert.setInt(1,nb);
+	insert.setInt(2,prix);
 	insert.executeUpdate();  
     }
 

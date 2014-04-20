@@ -37,7 +37,7 @@ public class MenuProprietaireConnexion{
 
 	case 1:
 	    System.out.println("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
-	    String adresse = Utils.readString("[0-9a-z]{1,20}");	
+	    String typeLogement = Utils.readString("[0-9a-z]{1,20}");	
 	
 	    System.out.println("Adresse entre 1~20caracteres.");
 	    String adresse = Utils.readString("[0-9a-z]{1,20}");
@@ -49,38 +49,41 @@ public class MenuProprietaireConnexion{
 	    String ville = Utils.readString("[A-Za-z]{1,20}");
 	   
 	    System.out.println("Date début disponibilité en format YYYY/MM/DD");//format sql annee/mois/jour
-	    String ddd = Utils.readString("date");
+	    String dateDep = Utils.readString("date");
 
 	    System.out.println("Date fin disponibilité en format YYYY/MM/DD");
-	    String ddd = Utils.readString("date");		
+	    String dateFin = Utils.readString("date");		
 
 	    System.out.println("Prix du logement par jour.");
-	    int prixJour = Utils.readString("date");		
-
+	    int prixJour = Utils.readInt();		
+	    /*
 	    System.out.println("(facultatif) Prix du logement par mois (cas 27jours ou plus)");
-	    if(sc.hasNextInt()) {int prixMois = Utils.readString();}
+	    if(hasNextInt()) {int prixMois = Utils.readString();}
 
 	    System.out.println("(facultatif) Suggestions");
-	    if(sc.hasNextLine()){String sugg = Utils.readString("date");}		
+	    if(hasNextLine()){String sugg = Utils.readString("date");}		
 
 	    System.out.println("(facultatif) Prestations");
-	    if(sc.hasNextLine()){String prest = Utils.readString("date");}		
+	    if(hasNextLine()){String prest = Utils.readString("date");}		
 
 	    System.out.println("(facultatif) Photos");//boucle infini jusqu'a ce que l'utilisateur dit FALSE
-	    if(sc.hasNextLine()){String photo = Utils.readString("date");}	
+	    if(hasNextLine()){String photo = Utils.readString("date");}	
 
 	    System.out.println("(facultatif) Transport");//il faut 2print pour nb vehicule,prix transport
-	    if(sc.hasNextLine()){String transport = Utils.readString("[A-Za-z]{1,20}");}	
-
+	    if(hasNextLine()){String transport = Utils.readString("[A-Za-z]{1,20}");}	
+	    */
 	    
 	    lgm.ajouterLogementDispo();
 	    lgm.ajouterLogementLogement();
 	    lgm.ajouterPrixLogement();
+
+	    /*
 	    if(sugg!="") lgm.ajouterLogementSuggestion();
 	    if(prest!="") lgm.ajouterLogementPrestation();
 	    if(photo!="") lgm.ajouterLogementPhoto();
 	    if(transport!="") lgm.ajouterLogementTransport();
-	    
+	    */	    
+
 	    break;
 
 	    case 2: 
