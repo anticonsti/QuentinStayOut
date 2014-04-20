@@ -57,16 +57,17 @@ class Logement{
     }    
     */
 
-    public void ajouterLogement(String adr, int surface, String ville, String dateDep, String dateFin, int prix, String pseudo) throws SQLException{
+    public void ajouterLogement(String adr, int surface, String ville, String dateDep, String dateFin, int prix, String prixMois, String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 
-	this.ajouterLogementLogement(adr, surface, ville);
+	this.tableLogement(adr, surface, ville);
+	int id_logement=this.idLogement(adr, surface, ville);
 	// ajoute dans la table propose_logement car non automatique...
-	this.tableProposeLogement(adr, surface, ville, pseudo);
+	this.tableProposeLogement(id_logement, pseudo);
 
-	this.ajouterLogementDispo(dateDep, dateFin);
-
+	this.tableDisponibilite(dateDep, dateFin);
+	this.tablePrixLogement(id_logement, dateDep, dateFin, prix, prixMois);
     }
     
     public void supprimerLogement() throws SQLException{
@@ -75,15 +76,8 @@ class Logement{
     public void modifierLogement() throws SQLException{
     }
     //-----------------------------------------------------------//
-    public void ajouterLogementDispo(String dateDep, String dateFin) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO disponibilite(date_debut_dispo, date_fin_dispo) VALUES(?,?)");
 
-	insert.setString(1,dateDep);
-	insert.setString(2,dateFin);
-	insert.executeUpdate();  
-    }
-
-    public void ajouterLogementLogement(String adr, int surface, String ville) throws SQLException{
+    public void tableLogement(String adr, int surface, String ville) throws SQLException{
 	insert = conn.prepareStatement("INSERT INTO logement(adresse_logement,surface,ville) VALUES(?,?,?)");
 
 	insert.setString(1,adr);
@@ -92,26 +86,44 @@ class Logement{
 	insert.executeUpdate();  
     }
 
-    public void tableProposeLogement(String adr, int surface, String ville, String pseudo) throws SQLException{
+    public int idLogement(String adr, int surface, String ville)throws SQLException{
+	int id_lgm=0;
+	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + String.valueOf(surface) + " AND ville ='"+ ville +"'");
+	result = select.executeQuery();
+	while (result.next()) {
+	    id_lgm=result.getInt(1);
+	}
+	return id_lgm;
+    }
 
-	int id_proprio=0, id_lgm=0;
+    public void tableProposeLogement(int id_logement, String pseudo) throws SQLException{
 
+	int id_proprio=0;
 	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM proprietaire WHERE pseudo ='"+ pseudo +"'");
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_proprio=result.getInt(1);
 	}
 
-	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + String.valueOf(surface) + " AND ville ='"+ ville +"'");
-	result = select.executeQuery();
-	while (result.next()) {
-	    id_lgm=result.getInt(1);
-	}
-
 	insert = conn.prepareStatement("INSERT INTO propose_logement VALUES(?,?)");
 	insert.setInt(1,id_proprio);
-	insert.setInt(2,id_lgm);
+	insert.setInt(2,id_logement);
 	insert.executeUpdate();
+    }
+
+
+    public void tableDisponibilite(String dateDep, String dateFin) throws SQLException{
+	insert = conn.prepareStatement("INSERT INTO disponibilite(date_debut_dispo, date_fin_dispo) VALUES(?,?)");
+
+	insert.setString(1,dateDep);
+	insert.setString(2,dateFin);
+	insert.executeUpdate();  
+    }
+
+    
+    public void tablePrixLogement(int id_logement, String dateDep, String dateFin, int prix, String prixMois ){
+
+
     }
 
 
