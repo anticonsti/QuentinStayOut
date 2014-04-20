@@ -78,9 +78,10 @@ public class MenuProprietaireConnexion{
 		String transport = Utils.readString("[A-Za-z]{0,20}");
 	    
 	    
-		lgm.ajouterLogementDispo(dateDep,dateFin);
-		lgm.ajouterLogementLogement(adresse,surface,ville);
-		lgm.ajouterLogementPrix(prix);
+		lgm.ajouterLogement(adresse, surface, ville, dateDep, dateFin, prix, pseudo);
+		//lgm.ajouterLogementDispo(dateDep,dateFin);
+		//lgm.ajouterLogementLogement(adresse,surface,ville);
+		//lgm.ajouterLogementPrix(prix);
 
 		/*
 		  if(sugg!="") lgm.ajouterLogementSuggestion();
