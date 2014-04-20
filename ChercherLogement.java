@@ -5,10 +5,13 @@ import java.io.*;
 public class ChercherLogement {
     PreparedStatement insert=null;
     ResultSet rs = null;
-    public ChercherLogement(){
+    Connection conn = null;
 
+    public ChercherLogement(Connection conn){
+	this.conn=conn;
     }
-    public void printMenuChercherLogement(Connection conn){
+
+    public void printMenuChercherLogement(){
 	System.out.print("\033c");
 	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
@@ -20,29 +23,32 @@ public class ChercherLogement {
 	System.out.print("\033c");
 
 	switch(c){
+
 	case 1 : 
 	    try{
-		this.afficheLogements(conn);
+		this.afficheLogements();
 	    }
 	    catch(SQLException e){
 		e.printStackTrace();
 	    }
 	    break;
+
 	case 2 : 
 	    try{
-	    this.chercherLogements(conn);
+	    this.chercherLogements();
 	    }
 	    catch(SQLException e){
 		e.printStackTrace();
 	    }
 	    break;
+
 	default:
 	    System.out.println("ERREUR");
 	}
 
     }
 
-    public  void afficheLogements(Connection conn)throws SQLException{
+    public  void afficheLogements()throws SQLException{
 	insert = conn.prepareStatement("SELECT * FROM Proprietaire");
 	rs = insert.executeQuery();
 	while (rs.next()) {
@@ -56,12 +62,11 @@ public class ChercherLogement {
 	    System.out.print(": ");
 	    System.out.println(rs.getString(5));
 	}
-	System.out.println("HELLO");
 
     }
 
-    public void chercherLogements(Connection conn)throws SQLException {
-	insert = conn.prepareStatement("INSERT INTO Proprietaire VALUES(?,?,?,?,?)");
+    public void chercherLogements()throws SQLException {
+
     }
 
 

@@ -117,7 +117,7 @@ public class Navigation {
 
 
 
-	ChercherLogement cl = new ChercherLogement();
+	ChercherLogement cl = new ChercherLogement(connecte.getConnection());
 
 	//	try{
 	switch(c){
@@ -126,7 +126,7 @@ public class Navigation {
 	    break;
 
 	case 2 :
-	    cl.printMenuChercherLogement(connecte.getConnection());
+	    cl.printMenuChercherLogement();
 	    break;
 		
 	case 0 : 
