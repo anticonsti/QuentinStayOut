@@ -57,10 +57,10 @@ public class MenuProprietaireConnexion{
 		System.out.println("Ville entre (1~30 caracteres): ");
 		String ville = Utils.readString("[A-Za-z]{1,20}");
 	   
-		System.out.println("Date début disponibilité (format DD/MM/YYYY): ");//format sql annee/mois/jour
+		System.out.println("Date début disponibilité (format YYYY-MM-DD): ");//format sql annee/mois/jour
 		String dateDep = Utils.readString("date");
 
-		System.out.println("Date fin disponibilité (format DD/MM/YYYY): ");
+		System.out.println("Date fin disponibilité (format YYYY-MM-DD): ");
 		String dateFin = Utils.readString("date");		
 
 		//System.out.println("Prix du logement par jour.");
@@ -130,7 +130,9 @@ public class MenuProprietaireConnexion{
 		break;
 
 	    case 2: 
+		lgm.listeLogement(lgm.getIdProprietaire(pseudo));
 		break;
+
 	    case 3:
 		break;
 	    case 4:

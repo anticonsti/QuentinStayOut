@@ -63,8 +63,9 @@ class Logement{
 
 	this.ajouterLogementLogement(adr, surface, ville);
 	int id_logement=this.getIdLogement(adr, surface, ville);
+	int id_proprio=this.getIdProprietaire(pseudo);
 	// ajoute dans la table propose_logement car non automatique...
-	this.tableProposeLogement(id_logement, pseudo);
+	this.tableProposeLogement(id_logement, id_proprio);
 
 	this.ajouterLogementDisponibilite(dateDep, dateFin);
 	this.tableLogementPrix(id_logement, dateDep, dateFin, prix, prixMois);	
@@ -92,7 +93,7 @@ class Logement{
     public int getIdLogement(String adr, String surface, String ville) throws SQLException{
 
 	int id_lgm=0;
-	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + surface + " AND ville ='"+ ville +"'");
+	select = conn.prepareStatement("SELECT DISTINCT id_logement FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + surface + " AND ville ='"+ ville +"'");
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_lgm=result.getInt(1);
@@ -119,14 +120,19 @@ class Logement{
     }
 
 
-    public void tableProposeLogement(int id_logement, String pseudo) throws SQLException{
+    public int getIdProprietaire(String pseudo) throws SQLException{
 
 	int id_proprio=0;
-	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM proprietaire WHERE pseudo ='"+ pseudo +"'");
+	select = conn.prepareStatement("SELECT DISTINCT id_proprietaire FROM proprietaire WHERE pseudo ='"+ pseudo +"'");
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_proprio=result.getInt(1);
 	}
+	return id_proprio;
+    }
+
+
+    public void tableProposeLogement(int id_logement, int id_proprio) throws SQLException{
 
 	insert = conn.prepareStatement("INSERT INTO propose_logement VALUES(?,?)");
 	insert.setInt(1, id_proprio);
@@ -138,8 +144,8 @@ class Logement{
     public void ajouterLogementDisponibilite(String dateDep, String dateFin) throws SQLException{
 
 	insert = conn.prepareStatement("INSERT INTO disponibilite(date_debut_dispo, date_fin_dispo) VALUES(?,?)");
-	insert.setString(1, dateDep);
-	insert.setString(2, dateFin);
+	insert.setDate(1, java.sql.Date.valueOf(dateDep));
+	insert.setDate(2, java.sql.Date.valueOf(dateFin));
 	insert.executeUpdate();  
     }
  
@@ -147,7 +153,7 @@ class Logement{
     public void tableLogementPrix(int id_logement, String dateDep, String dateFin, String prix, String prixMois ) throws SQLException{
 
 	int id_dispo = 0;
-	select = conn.prepareStatement("SELECT DISTINCT id_dispo FROM disponibilite WHERE date_debut_dispo = DATE "+ dateDep + " AND date_fin_dispo = DATE " + dateFin);
+	select = conn.prepareStatement("SELECT DISTINCT id_dispo FROM disponibilite WHERE CAST(date_debut_dispo AS DATE)= '"+ dateDep + "' AND CAST(date_fin_dispo AS DATE) = '" + dateFin+"'");
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_dispo=result.getInt(1);
@@ -250,6 +256,25 @@ class Logement{
 	insert.setInt(1, id_logement);
 	insert.setInt(2, id_transport);
 	insert.executeUpdate(); 	       
+    }
+
+
+    public void listeLogement(int id_prop) throws SQLException{
+	
+	select = conn.prepareStatement("SELECT * FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire=" + String.valueOf(id_prop) );
+	Utils.print("id_logement", 15);
+	Utils.print("| adresse", 40);
+	Utils.print("| surface", 9);
+	System.out.println("| ville");
+	System.out.println("--------------------------------------------------------------------------");
+
+	result = select.executeQuery();
+	while (result.next()) {
+	    Utils.print(String.valueOf(result.getInt(1)),15);
+	    Utils.print(result.getString(2), 40);
+	    Utils.print(result.getString(3), 9 );
+	    System.out.println(result.getString(4));
+	}
     }
 
 }
