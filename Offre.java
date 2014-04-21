@@ -17,6 +17,16 @@ public class Offre{
 	this.conn= conn;
     }
 
+    public void printRappelCommande(){
+	System.out.println("-------------------------------------------------------------");
+	System.out.print("0 - retour ");
+	System.out.print("| 1 - ajouter ");
+	System.out.print("| 2 - retirer ");
+	System.out.print("| 3 - modifier ");
+	System.out.println("| 4 - liste ");
+	System.out.println("-------------------------------------------------------------");
+    }
+
     public void printMenu(){
 	System.out.print("\033c");
     	System.out.println("Veuillez entrer votre choix :");
@@ -87,7 +97,12 @@ public class Offre{
 			this.printMenu();
 		    }
 
-		} else {
+		} else if( choix == 4){
+		    Utils.printEntete("LISTE DES OFFRES");
+		    this.listeOffre(id_proprio);
+		    this.printRappelCommande();
+
+		}else {
 		    this.printMenu();
 		}
 		choix = Utils.readInt();
@@ -110,5 +125,27 @@ public class Offre{
 	insert.executeUpdate(); 
     }
 
+
+    public void listeOffre(int id_proprio) throws SQLException{
+
+	select = conn.prepareStatement("SELECT * FROM offre_promotionnelle NATURAL JOIN propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) );
+	result = select.executeQuery();
+
+	Utils.print("id_promo", 9);
+	Utils.print("| id_logement", 15);
+	Utils.print("| date_debut", 15);
+	Utils.print("| date_fin", 9);
+	System.out.println("| prix");
+	System.out.println("--------------------------------------------------------------------------");
+
+	if(result.next()!=false){
+	    Utils.print(String.valueOf(result.getInt(1)),9);
+	    Utils.print("| "+String.valueOf(result.getInt(2)),15);
+	    Utils.print("| "+result.getString(3), 15);
+	    Utils.print("| "+result.getString(4), 9 );
+	    System.out.println("| "+ String.valueOf(result.getInt(1)));
+	}
+
+    }
 
 }
