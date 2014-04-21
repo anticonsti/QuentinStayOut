@@ -22,7 +22,8 @@ nb_pieces INT CHECK(nb_pieces>0)
 
 
 CREATE TABLE chambre(
-id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE
+id_logement INT REFERENCES logement(id_logement) ON UPDATE CASCADE ON DELETE CASCADE,
+numero_chambre INT CHECK(numero_chambre>=0)
 );
 
 
