@@ -48,8 +48,11 @@ public class MenuProprietaireConnexion{
 	this.printMenu(pseudo);
 	int choix = Utils.readInt();
 	Logement lgm = new Logement(conn);
+	Offre offre = new Offre(conn);
 
 	try{
+
+	    int id_proprio = lgm.getIdProprietaire(pseudo);
 
 	    while( choix !=0 ){
 
@@ -163,19 +166,19 @@ public class MenuProprietaireConnexion{
 
 		} else if( choix == 2){
 		    Utils.printEntete("LISTE DES LOGEMENTS");
-		    lgm.listeLogement(lgm.getIdProprietaire(pseudo));
+		    lgm.listeLogement(id_proprio);
 		    this.printRappelCommande();
 
 		} else if( choix == 3){
 		    Utils.printEntete("SUPPRIMER UN LOGEMENT");
 		    System.out.print("id_logement: ");
 		    int id = Utils.readInt();
-		    lgm.supprimerLogement(id, lgm.getIdProprietaire(pseudo));
+		    lgm.supprimerLogement(id, id_proprio);
 		    this.printRappelCommande();
 
 		} else if( choix == 4){
-
-
+		    Utils.printEntete("GESTION DES OFFRES PROMOTIONNELLES");
+		    offre.printMenuOffre(id_proprio);
 		} else{
 		    this.printMenu(pseudo);
 		}
