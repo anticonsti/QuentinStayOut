@@ -1,6 +1,9 @@
 import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 public class MenuProprietaireConnexion{
     PreparedStatement insert=null;
@@ -41,41 +44,53 @@ public class MenuProprietaireConnexion{
 
 		if( choix == 1 ){
 		    Utils.printEntete("AJOUTER UN LOGEMENT");
-		    System.out.println("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
+
+		    System.out.print("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
 		    String typeLogement = Utils.readString("A|C");
 		    String nbPiece="", numChambre="";
 		    Boolean booltype=typeLogement.equals("A");
 		    if(booltype){
-			System.out.println("nombre de pièces: ");
+			System.out.print("nombre de pièces: ");
 			nbPiece = Utils.readString("[1-9]+[0-9]{0,5}");
 		    } else {
-			System.out.println("numéro de chambre: ");
+			System.out.print("numéro de chambre: ");
 			numChambre = Utils.readString("[0-9]{0,5}");
 		    }
 	
-		    System.out.println("Adresse (1~20 caracteres): ");
+		    System.out.print("Adresse (1~20 caracteres): ");
 		    String adresse = Utils.readString("[0-9a-z]{1,20}");
 
-		    System.out.println("Surface: ");
+		    System.out.print("Surface: ");
 		    String surface= Utils.readString("[1-9]+[0-9]{0,5}");
 
-		    System.out.println("Ville entre (1~30 caracteres): ");
+		    System.out.print("Ville entre (1~30 caracteres): ");
 		    String ville = Utils.readString("[A-Za-z]{1,20}");
 	   
-		    System.out.println("Date début disponibilité (format YYYY-MM-DD): ");//format sql annee/mois/jour
-		    String dateDep = Utils.readString("date");
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		    String dateDep="",dateFin="";
+		    Date date1 =null, date2=null;
+		    do{
+			System.out.print("Date début disponibilité (format YYYY-MM-DD): ");//format sql annee/mois/jour
+			try{
+			    dateDep = Utils.readString("date");
+			    date1= sdf.parse(dateDep);
 
-		    System.out.println("Date fin disponibilité (format YYYY-MM-DD): ");
-		    String dateFin = Utils.readString("date");		
+			    System.out.print("Date fin disponibilité (format YYYY-MM-DD et date fin > date début): ");
+			    dateFin = Utils.readString("date");
+			    date2 = sdf.parse(dateFin);
+			} catch (ParseException ex){
+			    ex.printStackTrace();
+			}
+		    }while(!date2.after(date1));
 
 		    //System.out.println("Prix du logement par jour.");
 		    //int prixJour = Utils.readInt();
-		    System.out.println("Prix: ");
+		    System.out.print("Prix: ");
 		    String prix = Utils.readString("[1-9]+[0-9]{0,5}");
 
 		    //IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE hasNextInt() hasNextLine()
 		    // Pour passer au champ suivant il faut appuyer sur Entree (gestion NextLine dans readString) + comme c'est facultatif, on met {0,...}
-		    System.out.println("(facultatif, appuyer sur Entree pour passer) Prix du logement par mois (cas 27 jours ou plus): ");
+		    System.out.print("(facultatif, appuyer sur Entree pour passer) Prix du logement par mois (cas 27 jours ou plus): ");
 		    String prixMois = Utils.readString("[1-9]{0,1}+[0-9]{0,5}");
 
 		    lgm.ajouterLogement(adresse, surface, ville, dateDep, dateFin, prix, prixMois, pseudo);
@@ -88,22 +103,22 @@ public class MenuProprietaireConnexion{
 
 		    // Pour ce qui suit, répondre par O ou N
 		    String typeSugg="", nomSugg="";
-		    System.out.println("(facultatif) Suggestions (O/N): ");
+		    System.out.print("(facultatif) Suggestions (O/N): ");
 		    if((Utils.readString("O|N")).equals("O")){
-			System.out.println("type (touristique/gastronomique): ");
+			System.out.print("type (touristique/gastronomique): ");
 			typeSugg = Utils.readString("touristique|gastronomique");
-			System.out.println("(facultatif)   nom: ");
+			System.out.print("(facultatif)   nom: ");
 			nomSugg = Utils.readString("[A-Za-z]{1,20}");
 			lgm.ajouterLogementSuggestion(typeSugg, nomSugg);
 			lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
 		    }
 
 		    String prest="", prixPrest="";
-		    System.out.println("(facultatif) Prestations (O/N):");
+		    System.out.print("(facultatif) Prestations (O/N): ");
 		    if((Utils.readString("O|N")).equals("O")){
-			System.out.println("description: ");
+			System.out.print("description: ");
 			prest = Utils.readString("[A-Za-z]{1,20}");
-			System.out.println("prix: ");
+			System.out.print("prix: ");
 			prixPrest= Utils.readString("[1-9]+[0-9]{0,5}");
 			lgm.ajouterLogementPrestation(prest, prixPrest);
 			lgm.tableProposePrestation(prest, prixPrest, idLogement);
@@ -111,21 +126,21 @@ public class MenuProprietaireConnexion{
 
 		    String photo="", rep="N";
 		    do{
-			System.out.println("(facultatif) Photos (O/N)");//boucle infini jusqu'a ce que l'utilisateur dit N
+			System.out.print("(facultatif) Photos (O/N): ");//boucle infini jusqu'a ce que l'utilisateur dit N
 			rep=Utils.readString("O|N");
 			if(rep.equals("O")){
-			    System.out.println("nom ");
+			    System.out.print("nom: ");
 			    photo = Utils.readString("[A-Za-z]{1,20}");
 			    lgm.ajouterLogementPhoto(photo, idLogement);
 			}
 		    }while(rep.equals("O"));
 
 		    String nbVehicule="", prixTransport="";
-		    System.out.println("(facultatif) Transport (0/N)");
+		    System.out.print("(facultatif) Transport (0/N): ");
 		    if((Utils.readString("O|N")).equals("O")){
-			System.out.println("nombre véhicule: ");
+			System.out.print("nombre véhicule: ");
 			nbVehicule = Utils.readString("[0-9]{1,5}");
-			System.out.println("prix transport: ");
+			System.out.print("prix transport: ");
 			prixTransport = Utils.readString("[0-9]{1,5}");
 			lgm.ajouterLogementTransport(nbVehicule, prixTransport);
 			lgm.tableProposeTransport(nbVehicule, prixTransport, idLogement);
@@ -139,7 +154,13 @@ public class MenuProprietaireConnexion{
 		    Utils.printEntete("LISTE DES LOGEMENTS");
 		    lgm.listeLogement(lgm.getIdProprietaire(pseudo));
 
-		} else{
+		} else if( choix == 3){
+		    Utils.printEntete("SUPPRIMER UN LOGEMENT");
+		    System.out.println("id_logement: ");
+		    int id = Utils.readInt();
+		    lgm.supprimerLogement(id, lgm.getIdProprietaire(pseudo));
+
+		} else {
 		    this.printMenu(pseudo);
 		}
 		choix = Utils.readInt();
