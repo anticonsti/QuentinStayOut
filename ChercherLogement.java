@@ -185,44 +185,39 @@ public class ChercherLogement {
 	}
 
 	select = conn.prepareStatement(requete);
-	Utils.print("adresse_logement",15 );
-	Utils.print("| surface", 9);
-	Utils.print("| ville", 20);
-	Utils.print("| date_debut_dispo",15 );
-	Utils.print("| date_fin_dispo", 15);
-	Utils.print("| nom_suggestion", 15);
-	Utils.print("| description_prestation",15 );
-	Utils.print("| prix", 9);
+
 	System.out.println();
 	
 	result = select.executeQuery();
 	while (result.next()) {
 
-	    Utils.print(result.getString(1), 15);
-	    Utils.print("| " +String.valueOf(result.getInt(2)), 9 );
-	    Utils.print("| " +result.getString(3), 20);
-	    Utils.print("| " +result.getString(4), 15 );
-	    Utils.print("| " +result.getString(5), 15);
+	    System.out.println("adresse_logement :" + result.getString(1));
+	    System.out.println("surface :" +String.valueOf(result.getInt(2)));
+	    System.out.println("ville: "+result.getString(3));
+	    System.out.println("date_debut_dispo: " +result.getString(4));
+	    System.out.println("date_fin_dispo: " +result.getString(5));
 
 	    if( !suggestions.equals("") && prestations.equals("") ){
 
-		Utils.print("| " +result.getString(6), 15 );
-		System.out.println("| " +String.valueOf(result.getInt(7)));
+		System.out.println("prestation: " +result.getString(6));
+		System.out.println("prix: " +String.valueOf(result.getInt(7)));
 
 	    } else if( suggestions.equals("") && !suggestions.equals("") ){
 
-		Utils.print("| " +result.getString(6), 15 );
-		System.out.println("| " +String.valueOf(result.getInt(7)));
+		System.out.println("suggestion: " +result.getString(6));
+		System.out.println("prix: " +String.valueOf(result.getInt(7)));
 
 	    } else if( !suggestions.equals("") && !suggestions.equals("") ){
 
-		Utils.print("| " +result.getString(6), 15 );
-		Utils.print("| " +result.getString(7), 15 );
-		System.out.println("| " +String.valueOf(result.getInt(8)));
+		System.out.println("nom_suggestion: " +result.getString(6));
+		System.out.println("description_prestation: " +result.getString(7));
+		System.out.println("prix: " +String.valueOf(result.getInt(8)));
 
 	    } else {
-		System.out.println("| " +String.valueOf(result.getInt(6)));
+		System.out.println("prix: " +String.valueOf(result.getInt(6)));
 	    }
+	    System.out.println("--------------------------------------------------------------------------");
+	    System.out.println("");
 	}
 
     }
