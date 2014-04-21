@@ -49,6 +49,21 @@ public class Location {
 
     public void inscriptionLocataire(){
 
+	System.out.print("Nom: ");
+	String nom = Utils.readString("[A-Za-z]{1,20}");
+	   
+	System.out.print("Prenom: ");
+	String prenom = Utils.readString("[A-Za-z]{1,30}");
+
+	System.out.print("Adresse: ");
+	String adresse = Utils.readString("[A-Za-z ]{1,100}");
+
+	System.out.print("Numéro de téléphone: ");
+	String num = Utils.readString("[A-Za-z ]{1,100}");
+
+	System.out.print("Email: ");
+	String email = Utils.readString("[A-Za-z ]{1,100}");
+
     }
 
 }
