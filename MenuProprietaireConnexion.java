@@ -37,7 +37,16 @@ public class MenuProprietaireConnexion{
 
 	    case 1:
 		System.out.println("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
-		String typeLogement = Utils.readString("[0-9a-z]{1,20}");	
+		String typeLogement = Utils.readString("A|C");
+		String nbPiece="", numChambre="";
+		Boolean booltype=typeLogement.equals("A");
+		if(booltype){
+		    System.out.println("nombre de pièces: ");
+		    nbPiece = Utils.readString("[1-9]+[0-9]{0,5}");
+		} else {
+		    System.out.println("numéro de chambre: ");
+		    numChambre = Utils.readString("[0-9]{0,5}");
+		}
 	
 		System.out.println("Adresse (1~20 caracteres): ");
 		String adresse = Utils.readString("[0-9a-z]{1,20}");
@@ -61,11 +70,17 @@ public class MenuProprietaireConnexion{
 
 		//IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE hasNextInt() hasNextLine()
 		// Pour passer au champ suivant il faut appuyer sur Entree (gestion NextLine dans readString) + comme c'est facultatif, on met {0,...}
-		System.out.println("(facultatif) Prix du logement par mois (cas 27 jours ou plus): ");
-		String prixMois = Utils.readString("[0-9]{0,5}");
+		System.out.println("(facultatif, appuyer sur Entree pour passer) Prix du logement par mois (cas 27 jours ou plus): ");
+		String prixMois = Utils.readString("[1-9]{0,1}+[0-9]{0,5}");
 
 		lgm.ajouterLogement(adresse, surface, ville, dateDep, dateFin, prix, prixMois, pseudo);
 		int idLogement = lgm.getIdLogement(adresse, surface, ville);
+
+		if(booltype)
+		    lgm.ajouterAppartement(idLogement, nbPiece);
+		else
+		    lgm.ajouterChambre(idLogement, numChambre);
+
 
 		// Pour ce qui suit, répondre par O ou N
 		String typeSugg="", nomSugg="";
@@ -85,7 +100,7 @@ public class MenuProprietaireConnexion{
 		    System.out.println("description: ");
 		    prest = Utils.readString("[A-Za-z]{1,20}");
 		    System.out.println("prix: ");
-		    prixPrest= Utils.readString("[0-9]{1,5}");
+		    prixPrest= Utils.readString("[1-9]+[0-9]{0,5}");
 		    lgm.ajouterLogementPrestation(prest, prixPrest);
 		    lgm.tableProposePrestation(prest, prixPrest, idLogement);
 		}	

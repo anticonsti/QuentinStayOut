@@ -89,7 +89,7 @@ class Logement{
     }
 
 
-    public int getIdLogement(String adr, int surface, String ville)throws SQLException{
+    public int getIdLogement(String adr, int surface, String ville) throws SQLException{
 
 	int id_lgm=0;
 	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + String.valueOf(surface) + " AND ville ='"+ ville +"'");
@@ -98,6 +98,24 @@ class Logement{
 	    id_lgm=result.getInt(1);
 	}
 	return id_lgm;
+    }
+
+    
+    public void ajouterAppartement(int id_logement, String nb) throws SQLException{
+
+	insert = conn.prepareStatement("INSERT INTO appartement VALUES(?,?)");
+	insert.setInt(1, id_logement);
+	insert.setInt(2, Integer.parseInt(nb));
+	insert.executeUpdate();  
+    }
+
+
+    public void ajouterChambre(int id_logement, String num) throws SQLException{
+
+	insert = conn.prepareStatement("INSERT INTO chambre VALUES(?,?)");
+	insert.setInt(1, id_logement);
+	insert.setInt(2, Integer.parseInt(num));
+	insert.executeUpdate();  
     }
 
 
