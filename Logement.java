@@ -290,7 +290,7 @@ class Logement{
 	    Utils.print(String.valueOf(result.getInt(1)),15);
 	    Utils.print("| "+result.getString(2), 40);
 	    Utils.print("| "+result.getString(3), 9 );
-	    System.out.println(result.getString(4));
+	    System.out.println("| "+result.getString(4));
 	}
     }
 
