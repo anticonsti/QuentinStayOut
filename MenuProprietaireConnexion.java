@@ -52,7 +52,7 @@ public class MenuProprietaireConnexion{
 		String adresse = Utils.readString("[0-9a-z]{1,20}");
 
 		System.out.println("Surface: ");
-		int surface= Utils.readInt();
+		String surface= Utils.readString("[1-9]+[0-9]{0,5}");
 
 		System.out.println("Ville entre (1~30 caracteres): ");
 		String ville = Utils.readString("[A-Za-z]{1,20}");
@@ -66,7 +66,7 @@ public class MenuProprietaireConnexion{
 		//System.out.println("Prix du logement par jour.");
 		//int prixJour = Utils.readInt();
 		System.out.println("Prix: ");
-		int prix = Utils.readInt();
+		String prix = Utils.readString("[1-9]+[0-9]{0,5}");
 
 		//IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE hasNextInt() hasNextLine()
 		// Pour passer au champ suivant il faut appuyer sur Entree (gestion NextLine dans readString) + comme c'est facultatif, on met {0,...}

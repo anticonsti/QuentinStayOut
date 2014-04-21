@@ -57,7 +57,7 @@ class Logement{
     }    
     */
 
-    public void ajouterLogement(String adr, int surface, String ville, String dateDep, String dateFin, int prix, String prixMois, String pseudo) throws SQLException{
+    public void ajouterLogement(String adr, String surface, String ville, String dateDep, String dateFin, String prix, String prixMois, String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 
@@ -79,20 +79,20 @@ class Logement{
     //-----------------------------------------------------------//
 
 
-    public void ajouterLogementLogement(String adr, int surface, String ville) throws SQLException{
+    public void ajouterLogementLogement(String adr, String surface, String ville) throws SQLException{
 
 	insert = conn.prepareStatement("INSERT INTO logement(adresse_logement,surface,ville) VALUES(?,?,?)");
 	insert.setString(1, adr);
-	insert.setInt(2, surface);
+	insert.setInt(2, Integer.parseInt(surface));
 	insert.setString(3, ville);
 	insert.executeUpdate();  
     }
 
 
-    public int getIdLogement(String adr, int surface, String ville) throws SQLException{
+    public int getIdLogement(String adr, String surface, String ville) throws SQLException{
 
 	int id_lgm=0;
-	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + String.valueOf(surface) + " AND ville ='"+ ville +"'");
+	select = conn.prepareStatement("SELECT DISTINCT id_proprietaie FROM logement WHERE adresse_logement ='"+ adr +"'" + " AND surface =" + surface + " AND ville ='"+ ville +"'");
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_lgm=result.getInt(1);
@@ -144,7 +144,7 @@ class Logement{
     }
  
 
-    public void tableLogementPrix(int id_logement, String dateDep, String dateFin, int prix, String prixMois ) throws SQLException{
+    public void tableLogementPrix(int id_logement, String dateDep, String dateFin, String prix, String prixMois ) throws SQLException{
 
 	int id_dispo = 0;
 	select = conn.prepareStatement("SELECT DISTINCT id_dispo FROM disponibilite WHERE date_debut_dispo = DATE "+ dateDep + " AND date_fin_dispo = DATE " + dateFin);
@@ -162,7 +162,7 @@ class Logement{
 	insert = conn.prepareStatement(requete);
 	insert.setInt(1, id_dispo);
 	insert.setInt(2, id_logement);
-	insert.setInt(3, prix);
+	insert.setInt(3, Integer.parseInt(prix));
 	if(!prixMois.equals(""))
 	    insert.setInt(4, Integer.parseInt(prixMois));
 	insert.executeUpdate();
