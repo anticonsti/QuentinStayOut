@@ -31,10 +31,7 @@ public class PublierAnnonce {
 	while( choix!=0 ){
 
 	    if( choix ==1 ){
-		System.out.print("\033c");
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("INSCRIPTION");
-		System.out.println("-------------------------------------------------------------");
+		Utils.printEntete("INSCRIPTION");
 
 		System.out.println("Nom (1~20caracteres)");
 		String nom = Utils.readString("[A-Za-z]{1,20}");
@@ -70,10 +67,7 @@ public class PublierAnnonce {
 
 	    } else if( choix ==2 ){
 
-		System.out.print("\033c");
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("CONNEXION");
-		System.out.println("-------------------------------------------------------------");
+		Utils.printEntete("CONNEXION");
 
 		System.out.print("Pseudo: ");
 		String id = Utils.readString("[A-Za-z0-9]{1,20}");

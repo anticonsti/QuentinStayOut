@@ -64,9 +64,19 @@ public class Utils{
 	return password;
     }
 
+
     public static void print(String s, int i) {
 	System.out.print(s);
 	for (i -= s.length(); i >= 0; i --)
 	    System.out.print(" ");
     }
+
+
+    public static void printEntete(String nom){
+	System.out.print("\033c");
+	System.out.println("-------------------------------------------------------------");
+	System.out.println(nom);
+	System.out.println("-------------------------------------------------------------");
+    }
+
 }
