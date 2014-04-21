@@ -1,6 +1,9 @@
 import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class PublierAnnonce {
     PreparedStatement insert=null;
@@ -12,7 +15,7 @@ public class PublierAnnonce {
 	this.conn=conn;
     }
 
-    public void printMenuPublierAnnonce(){
+    public void printMenu(){
 	System.out.print("\033c");
 	System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
     	System.out.println("Veuillez entrer votre choix :");
@@ -21,8 +24,87 @@ public class PublierAnnonce {
 	System.out.println("1 - S'inscrire");
 	System.out.println("2 - Se connecter");
 	System.out.println("-------------------------------------------------------------");
+    }
+
+    public void printMenuPublierAnnonce(){
+	
+	this.printMenu();
 	int choix = Utils.readInt();
 
+	while( choix!=0 ){
+
+	    if( choix ==1 ){
+		System.out.print("\033c");
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("INSCRIPTION");
+		System.out.println("-------------------------------------------------------------");
+
+		System.out.println("Nom (1~20caracteres)");
+		String nom = Utils.readString("[A-Za-z]{1,20}");
+	   
+		System.out.println("Prenom (1~30caracteres)");
+		String prenom = Utils.readString("[A-Za-z]{1,30}");
+
+		System.out.println("Pseudo (1~30caracteres)");
+		String pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
+	   
+		String mdp="",mdp2="";
+		do{
+		    System.out.println("Mot de passe (1~30caracteres)");
+		    mdp = Utils.readString("[A-Za-z0-9]{1,30}");
+
+		    System.out.println("Saisir à nouveau le mot de passe");
+		    mdp2 = Utils.readString("[A-Za-z0-9]{1,30}");
+		}while(!mdp.equals(mdp2)); 
+
+		try{
+		    this.inscription(nom, prenom, pseudo, mdp);
+		} catch (SQLException e) {
+		    System.err.println(e.getMessage());
+		}
+
+		// affichage après 2s 
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+			public void run(){
+			    System.out.print("\033c");
+			    System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
+			    System.out.println("Veuillez entrer votre choix :");
+			    System.out.println("-------------------------------------------------------------");
+			    System.out.println("0 - retour");
+			    System.out.println("1 - S'inscrire");
+			    System.out.println("2 - Se connecter");
+			    System.out.println("-------------------------------------------------------------");
+			}
+		    }, 2000);
+
+	    } else if( choix ==2 ){
+
+		System.out.print("\033c");
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("CONNEXION");
+		System.out.println("-------------------------------------------------------------");
+
+		System.out.print("Pseudo: ");
+		String id = Utils.readString("[A-Za-z0-9]{1,20}");
+		String pw = Utils.readPassword("Password: ");
+		try{
+		    if( this.connection(id,pw) == 1 ){
+			MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
+			mpc.printMenuProprietaireConnexion(id);
+		    }
+		} catch (SQLException e) {
+		    System.err.println(e.getMessage());
+		}
+		this.printMenu();
+
+	    } else {
+		this.printMenu();
+	    }
+	    choix = Utils.readInt();
+	}
+
+	/*
 	try{
 	    switch(choix){
 
@@ -78,7 +160,7 @@ public class PublierAnnonce {
 	}catch (SQLException e) {
 	    System.err.println(e.getMessage());
 	}
-
+	*/
     }
 
 
