@@ -11,43 +11,39 @@ public class ChercherLogement {
 	this.conn=conn;
     }
 
-    public void printMenuChercherLogement(){
+    public void printMenu(){
 	System.out.print("\033c");
 	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - retour");
-	System.out.println("1 - afficher tous les logements disponibles");
+	System.out.println("1 - afficher les logements disponibles");
 	System.out.println("2 - chercher un logement par critère");
+	System.out.println("-------------------------------------------------------------");
+    }
 
-	int c = Utils.readInt();
-	System.out.print("\033c");
+    public void printMenuChercherLogement(){
 
-	switch(c){
+	this.printMenu();
+	int choix = Utils.readInt();
 
-	case 0:
-	    break;
-	    
-	case 1 : 
-	    try{
-		this.afficheLogements();
+	try{
+
+	    while( choix!=0 ){
+		if( choix == 1 ){
+		    Utils.printEntete("LOGEMENTS DISPONIBLES");
+		    this.afficheLogements();
+		} else if( choix == 2){
+		    Utils.printEntete("RECHERCHE AVANCEE");
+		    this.chercherLogements();
+		} else {
+		    this.printMenu();
+		}
+
+		choix = Utils.readInt();
 	    }
-	    catch(SQLException e){
-		e.printStackTrace();
-	    }
-	    break;
 
-	case 2 : 
-	    try{
-	    this.chercherLogements();
-	    }
-	    catch(SQLException e){
-		e.printStackTrace();
-		//System.out.println("aucun résultat");
-	    }
-	    break;
-
-	default:
-	    System.out.println("ERREUR");
+	} catch(SQLException e){
+	    e.printStackTrace();
 	}
 
     }
@@ -62,17 +58,15 @@ public class ChercherLogement {
 	result = select.executeQuery();
 	while (result.next()) {
 	    Utils.print(String.valueOf(result.getInt(1)),15);
-	    Utils.print(result.getString(2), 40);
-	    Utils.print(result.getString(3), 9 );
-	    System.out.println(result.getString(4));
+	    Utils.print("| " +result.getString(2), 40);
+	    Utils.print("| " +result.getString(3), 9 );
+	    System.out.println("| " +result.getString(4));
 	}
 
     }
 
     public void chercherLogements()throws SQLException {
-	System.out.print("\033c");
-	System.out.println("Recherche avancée:");
-	System.out.println("-------------------------------------------------------------");
+
 	System.out.print("Adresse: ");
 	String adresse = Utils.readString("[A-Za-z ]{0,100}");
 
@@ -83,10 +77,10 @@ public class ChercherLogement {
 	String ville = Utils.readString("[A-Za-z ]{0,20}");
 
 	System.out.print("Date début disponibilité: ");
-	String ddd = Utils.readString("date");
+	String ddd = Utils.readString("(((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01]))|");
 
 	System.out.print("Date fin disponibilité: ");
-	String dfd = Utils.readString("date");
+	String dfd = Utils.readString("(((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01]))|");
 
 	System.out.print("Suggestions: ");
 	String suggestions = Utils.readString("[A-Za-z ]{0,100}");
