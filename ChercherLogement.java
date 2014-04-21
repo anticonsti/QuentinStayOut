@@ -102,18 +102,26 @@ public class ChercherLogement {
 
 	String requete;
 	if( !suggestions.equals("") && prestations.equals("") ){
+
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion WHERE";
+
 	} else if( suggestions.equals("") && !suggestions.equals("") ){
+
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
+
 	} else if( !suggestions.equals("") && !suggestions.equals("") ){
+
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
+
 	} else {
+
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite WHERE";
+
 	}
 
 	int and = 0;
 	if(!adresse.equals("")){
-	    requete += "adresse_logement ='"+adresse+"'";
+	    requete += " adresse_logement ='"+adresse+"'";
 	    and=1;
 	}
 	if(!surface.equals("")){
@@ -126,9 +134,9 @@ public class ChercherLogement {
 	}
 	if(!ville.equals("")){
 	    if(and==1)
-		requete += " AND ville = " + ville;
+		requete += " AND ville = '" + ville+"'";
 	    else{
-		requete += " ville = " + ville;
+		requete += " ville = '" + ville +"'";
 		and=1;
 	    }
 	}
@@ -136,7 +144,7 @@ public class ChercherLogement {
 	    if(and==1)
 		requete += " AND date_debut_dispo = DATE '" +ddd+"'" ;
 	    else{
-		requete += "date_debut_dispo = DATE '" +ddd+"'" ;
+		requete += " date_debut_dispo = DATE '" +ddd+"'" ;
 		and=1;
 	    }
 	}
@@ -144,23 +152,23 @@ public class ChercherLogement {
 	    if(and==1)
 		requete += " AND date_debut_dispo = DATE '" +dfd+"'" ;
 	    else{
-		requete += "date_debut_dispo = DATE '" +dfd+"'" ;
+		requete += " date_debut_dispo = DATE '" +dfd+"'" ;
 		and=1;
 	    }
 	}
 	if(!suggestions.equals("")){
 	    if(and==1)
-		requete += " AND nom_suggestion = " + suggestions;
+		requete += " AND nom_suggestion = '" + suggestions +"'";
 	    else{
-		requete += " nom_suggestion = " + suggestions;
+		requete += " nom_suggestion = '" + suggestions +"'";
 		and=1;
 	    }
 	}
 	if(!prestations.equals("")){
 	    if(and==1)
-		requete += " AND description_prestation = " + prestations;
+		requete += " AND description_prestation = '" + prestations+"'";
 	    else{
-		requete += " description_prestation = " + prestations;
+		requete += " description_prestation = '" + prestations+"'";
 		and=1;
 	    }
 	}
@@ -189,23 +197,31 @@ public class ChercherLogement {
 	
 	result = select.executeQuery();
 	while (result.next()) {
+
 	    Utils.print(result.getString(1), 15);
-	    Utils.print(String.valueOf(result.getInt(2)), 9 );
-	    Utils.print(result.getString(3), 20);
-	    Utils.print(result.getString(4), 15 );
-	    Utils.print(result.getString(5), 15);
+	    Utils.print("| " +String.valueOf(result.getInt(2)), 9 );
+	    Utils.print("| " +result.getString(3), 20);
+	    Utils.print("| " +result.getString(4), 15 );
+	    Utils.print("| " +result.getString(5), 15);
+
 	    if( !suggestions.equals("") && prestations.equals("") ){
-		Utils.print(result.getString(6), 15 );
-		Utils.print(String.valueOf(result.getInt(7)), 9 );
+
+		Utils.print("| " +result.getString(6), 15 );
+		System.out.println("| " +String.valueOf(result.getInt(7)));
+
 	    } else if( suggestions.equals("") && !suggestions.equals("") ){
-		Utils.print(result.getString(6), 15 );
-		Utils.print(String.valueOf(result.getInt(7)), 9 );
+
+		Utils.print("| " +result.getString(6), 15 );
+		System.out.println("| " +String.valueOf(result.getInt(7)));
+
 	    } else if( !suggestions.equals("") && !suggestions.equals("") ){
-		Utils.print(result.getString(6), 15 );
-		Utils.print(result.getString(7), 15 );
-		Utils.print(String.valueOf(result.getInt(8)), 9 );
+
+		Utils.print("| " +result.getString(6), 15 );
+		Utils.print("| " +result.getString(7), 15 );
+		System.out.println("| " +String.valueOf(result.getInt(8)));
+
 	    } else {
-		Utils.print(String.valueOf(result.getInt(6)), 9 );
+		System.out.println("| " +String.valueOf(result.getInt(6)));
 	    }
 	}
 
