@@ -189,7 +189,10 @@ public class ChercherLogement {
 	System.out.println();
 	
 	result = select.executeQuery();
+
+	int in = 0;
 	while (result.next()) {
+	    in =1;
 
 	    System.out.println("adresse_logement :" + result.getString(1));
 	    System.out.println("surface :" +String.valueOf(result.getInt(2)));
@@ -219,6 +222,9 @@ public class ChercherLogement {
 	    System.out.println("--------------------------------------------------------------------------");
 	    System.out.println("");
 	}
+	if(in==0)
+	    System.out.println("aucun résultat");
+
 
     }
 
