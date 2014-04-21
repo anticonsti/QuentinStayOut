@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ChercherLogement {
     PreparedStatement select=null;
-    ResultSet rs = null;
+    ResultSet result = null;
     Connection conn = null;
 
     public ChercherLogement(Connection conn){
@@ -59,12 +59,12 @@ public class ChercherLogement {
 	Utils.print("| surface", 9);
 	System.out.println("| ville");
 	System.out.println("--------------------------------------------------------------------------");
-	rs = select.executeQuery();
-	while (rs.next()) {
-	    Utils.print(String.valueOf(rs.getInt(1)),15);
-	    Utils.print(rs.getString(2), 40);
-	    Utils.print(rs.getString(3), 9 );
-	    System.out.println(rs.getString(4));
+	result = select.executeQuery();
+	while (result.next()) {
+	    Utils.print(String.valueOf(result.getInt(1)),15);
+	    Utils.print(result.getString(2), 40);
+	    Utils.print(result.getString(3), 9 );
+	    System.out.println(result.getString(4));
 	}
 
     }
@@ -119,67 +119,67 @@ public class ChercherLogement {
 
 	int and = 0;
 	if(!adresse.equals("")){
-	    requete = requete + "adresse_logement ='"+adresse+"'";
+	    requete += "adresse_logement ='"+adresse+"'";
 	    and=1;
 	}
 	if(!surface.equals("")){
 	    if(and==1)
-		requete = requete + " AND surface = " + surface;
+		requete += " AND surface = " + surface;
 	    else{
-		requete = requete + " surface = " + surface;
+		requete += " surface = " + surface;
 		and=1;
 	    }
 	}
 	if(!ville.equals("")){
 	    if(and==1)
-		requete = requete + " AND ville = " + ville;
+		requete += " AND ville = " + ville;
 	    else{
-		requete = requete + " ville = " + ville;
+		requete += " ville = " + ville;
 		and=1;
 	    }
 	}
 	if(!ddd.equals("")){
 	    if(and==1)
-		requete = requete + " AND date_debut_dispo = DATE '" +ddd+"'" ;
+		requete += " AND date_debut_dispo = DATE '" +ddd+"'" ;
 	    else{
-		requete = requete + "date_debut_dispo = DATE '" +ddd+"'" ;
+		requete += "date_debut_dispo = DATE '" +ddd+"'" ;
 		and=1;
 	    }
 	}
 	if(!dfd.equals("")){
 	    if(and==1)
-		requete = requete + " AND date_debut_dispo = DATE '" +dfd+"'" ;
+		requete += " AND date_debut_dispo = DATE '" +dfd+"'" ;
 	    else{
-		requete = requete + "date_debut_dispo = DATE '" +dfd+"'" ;
+		requete += "date_debut_dispo = DATE '" +dfd+"'" ;
 		and=1;
 	    }
 	}
 	if(!suggestions.equals("")){
 	    if(and==1)
-		requete = requete + " AND nom_suggestion = " + suggestions;
+		requete += " AND nom_suggestion = " + suggestions;
 	    else{
-		requete = requete + " nom_suggestion = " + suggestions;
+		requete += " nom_suggestion = " + suggestions;
 		and=1;
 	    }
 	}
 	if(!prestations.equals("")){
 	    if(and==1)
-		requete = requete + " AND description_prestation = " + prestations;
+		requete += " AND description_prestation = " + prestations;
 	    else{
-		requete = requete + " description_prestation = " + prestations;
+		requete += " description_prestation = " + prestations;
 		and=1;
 	    }
 	}
 	if(!prix.equals("")){
 	    if(and==1)
-		requete = requete + " AND prix = " + prix;
+		requete += " AND prix = " + prix;
 	    else{
-		requete = requete + " prix = " + prix;
+		requete += " prix = " + prix;
 		and=1;
 	    }
 	}
 	if(affichage.equals("O")){
-	    requete = requete + " ORDER BY prix";
+	    requete += " ORDER BY prix";
 	}
 
 	select = conn.prepareStatement(requete);
@@ -193,25 +193,25 @@ public class ChercherLogement {
 	Utils.print("| prix", 9);
 	System.out.println();
 	
-	rs = select.executeQuery();
-	while (rs.next()) {
-	    Utils.print(rs.getString(1), 15);
-	    Utils.print(String.valueOf(rs.getInt(2)), 9 );
-	    Utils.print(rs.getString(3), 20);
-	    Utils.print(rs.getString(4), 15 );
-	    Utils.print(rs.getString(5), 15);
+	result = select.executeQuery();
+	while (result.next()) {
+	    Utils.print(result.getString(1), 15);
+	    Utils.print(String.valueOf(result.getInt(2)), 9 );
+	    Utils.print(result.getString(3), 20);
+	    Utils.print(result.getString(4), 15 );
+	    Utils.print(result.getString(5), 15);
 	    if( !suggestions.equals("") && prestations.equals("") ){
-		Utils.print(rs.getString(6), 15 );
-		Utils.print(String.valueOf(rs.getInt(7)), 9 );
+		Utils.print(result.getString(6), 15 );
+		Utils.print(String.valueOf(result.getInt(7)), 9 );
 	    } else if( suggestions.equals("") && !suggestions.equals("") ){
-		Utils.print(rs.getString(6), 15 );
-		Utils.print(String.valueOf(rs.getInt(7)), 9 );
+		Utils.print(result.getString(6), 15 );
+		Utils.print(String.valueOf(result.getInt(7)), 9 );
 	    } else if( !suggestions.equals("") && !suggestions.equals("") ){
-		Utils.print(rs.getString(6), 15 );
-		Utils.print(rs.getString(7), 15 );
-		Utils.print(String.valueOf(rs.getInt(8)), 9 );
+		Utils.print(result.getString(6), 15 );
+		Utils.print(result.getString(7), 15 );
+		Utils.print(String.valueOf(result.getInt(8)), 9 );
 	    } else {
-		Utils.print(String.valueOf(rs.getInt(6)), 9 );
+		Utils.print(String.valueOf(result.getInt(6)), 9 );
 	    }
 	}
 
