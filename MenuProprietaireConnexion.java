@@ -15,6 +15,18 @@ public class MenuProprietaireConnexion{
 	this.conn=conn;
     }
 
+    public void printRappelCommande(){
+	System.out.println("-------------------------------------------------------------");
+	System.out.print("0 - déconnexion | ");
+	System.out.print("1 - ajout | ");
+	System.out.print("2 - liste des logements | ");
+	System.out.print("3 - suppression | ");
+	System.out.print("4 - offre promotionnelle | ");
+	System.out.print("5 - modification | ");
+	System.out.println("6 - liste des locations  ");
+	System.out.println("-------------------------------------------------------------");
+    }
+
     public void printMenu(String pseudo){
 	System.out.print("\033c");
 	System.out.println("Compte " + pseudo);
@@ -26,8 +38,7 @@ public class MenuProprietaireConnexion{
 	System.out.println("3 - supprimer un logement");
 	System.out.println("4 - offre promotionnelle");
 	System.out.println("5 - modification d'un logement");
-	System.out.println("6 - visualiser les locations");
-
+	System.out.println("6 - liste des locations");
 	System.out.println("-------------------------------------------------------------");
 
     }
@@ -153,14 +164,19 @@ public class MenuProprietaireConnexion{
 		} else if( choix == 2){
 		    Utils.printEntete("LISTE DES LOGEMENTS");
 		    lgm.listeLogement(lgm.getIdProprietaire(pseudo));
+		    this.printRappelCommande();
 
 		} else if( choix == 3){
 		    Utils.printEntete("SUPPRIMER UN LOGEMENT");
-		    System.out.println("id_logement: ");
+		    System.out.print("id_logement: ");
 		    int id = Utils.readInt();
 		    lgm.supprimerLogement(id, lgm.getIdProprietaire(pseudo));
+		    this.printRappelCommande();
 
-		} else {
+		} else if( choix == 4){
+
+
+		} else{
 		    this.printMenu(pseudo);
 		}
 		choix = Utils.readInt();
