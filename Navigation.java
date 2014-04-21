@@ -58,13 +58,7 @@ public class Navigation {
 	return c;
     }
 
-    
-    public static void print(String s, int i) {
-	System.out.print(s);
-	for (i -= s.length(); i >= 0; i --)
-	    System.out.print(" ");
-    }
-    
+ 
     /**Imprime les recommandations d'usage de la classe ChaineHotels a l'ecran.*/
     public static void usage() {
 	System.out.println("Veuillez entrer votre nom identifiant pour Postgres.");
