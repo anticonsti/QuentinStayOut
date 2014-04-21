@@ -6,6 +6,7 @@ class Logement{
     
     PreparedStatement insert=null;
     PreparedStatement select=null;
+    PreparedStatement delete=null;
     ResultSet result = null;
     Connection conn = null;
     
@@ -70,12 +71,28 @@ class Logement{
 	this.ajouterLogementDisponibilite(dateDep, dateFin);
 	this.tableLogementPrix(id_logement, dateDep, dateFin, prix, prixMois);	
     }
+
     
-    public void supprimerLogement() throws SQLException{
+    public void supprimerLogement(int id_logement, int id_proprio) throws SQLException{
+
+	// vérifie qu'il y a des logements
+	String idl = String.valueOf(id_logement);
+	select = conn.prepareStatement("SELECT * FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement= " + idl );
+	result = select.executeQuery();
+
+	if(result.next()!=false){
+	    delete = conn.prepareStatement("DELETE FROM logement WHERE id_logement="+idl);
+	    delete.executeUpdate();
+	    System.out.println("logement supprimé");
+	} else {
+	    System.out.println("rien à supprimer");
+	}
+	
     }
     
     public void modifierLogement() throws SQLException{
     }
+
 
     //-----------------------------------------------------------//
 
@@ -206,7 +223,7 @@ class Logement{
 
 	insert.setString(1, desc_pr);
 	insert.setInt(2, Integer.parseInt(prix_pr));
-	insert.executeUpdate();  
+	insert.executeUpdate();
     }
 
 
@@ -246,7 +263,7 @@ class Logement{
     public void tableProposeTransport(String nb, String prix, int id_logement) throws SQLException{
 	
 	int id_transport = 0;
-	select = conn.prepareStatement("SELECT DISTINCT id_service_transport FROM transport WHERE nb_vehicule = "+ nb + " AND prix_transport = " + prix );
+	select = conn.prepareStatement("SELECT DISTINCT id_service_transport FROM service_transport WHERE nb_vehicule = "+ nb + " AND prix_transport = " + prix );
 	result = select.executeQuery();
 	while (result.next()) {
 	    id_transport=result.getInt(1);
@@ -271,8 +288,8 @@ class Logement{
 	result = select.executeQuery();
 	while (result.next()) {
 	    Utils.print(String.valueOf(result.getInt(1)),15);
-	    Utils.print(result.getString(2), 40);
-	    Utils.print(result.getString(3), 9 );
+	    Utils.print("| "+result.getString(2), 40);
+	    Utils.print("| "+result.getString(3), 9 );
 	    System.out.println(result.getString(4));
 	}
     }
