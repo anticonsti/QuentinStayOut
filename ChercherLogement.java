@@ -24,6 +24,7 @@ public class ChercherLogement {
 
 	this.printMenu();
 	int choix = Utils.readInt();
+	Location loc = new Location(conn);
 
 	try{
 
@@ -32,6 +33,8 @@ public class ChercherLogement {
 		if( choix == 1 ){
 		    Utils.printEntete("LOGEMENTS DISPONIBLES");
 		    this.afficheLogements();
+		    loc.printLocation();
+		    this.printMenu();
 
 		} else if( choix == 2){
 		    Utils.printEntete("RECHERCHE AVANCEE");
