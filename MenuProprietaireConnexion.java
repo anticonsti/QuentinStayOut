@@ -60,35 +60,57 @@ public class MenuProprietaireConnexion{
 		int prix = Utils.readInt();
 
 		//IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE hasNextInt() hasNextLine()
-		// Pour passer au champ suivant il faut appuyer sur Entree
-		// comme c'est facultatif, on met {0,...}
+		// Pour passer au champ suivant il faut appuyer sur Entree (gestion NextLine dans readString) + comme c'est facultatif, on met {0,...}
 		System.out.println("(facultatif) Prix du logement par mois (cas 27 jours ou plus): ");
 		String prixMois = Utils.readString("[0-9]{0,5}");
 
-		System.out.println("(facultatif) Suggestions: ");
-		String sugg = Utils.readString("[A-Za-z]{0,20}");		
-
-		System.out.println("(facultatif) Prestations");
-		String prest = Utils.readString("[A-Za-z]{0,20}");	
-
-		System.out.println("(facultatif) Photos");//boucle infini jusqu'a ce que l'utilisateur dit FALSE
-		String photo = Utils.readString("[A-Za-z]{0,20}");
-
-		System.out.println("(facultatif) Transport");//il faut 2print pour nb vehicule,prix transport
-		String transport = Utils.readString("[A-Za-z]{0,20}");
-	    
-	    
 		lgm.ajouterLogement(adresse, surface, ville, dateDep, dateFin, prix, prixMois, pseudo);
-		//lgm.ajouterLogementDispo(dateDep,dateFin);
-		//lgm.ajouterLogementLogement(adresse,surface,ville);
-		//lgm.ajouterLogementPrix(prix);
+		int idLogement = lgm.getIdLogement(adresse, surface, ville);
 
-		/*
-		  if(sugg!="") lgm.ajouterLogementSuggestion();
-		  if(prest!="") lgm.ajouterLogementPrestation();
-		  if(photo!="") lgm.ajouterLogementPhoto();
-		  if(transport!="") lgm.ajouterLogementTransport();
-		*/	    
+		// Pour ce qui suit, répondre par O ou N
+		String typeSugg="", nomSugg="";
+		System.out.println("(facultatif) Suggestions (O/N): ");
+		if((Utils.readString("O|N")).equals("O")){
+		    System.out.println("type (touristique/gastronomique): ");
+		    typeSugg = Utils.readString("touristique|gastronomique");
+		    System.out.println("(facultatif)   nom: ");
+		    nomSugg = Utils.readString("[A-Za-z]{1,20}");
+		    lgm.ajouterLogementSuggestion(typeSugg, nomSugg);
+		    lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
+		}
+
+		String prest="", prixPrest="";
+		System.out.println("(facultatif) Prestations (O/N):");
+		if((Utils.readString("O|N")).equals("O")){
+		    System.out.println("description: ");
+		    prest = Utils.readString("[A-Za-z]{1,20}");
+		    System.out.println("prix: ");
+		    prixPrest= Utils.readString("[0-9]{1,5}");
+		    lgm.ajouterLogementPrestation(prest, prixPrest);
+		    lgm.tableProposePrestation(prest, prixPrest, idLogement);
+		}	
+
+		String photo="", rep="N";
+		do{
+		    System.out.println("(facultatif) Photos (O/N)");//boucle infini jusqu'a ce que l'utilisateur dit N
+		    rep=Utils.readString("O|N");
+		    if(rep.equals("O")){
+			System.out.println("nom ");
+			photo = Utils.readString("[A-Za-z]{1,20}");
+			lgm.ajouterLogementPhoto(photo, idLogement);
+		    }
+		}while(rep.equals("O"));
+
+		String nbVehicule="", prixTransport="";
+		System.out.println("(facultatif) Transport (0/N)");
+		if((Utils.readString("O|N")).equals("O")){
+		    System.out.println("nombre véhicule: ");
+		    nbVehicule = Utils.readString("[0-9]{1,5}");
+		    System.out.println("prix transport: ");
+		    prixTransport = Utils.readString("[0-9]{1,5}");
+		    lgm.ajouterLogementTransport(nbVehicule, prixTransport);
+		    lgm.tableProposeTransport(nbVehicule, prixTransport, idLogement);
+		}
 
 		break;
 
