@@ -1,9 +1,6 @@
 import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class PublierAnnonce {
     PreparedStatement insert=null;
@@ -63,20 +60,13 @@ public class PublierAnnonce {
 		    System.err.println(e.getMessage());
 		}
 
-		// affichage après 2s 
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-			public void run(){
-			    System.out.print("\033c");
-			    System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
-			    System.out.println("Veuillez entrer votre choix :");
-			    System.out.println("-------------------------------------------------------------");
-			    System.out.println("0 - retour");
-			    System.out.println("1 - S'inscrire");
-			    System.out.println("2 - Se connecter");
-			    System.out.println("-------------------------------------------------------------");
-			}
-		    }, 2000);
+		// affichage après 1.3s 
+		try {
+		    Thread.sleep(1300);
+		} catch (InterruptedException e) {
+		    System.err.println(e.getMessage());
+		}
+		this.printMenu();
 
 	    } else if( choix ==2 ){
 
@@ -92,6 +82,12 @@ public class PublierAnnonce {
 		    if( this.connection(id,pw) == 1 ){
 			MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
 			mpc.printMenuProprietaireConnexion(id);
+		    } else{
+			try {
+			    Thread.sleep(1300);
+			} catch (InterruptedException e) {
+			    System.err.println(e.getMessage());
+			}
 		    }
 		} catch (SQLException e) {
 		    System.err.println(e.getMessage());
