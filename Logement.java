@@ -15,49 +15,6 @@ class Logement{
     }
 
 
-    /*
-    public void printMenuLogement(){
-
-	System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
-    	System.out.println("Veuillez entrer votre choix :");
-	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - retour");
-	System.out.println("1 - blablablah");
-	System.out.println("2 - blblblblah");
-	System.out.println("-------------------------------------------------------------");
-	int choix = Utils.readInt();
-	
-	//try{
-	    switch(choix){
-
-	    case 0 :
-		System.out.print("\033c"); //nettoyage de l'ecran
-		System.out.println("Veuillez entrer votre choix :");
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("0 - fin");
-		System.out.println("1 - heeeeeeeeeeeeein");
-		System.out.println("2 - QUEEEEEEEEEEEEEE");
-		System.out.println("-------------------------------------------------------------");
-		break;
-
-	    case 1 : 
-		break;
-
-	    case 2 :
-		break;
-
-	    default :
-		//on recommence le switch puisque l'utilisateur a entre un nombre bizarre.
-		printMenuLogement(); 
-		break;
-	    }
-	    //}catch (SQLException e) {
-	    //System.err.println(e.getMessage());
-	    //}
-
-    }    
-    */
-
     public void ajouterLogement(String adr, String surface, String ville, String dateDep, String dateFin, String prix, String prixMois, String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
