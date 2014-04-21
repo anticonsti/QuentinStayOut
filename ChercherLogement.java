@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
 
@@ -29,12 +28,15 @@ public class ChercherLogement {
 	try{
 
 	    while( choix!=0 ){
+
 		if( choix == 1 ){
 		    Utils.printEntete("LOGEMENTS DISPONIBLES");
 		    this.afficheLogements();
+
 		} else if( choix == 2){
 		    Utils.printEntete("RECHERCHE AVANCEE");
 		    this.chercherLogements();
+
 		} else {
 		    this.printMenu();
 		}

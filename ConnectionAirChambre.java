@@ -1,6 +1,6 @@
 import java.io.*;
 import java.sql.*;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 class ConnectionAirChambre {
     Connection conn;

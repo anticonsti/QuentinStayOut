@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.sql.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
