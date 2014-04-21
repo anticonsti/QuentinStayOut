@@ -25,6 +25,7 @@ public class Offre{
 	System.out.println("1 - ajouter une offre ");
 	System.out.println("2 - retirer une offre ");
 	System.out.println("3 - modifier une offre ");
+	System.out.println("4 - liste des offres ");
 	System.out.println("-------------------------------------------------------------");
 
     }
@@ -41,29 +42,50 @@ public class Offre{
 		if( choix == 1){
 		    Utils.printEntete("AJOUTER UNE OFFRE");
 
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		    String dateDep="",dateFin="";
-		    Date date1 =null, date2=null;
-		    do{
-			System.out.print("Date début offre_promo (format YYYY-MM-DD): ");//format sql annee/mois/jour
-			try{
-			    dateDep = Utils.readString("date");
-			    date1= sdf.parse(dateDep);
+		    select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) );
+		    result = select.executeQuery();
 
-			    System.out.print("Date fin offre_promp (format YYYY-MM-DD et date fin > date début): ");
-			    dateFin = Utils.readString("date");
-			    date2 = sdf.parse(dateFin);
-			} catch (ParseException ex){
-			    ex.printStackTrace();
-			}
-		    }while(!date2.after(date1));
+		    if(result.next()!=false){
+			String id_logement="";
+			boolean rsNext=false;
+			do{
+			    System.out.print("id_logement: ");
+			    id_logement = Utils.readString("[0-9]{1,5}");
+			    select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement = " + id_logement );
+			    result = select.executeQuery();
+			    rsNext = result.next();
+			}while( rsNext == false);
 
-		    System.out.print("Prix: ");
-		    String prix = Utils.readString("[1-9]+[0-9]{0,5}");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDep="",dateFin="";
+			Date date1 =null, date2=null;
+			do{
+			    System.out.print("Date début offre_promo (format YYYY-MM-DD): ");//format sql annee/mois/jour
+			    try{
+				dateDep = Utils.readString("date");
+				date1= sdf.parse(dateDep);
 
-		    this.ajouterOffre(dateDep, dateFin, prix, id_proprio);
-		    Thread.sleep(1300);
-		    this.printMenu();
+				System.out.print("Date fin offre_promp (format YYYY-MM-DD et date fin > date début): ");
+				dateFin = Utils.readString("date");
+				date2 = sdf.parse(dateFin);
+			    } catch (ParseException ex){
+				ex.printStackTrace();
+			    }
+			}while(!date2.after(date1));
+
+			System.out.print("Prix: ");
+			String prix = Utils.readString("[1-9]+[0-9]{0,5}");
+
+			this.ajouterOffre(dateDep, dateFin, prix, id_logement);
+			System.out.println("offre ajoutée");
+			Thread.sleep(1300);
+			this.printMenu();
+
+		    } else {
+			System.out.println("ajouter un logement d'abord");
+			Thread.sleep(1300);
+			this.printMenu();
+		    }
 
 		} else {
 		    this.printMenu();
@@ -78,25 +100,14 @@ public class Offre{
     }
 
     
-    public void ajouterOffre(String dateDep, String dateFin, String prix, int id_proprio) throws SQLException{
+    public void ajouterOffre(String dateDep, String dateFin, String prix, String id_logement) throws SQLException{
 
-	select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) );
-	result = select.executeQuery();
-
-	if(result.next()!=false){
-
-	    int id_log =result.getInt(1);
-	    insert = conn.prepareStatement("INSERT INTO offre_promotionnelle(id_logement, date_debut_dispo, date_fin_dispo, prix) VALUES(?,?,?,?)");
-	    insert.setInt(1, id_log);
-	    insert.setDate(2, java.sql.Date.valueOf(dateDep));
-	    insert.setDate(3, java.sql.Date.valueOf(dateFin));
-	    insert.setInt(4, Integer.parseInt(prix));
-	    insert.executeUpdate(); 
-
-	} else {
-	    System.out.println("ajouter un logement d'abord");
-	}
-
+	insert = conn.prepareStatement("INSERT INTO offre_promotionnelle(id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES(?,?,?,?)");
+	insert.setInt(1, Integer.parseInt(id_logement));
+	insert.setDate(2, java.sql.Date.valueOf(dateDep));
+	insert.setDate(3, java.sql.Date.valueOf(dateFin));
+	insert.setInt(4, Integer.parseInt(prix));
+	insert.executeUpdate(); 
     }
 
 

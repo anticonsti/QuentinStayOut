@@ -179,6 +179,8 @@ public class MenuProprietaireConnexion{
 		} else if( choix == 4){
 		    Utils.printEntete("GESTION DES OFFRES PROMOTIONNELLES");
 		    offre.printMenuOffre(id_proprio);
+		    this.printMenu(pseudo);
+
 		} else{
 		    this.printMenu(pseudo);
 		}
