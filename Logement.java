@@ -53,12 +53,7 @@ class Logement{
     	//=> nbpiece et numchambre peuvent changer via les travaux. Adresse,ville NON
     	//4. apres la modification on affiche toutes les informations liees a ce logement
     	//5. qqch comme : print("0-retour, 1-modifier un autre logement");
-    	
-    	//UPDATE table_name SET column1=value1,column2=value2,... WHERE some_column=some_value;
-    	/* NON
-    	select = conn.prepareStatement("UPDATE logement SET ");
-	result = select.executeQuery();
-    	*/
+    	//ON APPELLE LES "SOUS"FONCTIONS MODIF
     	
     }
 
@@ -262,5 +257,25 @@ class Logement{
 	    System.out.println("| "+result.getString(4));
 	}
     }
+	/* //A VERIFIER SI CA MARCHE !!
+    public void modifierLogementPrix(int id_prop, int prix, int prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
+	
+    	//UPDATE table_name SET column1=value1,column2=value2,... WHERE some_column=some_value;
+    	//id_dispo, id_logement,prix,prix_mois)
+	String req ="UPDATE prix_logement SET ";
+	if(prixB && prixMoisB) req +="prix=?,"+prix+"prixMois=?"+prixMois; //modif prix et prixMois
+	else if(prixB && !prixMoisB) req+="prix=?"+prix; //modif prix uniquement
+	else req+="prixMois=?"+prixMois; //modif prixMois uniquement
+	
+	req+=" WHERE id_prop=?"+id_prop;
+	
+	PreparedStatement preparedStatement = dbConnection.prepareStatement(req);
+	preparedStatement.setString(1, prix);
+	preparedStatement.setInt(2, prixMois);
+	// execute insert SQL stetement
+	preparedStatement .executeUpdate();
+	
+    }
+	*/
 
 }
