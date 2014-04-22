@@ -2,7 +2,7 @@ CREATE TABLE proprietaire(
 id_proprietaire SERIAL PRIMARY KEY,
 nom_proprietaire VARCHAR(20) NOT NULL, 
 prenom_proprietaire VARCHAR(30) NOT NULL, 
-pseudo VARCHAR(30) NOT NULL, 
+pseudo VARCHAR(30) UNIQUE NOT NULL, 
 mot_de_passe VARCHAR(30) NOT NULL
 );
 
