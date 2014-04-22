@@ -244,20 +244,20 @@ public class Location {
 	insert = conn.prepareStatement("INSERT INTO loge VALUES(?,?)");
 	insert.setInt(1, id_location);
 	insert.setInt(2, id_locataire);
-
+	insert.executeUpdate();
 
 	// insertion dans la table concerne
 	insert = conn.prepareStatement("INSERT INTO concerne VALUES(?,?)");
 	insert.setInt(1, Integer.parseInt(id_logement));
 	insert.setInt(2, id_location);
-
+	insert.executeUpdate();
 
 	// insertion dans la table avec_prestation si nécessaire
 	if( avecPrestation.equals("O")){
 	    insert = conn.prepareStatement("INSERT INTO avec_prestation VALUES(?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_prestation);
-
+	    insert.executeUpdate();
 	}
 
 
@@ -266,7 +266,7 @@ public class Location {
 	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
-
+	    insert.executeUpdate();
 	}
 
     }
