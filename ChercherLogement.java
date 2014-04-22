@@ -2,8 +2,8 @@ import java.sql.*;
 import java.io.*;
 
 public class ChercherLogement {
-    PreparedStatement select=null;
-    ResultSet result = null;
+    PreparedStatement select=null, select2=null;
+    ResultSet result = null, result2 = null;
     Connection conn = null;
 
     public ChercherLogement(Connection conn){
@@ -72,19 +72,32 @@ public class ChercherLogement {
 	int resultats = 0;
 
 	select = conn.prepareStatement("SELECT * FROM logement");
-	Utils.print("id_logement", 15);
-	Utils.print("| adresse", 40);
-	Utils.print("| surface", 9);
-	System.out.println("| ville");
-	System.out.println("--------------------------------------------------------------------------");
 	result = select.executeQuery();
 
 	while (result.next()) {
+
+	    System.out.println("");
 	    resultats = 1;
-	    Utils.print(String.valueOf(result.getInt(1)),15);
-	    Utils.print("| " +result.getString(2), 40);
-	    Utils.print("| " +result.getString(3), 9 );
-	    System.out.println("| " +result.getString(4));
+	    String id_logement = String.valueOf(result.getInt(1));
+
+	    select2=conn.prepareStatement("SELECT nom_proprietaire, prenom_proprietaire FROM proprietaire NATURAL JOIN propose_logement WHERE id_logement="+ id_logement);
+	    result2 = select2.executeQuery();
+	    if( result2.next() ){
+		System.out.println("propriétaire: " +result2.getString(1) + " " + result2.getString(2));
+	    }
+	    
+	    System.out.println("id_logement: "+id_logement);
+	    System.out.println("adresse: "+result.getString(2) + ", " + result.getString(4) );
+	    System.out.println("surface: " +result.getString(3));
+
+	    select2=conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, prix FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement="+ id_logement);
+	    result2 = select2.executeQuery();
+	    if( result2.next() ){
+		System.out.println("disponible de " + result2.getString(1) + " à " + result2.getString(2) );
+		System.out.println("prix: "+result2.getString(3));
+	    }
+	    System.out.println("");
+	    System.out.println("--------------------------------------------------------------------------");
 	}
 
 	return resultats;
