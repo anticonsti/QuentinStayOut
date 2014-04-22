@@ -47,7 +47,7 @@ public class Location {
 		// réponse de l'utilisateur
 		if( Utils.readString("O|N").equals("O")){
 
-		    Utils.printEntete("FORMULAIRE A REMPLIR");
+		    Utils.printEntete("FORMULAIRE A REMPLIR POUR LE LOGEMENT " + id_logement);
 		    this.inscriptionLocataire(id_logement);
 		    System.out.println("Inscription terminée");
 		    Thread.sleep(1300);
@@ -156,6 +156,7 @@ public class Location {
 	}
 
 	// pour les transports, on vérifie s'il reste des véhicules disponibles
+	// comment controler les véhicules disponibles en tenant compte des réservations déjà faites
 	int prixTransport=0;
 	String avecTransport="";
 	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement + " AND nb_vehicule > 0 ");
@@ -168,8 +169,55 @@ public class Location {
 	}
 
 	
-	// controler avant d'inserer dans locataire, loge, location, concerne, avec_transport, avec_prestation
+	// controler avant d'inserer dans locataire, location, loge, concerne, avec_prestation, avec_transport
 	
+	
+	/*
+
+	  // insertion dans la table locataire
+	  insert= conn.prepareStatement("INSERT INTO locataire(nom_locataire, prenom_locataire, adresse_locataire, num_tel, email) VALUES(?,?,?,?,?)");
+	  insert.setString(1, nom);
+	  insert.setString(2, prenom);
+	  insert.setString(3, adresse);
+	  insert.setString(4, num);
+	  insert.setString(5, email);
+	  insert.executeUpdate(); 
+
+
+	  // insertion dans la table location, besoin du montant total
+	  // appliquer le prix selon la durée de location
+
+	  int duree = Integer.parseInt(dateFin.substring(7)) - Integer.parseInt(dateDep.substring(7))
+	  int montant=0;
+
+	  select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
+	  result = select.executeQuery();
+	  if(result.next()) {
+	  montant +=result.getInt(1);
+	  }
+
+	  montant += prixPrestation + prixTransport;
+	  insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?)");
+	  insert.setDate(1, java.sql.Date.valueOf(dateDep));
+	  insert.setDate(2, java.sql.Date.valueOf(dateFin));
+	  insert.setInt(3, montant);
+	  insert.executeUpdate(); 
+    
+
+
+	  // insertion dans la table loge
+
+
+	  // insertion dans la table concerne
+	  
+
+	  // insertion dans la table avec_prestation si nécessaire
+
+
+	  // insertion dans la table avec_transport si nécessaire
+
+
+	 */
     }
 
 }
