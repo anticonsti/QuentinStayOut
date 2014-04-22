@@ -1,5 +1,8 @@
 import java.sql.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 public class Location {
 
@@ -44,16 +47,11 @@ public class Location {
 		// réponse de l'utilisateur
 		if( Utils.readString("O|N").equals("O")){
 
-		    System.out.print("Vous devez vous inscrire (O/N): ");
+		    Utils.printEntete("FORMULAIRE A REMPLIR");
+		    this.inscriptionLocataire(id_logement);
+		    System.out.println("Inscription terminée");
+		    Thread.sleep(1300);
 
-		    // réponse de l'utilisateur
-		    if(Utils.readString("O|N").equals("O")){
-
-			Utils.printEntete("INSCRIPTION");
-			this.inscriptionLocataire();
-			System.out.println("Inscription terminée");
-			Thread.sleep(1300);
-		    }
 		}
 	    }
 
@@ -109,24 +107,68 @@ public class Location {
     }
 
 
-    public void inscriptionLocataire(){
+    public void inscriptionLocataire(String id_logement) throws SQLException {
 
 	System.out.print("Nom: ");
 	String nom = Utils.readString("[A-Za-z]{1,20}");
 	   
-	System.out.print("Prenom: ");
+	System.out.print("Prénom: ");
 	String prenom = Utils.readString("[A-Za-z]{1,30}");
 
 	System.out.print("Adresse: ");
 	String adresse = Utils.readString("[A-Za-z ]{1,100}");
 
-	System.out.print("Numéro de téléphone: ");
-	String num = Utils.readString("[A-Za-z ]{1,100}");
+	System.out.print("Numéro de téléphone (xxxxxxxxxx): ");
+	String num = Utils.readString("\\d{10}");
 
 	System.out.print("Email: ");
-	String email = Utils.readString("[A-Za-z ]{1,100}");
+	String email = Utils.readString("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String dateDep="",dateFin="";
+	Date date1 =null, date2=null;
+	do{
+	    System.out.print("Date début location (YYYY-MM-DD): ");
+	    try{
+		dateDep = Utils.readString("date");
+		date1= sdf.parse(dateDep);
 
+		System.out.print("Date fin location (YYYY-MM-DD): ");
+		dateFin = Utils.readString("date");
+		date2 = sdf.parse(dateFin);
+		if(!date2.after(date1))
+		    System.out.println("Erreur sur la date de fin de location");
+	    } catch (ParseException ex){
+		ex.printStackTrace();
+	    }
+	}while(!date2.after(date1));
+
+	// pour les prestations, on vérifie s'il y en a d'abord
+	int prixPrestation=0;
+	String avecPrestation="";
+	select = conn.prepareStatement("SELECT prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.print("Avec prestations? (O/N): ");
+	    if( (avecPrestation=Utils.readString("O|N")).equals("O")){
+		prixPrestation=result.getInt(1);
+	    }
+	}
+
+	// pour les transports, on vérifie s'il reste des véhicules disponibles
+	int prixTransport=0;
+	String avecTransport="";
+	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement + " AND nb_vehicule > 0 ");
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.print("Avec transport? (O/N): ");
+	    if( (avecTransport=Utils.readString("O|N")).equals("O")){
+		prixTransport=result.getInt(1);
+	    }
+	}
+
+	
+	// controler avant d'inserer dans locataire, loge, location, concerne, avec_transport, avec_prestation
 	
     }
 
