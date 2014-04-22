@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM logement NATURAL JOIN appartement NATURAL JOIN disponibilite WHERE DATE '04/04/2015' >= date_debut_dispo AND DATE '08/04/2015' <= date_fin_dispo;
