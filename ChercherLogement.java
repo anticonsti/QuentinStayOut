@@ -126,7 +126,9 @@ public class ChercherLogement {
 	System.out.print("Prestations: ");
 	String prestations = Utils.readString("[A-Za-z ]{0,100}");
 
-	System.out.print("Prix: ");
+	System.out.print("Prix (Inférieur[I], Supérieur[S], Egale[E]): ");
+	String rapport = Utils.readString("[ISE]{0,1}");
+	System.out.print("à: ");
 	String prix = Utils.readString("[0-9]{0,10}");
 
 	System.out.print("Affichage par prix croissant (O/N): ");
@@ -216,6 +218,10 @@ public class ChercherLogement {
 		requete += " prix = " + prix;
 		and=1;
 	    }
+	    if(rapport.equals("I"))
+	       requete.replace('=','<');
+	    else if(rapport.equals("S"))
+		requete.replace('=','>');
 	}
 	if(affichage.equals("O")){
 	    requete += " ORDER BY prix";
