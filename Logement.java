@@ -47,6 +47,19 @@ class Logement{
     }
     
     public void modifierLogement() throws SQLException{
+    	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
+    	//2. recupere le nombre entre par l'utilisateur 
+    	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation,transport");
+    	//=> nbpiece et numchambre peuvent changer via les travaux. Adresse,ville NON
+    	//4. apres la modification on affiche toutes les informations liees a ce logement
+    	//5. qqch comme : print("0-retour, 1-modifier un autre logement");
+    	
+    	//UPDATE table_name SET column1=value1,column2=value2,... WHERE some_column=some_value;
+    	/* NON
+    	select = conn.prepareStatement("UPDATE logement SET ");
+	result = select.executeQuery();
+    	/*
+    	
     }
 
 
