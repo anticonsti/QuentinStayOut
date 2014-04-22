@@ -4,6 +4,7 @@ import java.io.*;
 public class Location {
 
     PreparedStatement select=null;
+    PreparedStatement select2=null;
     ResultSet result = null;
     Connection conn = null;
 
@@ -14,14 +15,16 @@ public class Location {
     public void printLocation(){
 
 	System.out.println("");
-	System.out.print("Louer ? (O/N): ");
-	String rep= Utils.readString("O|N");
+	System.out.print("Voir un logement ? (O/N): ");
 
 	try{
 
-	    if(rep.equals("O")){
+	    // réponse de l'utilisateur
+	    if(Utils.readString("O|N").equals("O")){
 		String id_logement="";
 		boolean rsNext=false;
+		
+		// sélection d'un logement
 		do{
 		    System.out.print("id_logement: ");
 		    id_logement = Utils.readString("[0-9]{1,5}");
@@ -29,16 +32,28 @@ public class Location {
 		    result = select.executeQuery();
 		    rsNext = result.next();
 		    if(rsNext==false)
-			System.out.println("non existant");
+			System.out.println("Inexistant");
 		}while( rsNext == false);
 		
-		System.out.print("Vous devez vous inscrire (O/N): ");
-		String rep2 = Utils.readString("O|N");
-		if(rep2.equals("O")){
-		    Utils.printEntete("INSCRIPTION");
-		    this.inscriptionLocataire();
-		    System.out.println("inscription terminée");
-		    Thread.sleep(1300);
+		// détails du logement
+		Utils.printEntete("VOTRE LOGEMENT");
+		this.detailsLogement(id_logement);
+
+		System.out.print("Louer ? (O/N): ");
+
+		// réponse de l'utilisateur
+		if( Utils.readString("O|N").equals("O")){
+
+		    System.out.print("Vous devez vous inscrire (O/N): ");
+
+		    // réponse de l'utilisateur
+		    if(Utils.readString("O|N").equals("O")){
+
+			Utils.printEntete("INSCRIPTION");
+			this.inscriptionLocataire();
+			System.out.println("Inscription terminée");
+			Thread.sleep(1300);
+		    }
 		}
 	    }
 
@@ -46,6 +61,53 @@ public class Location {
 	    System.err.println(e.getMessage());
 	}
     }
+
+    
+    public void detailsLogement(String id_logement) throws SQLException {
+
+	select = conn.prepareStatement("SELECT * FROM logement WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.println("id_logement: " + String.valueOf(result.getInt(1)));
+	    System.out.println("adresse: " +result.getString(2));
+	    System.out.println("surface: " +result.getString(3));
+	    System.out.println("ville: " +result.getString(4));
+	}
+
+	select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min, prix, prix_mois FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.println("date_debut_dispo: " + result.getDate(1));
+	    System.out.println("date_fin_dispo: " +result.getDate(2));
+	    System.out.println("sejour_min: " +String.valueOf(result.getInt(3)));
+	    System.out.println("prix/nuit: " +String.valueOf(result.getInt(4)));
+	    System.out.println("prix/mois: " +String.valueOf(result.getInt(5)));
+	}
+
+	select = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.println("type_suggestion: " +result.getString(1));
+	    System.out.println("nom_suggestion: " +result.getString(2));
+	}
+
+	select = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.println("type_suggestion: " +result.getString(1));
+	    System.out.println("nom_suggestion: " +String.valueOf(result.getInt(2)));
+	}
+
+	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    System.out.println("service_transport: oui");
+	    System.out.println("prix_transport: " +String.valueOf(result.getInt(1)));
+	}
+
+	System.out.println("");
+    }
+
 
     public void inscriptionLocataire(){
 
@@ -64,6 +126,8 @@ public class Location {
 	System.out.print("Email: ");
 	String email = Utils.readString("[A-Za-z ]{1,100}");
 
+
+	
     }
 
 }
