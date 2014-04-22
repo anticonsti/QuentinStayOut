@@ -92,8 +92,8 @@ public class Location {
 	select = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("type_suggestion: " +result.getString(1));
-	    System.out.println("nom_suggestion: " +String.valueOf(result.getInt(2)));
+	    System.out.println("prestation: " +result.getString(1));
+	    System.out.println("prix: " +String.valueOf(result.getInt(2)));
 	}
 
 	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement);
