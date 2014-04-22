@@ -12,7 +12,7 @@ public class ChercherLogement {
 
     public void printMenu(){
 	System.out.print("\033c");
-	System.out.println("Veuillez entrer votre choix :");
+	System.out.println("TROUVER UN LOGEMENT :");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - retour");
 	System.out.println("1 - afficher les logements disponibles");
@@ -32,13 +32,27 @@ public class ChercherLogement {
 
 		if( choix == 1 ){
 		    Utils.printEntete("LOGEMENTS DISPONIBLES");
-		    this.afficheLogements();
-		    loc.printLocation();
-		    this.printMenu();
+		    
+		    if( this.afficheLogements() == 1 ){
+			loc.printLocation();
+			this.printMenu();
+		    } else {
+			System.out.println("aucun résultat");
+			Thread.sleep(1300);
+			this.printMenu();
+		    }
 
 		} else if( choix == 2){
 		    Utils.printEntete("RECHERCHE AVANCEE");
-		    this.chercherLogements();
+
+		    if( this.chercherLogements() == 1 ){
+			loc.printLocation();
+			this.printMenu();
+		    } else {
+			System.out.println("aucun résultat");
+			Thread.sleep(1300);
+			this.printMenu();
+		    }
 
 		} else {
 		    this.printMenu();
@@ -47,13 +61,16 @@ public class ChercherLogement {
 		choix = Utils.readInt();
 	    }
 
-	} catch(SQLException e){
+	} catch(SQLException | InterruptedException e){
 	    e.printStackTrace();
 	}
 
     }
 
-    public  void afficheLogements()throws SQLException{
+    public int afficheLogements()throws SQLException{
+
+	int resultats = 0;
+
 	select = conn.prepareStatement("SELECT * FROM logement");
 	Utils.print("id_logement", 15);
 	Utils.print("| adresse", 40);
@@ -61,16 +78,19 @@ public class ChercherLogement {
 	System.out.println("| ville");
 	System.out.println("--------------------------------------------------------------------------");
 	result = select.executeQuery();
+
 	while (result.next()) {
+	    resultats = 1;
 	    Utils.print(String.valueOf(result.getInt(1)),15);
 	    Utils.print("| " +result.getString(2), 40);
 	    Utils.print("| " +result.getString(3), 9 );
 	    System.out.println("| " +result.getString(4));
 	}
 
+	return resultats;
     }
 
-    public void chercherLogements()throws SQLException {
+    public int chercherLogements()throws SQLException {
 
 	System.out.print("Adresse: ");
 	String adresse = Utils.readString("[A-Za-z ]{0,100}");
@@ -101,8 +121,7 @@ public class ChercherLogement {
 	System.out.println();
 	
 	if(adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && suggestions.equals("") && prestations.equals("") && prix.equals("")){
-	    System.out.println("aucun résultat");
-	    return;
+	    return 0;
 	}
 
 	String requete;
@@ -110,11 +129,11 @@ public class ChercherLogement {
 
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion WHERE";
 
-	} else if( suggestions.equals("") && !suggestions.equals("") ){
+	} else if( suggestions.equals("") && !prestations.equals("") ){
 
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
 
-	} else if( !suggestions.equals("") && !suggestions.equals("") ){
+	} else if( !suggestions.equals("") && !prestations.equals("") ){
 
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, description_prestation, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion NATURAL JOIN prestation NATURAL JOIN propose_prestation WHERE";
 
@@ -195,9 +214,9 @@ public class ChercherLogement {
 	
 	result = select.executeQuery();
 
-	int in = 0;
+	int resultats = 0;
 	while (result.next()) {
-	    in =1;
+	    resultats =1;
 
 	    System.out.println("adresse_logement :" + result.getString(1));
 	    System.out.println("surface :" +String.valueOf(result.getInt(2)));
@@ -227,9 +246,8 @@ public class ChercherLogement {
 	    System.out.println("--------------------------------------------------------------------------");
 	    System.out.println("");
 	}
-	if(in==0)
-	    System.out.println("aucun résultat");
 
+	return resultats;
 
     }
 
