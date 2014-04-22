@@ -128,16 +128,16 @@ public class Offre{
 
 	Utils.print("id_promo", 9);
 	Utils.print("| id_logement", 15);
-	Utils.print("| date_debut", 15);
-	Utils.print("| date_fin", 9);
+	Utils.print("| date_debut", 13);
+	Utils.print("| date_fin", 13);
 	System.out.println("| prix");
 	System.out.println("--------------------------------------------------------------------------");
 
 	if(result.next()!=false){
 	    Utils.print(String.valueOf(result.getInt(1)),9);
 	    Utils.print("| "+String.valueOf(result.getInt(2)),15);
-	    Utils.print("| "+result.getString(3), 15);
-	    Utils.print("| "+result.getString(4), 9 );
+	    Utils.print("| "+result.getString(3), 13);
+	    Utils.print("| "+result.getString(4), 13);
 	    System.out.println("| "+ String.valueOf(result.getInt(1)));
 	}
 
