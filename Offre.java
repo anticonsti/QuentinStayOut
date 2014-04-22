@@ -20,9 +20,7 @@ public class Offre{
 	System.out.println("-------------------------------------------------------------");
 	System.out.print("0 - retour ");
 	System.out.print("| 1 - ajouter ");
-	System.out.print("| 2 - retirer ");
-	System.out.print("| 3 - modifier ");
-	System.out.println("| 4 - liste ");
+	System.out.println("| 2 - liste ");
 	System.out.println("-------------------------------------------------------------");
     }
 
@@ -32,9 +30,7 @@ public class Offre{
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - retour");
 	System.out.println("1 - ajouter une offre ");
-	System.out.println("2 - retirer une offre ");
-	System.out.println("3 - modifier une offre ");
-	System.out.println("4 - liste des offres ");
+	System.out.println("2 - liste des offres ");
 	System.out.println("-------------------------------------------------------------");
 
     }
@@ -82,8 +78,8 @@ public class Offre{
 			    }
 			}while(!date2.after(date1));
 
-			System.out.print("Prix: ");
-			String prix = Utils.readString("[1-9]+[0-9]{0,5}");
+			System.out.print("Pourcentage de réduction: ");
+			String prix = Utils.readString("[1-9]+[0-9]{0,2}");
 
 			this.ajouterOffre(dateDep, dateFin, prix, id_logement);
 			System.out.println("offre ajoutée");
@@ -96,7 +92,7 @@ public class Offre{
 			this.printMenu();
 		    }
 
-		} else if( choix == 4){
+		} else if( choix == 2){
 		    Utils.printEntete("LISTE DES OFFRES");
 		    this.listeOffre(id_proprio);
 		    this.printRappelCommande();
