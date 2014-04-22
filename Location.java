@@ -7,7 +7,7 @@ import java.text.ParseException;
 public class Location {
 
     PreparedStatement select=null;
-    PreparedStatement select2=null;
+    PreparedStatement insert=null;
     ResultSet result = null;
     Connection conn = null;
 
@@ -126,8 +126,11 @@ public class Location {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	String dateDep="",dateFin="";
-	Date date1 =null, date2=null;
+	Date date1 =null, date2=null, date1bis=null, date2bis=null;
+	int sejourMin = 0;
+	int erreurDate=1;
 	do{
+	    erreurDate=1;
 	    System.out.print("Date début location (YYYY-MM-DD): ");
 	    try{
 		dateDep = Utils.readString("date");
@@ -136,88 +139,136 @@ public class Location {
 		System.out.print("Date fin location (YYYY-MM-DD): ");
 		dateFin = Utils.readString("date");
 		date2 = sdf.parse(dateFin);
-		if(!date2.after(date1))
-		    System.out.println("Erreur sur la date de fin de location");
+		select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
+		result = select.executeQuery();
+		if(result.next()) {
+		    date1bis=sdf.parse(result.getString(1));
+		    date2bis=sdf.parse(result.getString(2));
+		    if( result.getString(3) != null){
+			sejourMin= result.getInt(3);
+		    }
+		}
+
+		int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
+		if(duree < sejourMin ){
+		    erreurDate=0;
+		    System.out.println("Erreur sur la durée de location");
+		}
+
+		if(!date2.after(date1) || date1.before(date1bis) || date2.after(date2bis) ){
+		    erreurDate=0;
+		    System.out.println("Erreur sur la date de location");
+		}
 	    } catch (ParseException ex){
 		ex.printStackTrace();
 	    }
-	}while(!date2.after(date1));
+	}while(erreurDate==0);
 
 	// pour les prestations, on vérifie s'il y en a d'abord
-	int prixPrestation=0;
+	int id_prestation=-1, prixPrestation=0;
 	String avecPrestation="";
-	select = conn.prepareStatement("SELECT prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
+	select = conn.prepareStatement("SELECT id_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
 	    System.out.print("Avec prestations? (O/N): ");
 	    if( (avecPrestation=Utils.readString("O|N")).equals("O")){
-		prixPrestation=result.getInt(1);
+		id_prestation=result.getInt(1);
+		prixPrestation=result.getInt(2);
 	    }
 	}
 
+	
 	// pour les transports, on vérifie s'il reste des véhicules disponibles
 	// comment controler les véhicules disponibles en tenant compte des réservations déjà faites
-	int prixTransport=0;
+	int id_transport=-1, prixTransport=0;
 	String avecTransport="";
-	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement + " AND nb_vehicule > 0 ");
+	select = conn.prepareStatement("SELECT id_service_transport, prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement + " AND nb_vehicule > 0 ");
 	result = select.executeQuery();
 	if(result.next()) {
 	    System.out.print("Avec transport? (O/N): ");
 	    if( (avecTransport=Utils.readString("O|N")).equals("O")){
-		prixTransport=result.getInt(1);
+		id_transport=result.getInt(1);
+		prixTransport=result.getInt(2);
 	    }
 	}
-
 	
-	// controler avant d'inserer dans locataire, location, loge, concerne, avec_prestation, avec_transport
+
+	// insertion dans locataire, location, loge, concerne, avec_prestation, avec_transport
 	
-	
-	/*
+	// insertion dans la table locataire
+	int id_locataire = -1;
 
-	  // insertion dans la table locataire
-	  insert= conn.prepareStatement("INSERT INTO locataire(nom_locataire, prenom_locataire, adresse_locataire, num_tel, email) VALUES(?,?,?,?,?)");
-	  insert.setString(1, nom);
-	  insert.setString(2, prenom);
-	  insert.setString(3, adresse);
-	  insert.setString(4, num);
-	  insert.setString(5, email);
-	  insert.executeUpdate(); 
-
-
-	  // insertion dans la table location, besoin du montant total
-	  // appliquer le prix selon la durée de location
-
-	  int duree = Integer.parseInt(dateFin.substring(7)) - Integer.parseInt(dateDep.substring(7))
-	  int montant=0;
-
-	  select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
-	  result = select.executeQuery();
-	  if(result.next()) {
-	  montant +=result.getInt(1);
-	  }
-
-	  montant += prixPrestation + prixTransport;
-	  insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?)");
-	  insert.setDate(1, java.sql.Date.valueOf(dateDep));
-	  insert.setDate(2, java.sql.Date.valueOf(dateFin));
-	  insert.setInt(3, montant);
-	  insert.executeUpdate(); 
-    
+	// récupère id_locataire après insertion avec RETURNING
+	insert= conn.prepareStatement("INSERT INTO locataire(nom_locataire, prenom_locataire, adresse_locataire, num_tel, email) VALUES(?,?,?,?,?) RETURNING id_locataire " );
+	insert.setString(1, nom);
+	insert.setString(2, prenom);
+	insert.setString(3, adresse);
+	insert.setString(4, num);
+	insert.setString(5, email);
+	result=insert.executeQuery();
+	if(result.next())
+	    id_locataire = result.getInt(1);
 
 
-	  // insertion dans la table loge
+	// insertion dans la table location
+	// besoin du montant total
+	// appliquer le prix selon la durée de location
+
+	int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
+	int montant=0;
+
+	select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if(result.next()) {
+	    // on applique prix/mois PB comment calculer pour 1 mois et quelques jours ??
+	    if( duree > 28 ){
+		montant +=result.getInt(2);
+	    } else {
+		// on applique prix/nuit
+		montant +=(result.getInt(1)*duree);
+	    }
+	}
+	montant += prixPrestation + prixTransport;
+
+	int id_location =-1;
+	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?) RETURNING id_location " );
+	insert.setDate(1, java.sql.Date.valueOf(dateDep));
+	insert.setDate(2, java.sql.Date.valueOf(dateFin));
+	insert.setInt(3, montant);
+	result=insert.executeQuery();
+	if(result.next())
+	    id_location = result.getInt(1);
 
 
-	  // insertion dans la table concerne
-	  
-
-	  // insertion dans la table avec_prestation si nécessaire
-
-
-	  // insertion dans la table avec_transport si nécessaire
+	// insertion dans la table loge
+	insert = conn.prepareStatement("INSERT INTO loge VALUES(?,?)");
+	insert.setInt(1, id_location);
+	insert.setInt(2, id_locataire);
 
 
-	 */
+	// insertion dans la table concerne
+	insert = conn.prepareStatement("INSERT INTO concerne VALUES(?,?)");
+	insert.setInt(1, Integer.parseInt(id_logement));
+	insert.setInt(2, id_location);
+
+
+	// insertion dans la table avec_prestation si nécessaire
+	if( avecPrestation.equals("O")){
+	    insert = conn.prepareStatement("INSERT INTO avec_prestation VALUES(?,?)");
+	    insert.setInt(1, id_location);
+	    insert.setInt(2, id_prestation);
+
+	}
+
+
+	// insertion dans la table avec_transport si nécessaire
+	if( avecTransport.equals("O")){
+	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?)");
+	    insert.setInt(1, id_location);
+	    insert.setInt(2, id_transport);
+
+	}
+
     }
 
 }
