@@ -58,7 +58,7 @@ class Logement{
     	/* NON
     	select = conn.prepareStatement("UPDATE logement SET ");
 	result = select.executeQuery();
-    	/*
+    	*/
     	
     }
 
