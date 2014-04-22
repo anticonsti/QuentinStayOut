@@ -28,7 +28,7 @@ public class Offre{
 
     public void printMenu(){
 	System.out.print("\033c");
-    	System.out.println("Veuillez entrer votre choix :");
+    	System.out.println("OFFRE PROMOTIONNELLE:");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - retour");
 	System.out.println("1 - ajouter une offre ");

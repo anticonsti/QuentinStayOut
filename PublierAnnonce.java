@@ -13,8 +13,7 @@ public class PublierAnnonce {
 
     public void printMenu(){
 	System.out.print("\033c");
-	System.out.println("Pour pouvoir publier une annonce, il faut que vous soyez connecte.");
-    	System.out.println("Veuillez entrer votre choix :");
+	System.out.println("PUBLIER ANNONCE");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - retour");
 	System.out.println("1 - S'inscrire");
