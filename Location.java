@@ -130,9 +130,10 @@ public class Location {
 	System.out.print("Email: ");
 	String email = Utils.readString("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	String dateDep="",dateFin="";
-	Date date1 =null, date2=null, date1bis=null, date2bis=null;
+	Date date1 =null, date2=null, dateDProprio=null, dateFProprio=null, dateDLocat=null, dateFLocat=null;
 	int sejourMin = 0;
 	int erreurDate=1;
 	do{
@@ -145,25 +146,50 @@ public class Location {
 		System.out.print("Date fin location (YYYY-MM-DD): ");
 		dateFin = Utils.readString("date");
 		date2 = sdf.parse(dateFin);
+
+
+		// vérifie la période à louer
+
+		// période proposée par le propriétaire
 		select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
 		result = select.executeQuery();
 		if(result.next()) {
-		    date1bis=sdf.parse(result.getString(1));
-		    date2bis=sdf.parse(result.getString(2));
+		    dateDProprio=sdf.parse(result.getString(1));
+		    dateFProprio=sdf.parse(result.getString(2));
 		    if( result.getString(3) != null){
 			sejourMin= result.getInt(3);
 		    }
 		}
-
+		
+		// vérifie la durée minimum
 		int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
 		if(duree < sejourMin ){
 		    erreurDate=0;
 		    System.out.println("Erreur sur la durée de location");
 		}
 
-		if(!date2.after(date1) || date1.before(date1bis) || date2.after(date2bis) ){
+		// vérifie que la période à louer est bien dans la période proposée par le propriétaire
+		if( !date2.after(date1) || date1.before(dateDProprio) || date2.after(dateFProprio) ){
 		    erreurDate=0;
 		    System.out.println("Erreur sur la date de location");
+		}
+
+		if( erreurDate !=0){
+		    // puis on vérifie qu'on ne loue pas sur une période déjà prise
+		    // période occupée par les locataires
+		    select = conn.prepareStatement("SELECT date_debut_location, date_fin_location FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE id_logement = " + id_logement);
+	
+		    result = select.executeQuery();
+		    while(result.next()) {
+			dateDLocat=sdf.parse(result.getString(1));
+			dateFLocat=sdf.parse(result.getString(2));
+
+			if( ( date1.after(dateDLocat) && date1.before(dateFLocat) ) || (date2.after(dateDLocat) && date2.before(dateFLocat)) ){
+			    erreurDate=0;
+			    System.out.println("Erreur sur la date de location");
+			    break;
+			}
+		    }
 		}
 	    } catch (ParseException ex){
 		ex.printStackTrace();
