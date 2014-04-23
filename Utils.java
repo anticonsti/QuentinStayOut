@@ -5,7 +5,9 @@ public class Utils{
     static public String readString(String motif){
 	int erreur=0;
 	if(motif.equals("date"))
+	    //ca marche ? a tester avec 31fevrier etc.. je verrai
 	    motif = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
+	    //motif = ""; http://stackoverflow.com/questions/13194322/php-regex-to-check-date-is-in-yyyy-mm-dd-format
 	do{
 	    Scanner in = new Scanner(System.in);
 	    String s = in.nextLine();
