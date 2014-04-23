@@ -95,6 +95,7 @@ id_suggestion INT REFERENCES suggestion(id_suggestion) ON UPDATE CASCADE ON DELE
 
 CREATE TABLE service_transport(
 id_service_transport SERIAL PRIMARY KEY, 
+nom_transport VARCHAR(20) NOT NULL,
 nb_vehicule INT NOT NULL CHECK(nb_vehicule>=0),
 prix_transport INT NOT NULL CHECK(prix_transport>0)
 );
@@ -123,7 +124,10 @@ id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CAS
 
 CREATE TABLE avec_transport(
 id_location INT REFERENCES location(id_location) ON UPDATE CASCADE ON DELETE CASCADE, 
-id_service_transport INT REFERENCES service_transport(id_service_transport) ON UPDATE CASCADE ON DELETE CASCADE
+id_service_transport INT REFERENCES service_transport(id_service_transport) ON UPDATE CASCADE ON DELETE CASCADE,
+date_reservation DATE NOT NULL,
+heure_aller TIME,
+heure_retour TIME
 );
 
 
