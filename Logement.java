@@ -47,7 +47,7 @@ class Logement{
 	
     }
     
-    public void modifierLogement(int id_prop, String prix, String prixMois) throws SQLException{
+    public void modifierLogement(int id_prop,int id_logement String prix, String prixMois, String dateDep, String dateFin) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
     	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation,transport");
@@ -58,10 +58,10 @@ class Logement{
     	boolean prixB=false, prixMoisB=false;
     	
     	if(prix!="") prixB=true;
-    	if(prixM!="") prixM=true;
+    	if(prixM!="") prixMoisB=true;
     	
-    	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
-    	
+    	//modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
+    	//modifierLogementDispo(id_logement, dateDep, dateFin)
     	
     }
 
@@ -284,7 +284,7 @@ class Logement{
     }
 	*/
 	/*
-    public void modifierLogementDispo(int id_logement, String dateDep, String dateFin, String prix, String prixMois ) throws SQLException{
+    public void modifierLogementDispo(int id_logement, String dateDep, String dateFin) throws SQLException{
 
 	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_logement="+id_logement;
 
