@@ -229,10 +229,10 @@ public class Location {
 			    System.out.print("heure_aller (O/N): ");
 			    rep_aller=Utils.readString("O|N");
 			    
-			    System.out.print("heure: ");
+			    System.out.print("heure (hh:mm): ");
 			    heure_aller=Utils.readString("(\\d{2}:\\d{2})|");
 			    try{
-				date_aller = format.parse(dateDep + " " +heure_aller);
+				date_aller = format.parse(dateDep + " " +heure_aller + ":00");
 			    } catch (ParseException ex){
 				ex.printStackTrace();
 			    }
@@ -241,10 +241,10 @@ public class Location {
 			    if( (rep_retour=Utils.readString("O|N")).equals("N") && rep_aller.equals("N") )
 				break;
 
-			    System.out.print("heure: ");
+			    System.out.print("heure (hh:mm): ");
 			    heure_retour=Utils.readString("(\\d{2}:\\d{2})|");
 			    try{
-				date_retour= format.parse(dateFin + " " +heure_retour);
+				date_retour= format.parse(dateFin + " " +heure_retour +":00");
 			    } catch (ParseException ex){
 				ex.printStackTrace();
 			    }
@@ -372,7 +372,7 @@ public class Location {
 	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
-	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateDep + " " +heure_aller));
+	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateDep + " " +heure_aller + ":00"));
 	    insert.executeUpdate();
 	}
 
@@ -380,7 +380,7 @@ public class Location {
 	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
-	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateFin + " " +heure_retour));
+	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateFin + " " +heure_retour + ":00"));
 	    insert.executeUpdate();
 	}
 
