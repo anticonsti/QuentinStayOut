@@ -182,17 +182,17 @@ public class ChercherLogement {
 	}
 	if(!ddd.equals("")){
 	    if(and==1)
-		requete += " AND date_debut_dispo = DATE '" +ddd+"'" ;
+		requete += " AND date_debut_dispo >= DATE '" +ddd+"'" ;
 	    else{
-		requete += " date_debut_dispo = DATE '" +ddd+"'" ;
+		requete += " date_debut_dispo >= DATE '" +ddd+"'" ;
 		and=1;
 	    }
 	}
 	if(!dfd.equals("")){
 	    if(and==1)
-		requete += " AND date_debut_dispo = DATE '" +dfd+"'" ;
+		requete += " AND date_fin_dispo >= DATE '" +dfd+"'" ;
 	    else{
-		requete += " date_debut_dispo = DATE '" +dfd+"'" ;
+		requete += " date_fin_dispo >= DATE '" +dfd+"'" ;
 		and=1;
 	    }
 	}
