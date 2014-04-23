@@ -37,8 +37,28 @@ public class PublierAnnonce {
 		System.out.println("Prenom (1~30caracteres)");
 		String prenom = Utils.readString("[A-Za-z]{1,30}");
 
-		System.out.println("Pseudo (1~30caracteres)");
-		String pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
+		int verifPseudo=1;
+		String pseudo = "";
+		do {
+		    verifPseudo=1;
+		    System.out.println("Pseudo (1~30caracteres)");
+		    pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
+
+		    // vérifie si le pseudo n'existe pas
+		    try{
+			select = conn.prepareStatement("SELECT pseudo FROM proprietaire");
+			result = select.executeQuery();
+			while(result.next()){
+			    if(pseudo.equals(result.getString(1))){
+				System.out.println("pseudo existant");
+				verifPseudo=0;
+				break;
+			    }
+			}
+		    } catch (SQLException e) {
+			System.err.println(e.getMessage());
+		    }
+		}while(verifPseudo==0);
 	   
 		String mdp="",mdp2="";
 		do{
@@ -92,63 +112,6 @@ public class PublierAnnonce {
 	    choix = Utils.readInt();
 	}
 
-	/*
-	try{
-	    switch(choix){
-
-	    case 0 :
-		System.out.print("\033c"); //nettoyage de l'ecran
-		System.out.println("Veuillez entrer votre choix :");
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("0 - fin");
-		System.out.println("1 - Publier votre annonce");
-		System.out.println("2 - Trouvez un logement");
-		System.out.println("-------------------------------------------------------------");
-		break;
-
-	    case 1 : 
-		System.out.println("Nom (1~20caracteres)");
-		String nom = Utils.readString("[A-Za-z]{1,20}");
-	   
-		System.out.println("Prenom (1~30caracteres)");
-		String prenom = Utils.readString("[A-Za-z]{1,30}");
-
-		System.out.println("Pseudo (1~30caracteres)");
-		String pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
-	   
-		System.out.println("Mot de passe (1~30caracteres)");
-		String mdp = Utils.readString("[A-Za-z0-9]{1,30}");
-
-		this.inscription(nom, prenom, pseudo, mdp);
-
-		//  si un client supprime son compte, son id_proprietaire ne sera pas repris par une autre personne :
-		//  de toute facon on n'aura jamais de INT nombre de clients sur le site. 
-		break;
-
-	    case 2 :
-		System.out.print("Pseudo: ");
-		String id = Utils.readString("[A-Za-z0-9]{1,20}");
-	   
-		String pw = Utils.readPassword("Password: ");
-
-		if( this.connection(id,pw) == 1 ){
-		    MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
-		    mpc.printMenuProprietaireConnexion(id);
-		}else{
-		    System.out.println();
-		}
-		    
-		break;
-
-	    default :
-		//on recommence le switch puisque l'utilisateur a entre un nombre bizarre.
-		printMenuPublierAnnonce();
-		break;
-	    }
-	}catch (SQLException e) {
-	    System.err.println(e.getMessage());
-	}
-	*/
     }
 
 
