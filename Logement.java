@@ -223,21 +223,13 @@ class Logement{
     }
 
 
-    public void ajouterLogementTransport(String nb, String prix) throws SQLException{
-	insert = conn.prepareStatement("INSERT INTO service_transport(nb_vehicule, prix_transport) VALUES (?,?)");
 
-	insert.setInt(1, Integer.parseInt(nb));
-	insert.setInt(2, Integer.parseInt(prix));
-	insert.executeUpdate();  
-    }
-
-
-    public void tableProposeTransport(String nb, String prix, int id_logement) throws SQLException{
+    public void tableProposeTransport(String ville, int id_logement) throws SQLException{
 	
 	int id_transport = 0;
-	select = conn.prepareStatement("SELECT DISTINCT id_service_transport FROM service_transport WHERE nb_vehicule = "+ nb + " AND prix_transport = " + prix );
+	select = conn.prepareStatement("SELECT id_service_transport FROM service_transport WHERE ville_service_transport = '" + ville + "'" );
 	result = select.executeQuery();
-	while (result.next()) {
+	if(result.next()) {
 	    id_transport=result.getInt(1);
 	}
 

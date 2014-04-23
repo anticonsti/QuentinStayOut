@@ -159,6 +159,9 @@ public class MenuProprietaireConnexion{
 			}
 		    }while(rep.equals("O"));
 
+		    // ajoute dans la table propose_transport 
+		    // si ville logement = ville service transport 
+		    lgm.tableProposeTransport(ville, idLogement);
 
 		    System.out.println("Logement ajouté");
 		    Thread.sleep(1300);
