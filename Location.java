@@ -215,18 +215,14 @@ public class Location {
 		    System.out.print("Avec transport? (O/N): ");
 		    if( (avecTransport=Utils.readString("O|N")).equals("O")){
 		
-			// affiche les réservations déjà faites
-			System.out.println("Liste des réservations: ");
-			select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport);
-			result2 = select2.executeQuery();
-			while(result2.next()) {
-			    System.out.println(result2.getString(1));
-			}
 
 			System.out.println("");
 			// vérifie heure aller et retour
 			int erreurHeure=1;
 			do{
+			    // comparer avec toutes les autres réservations
+			    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport);
+
 			    erreurHeure=1;
 			    System.out.print("heure_aller (O/N): ");
 			    if( (rep_aller=Utils.readString("O|N")).equals("O") ){
@@ -272,6 +268,14 @@ public class Location {
 					// indisponible si diff < 30 
 					if(diffMinutes_aller < 30){
 					    System.out.println("impossible");
+					    // affiche les réservations déjà faites
+					    System.out.println("Liste des réservations: ");
+					    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport + " AND date(date_reservation) = '" + dateDep +"'");
+					    result2 = select2.executeQuery();
+					    while(result2.next()) {
+						System.out.println(result2.getString(1));
+					    }
+
 					    erreurHeure=0;
 					    break;
 					}
@@ -290,6 +294,13 @@ public class Location {
 					// indisponible si diff < 30 
 					if(diffMinutes_retour < 30){
 					    System.out.println("impossible");
+					    // affiche les réservations déjà faites
+					    System.out.println("Liste des réservations: ");
+					    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport + " AND date(date_reservation) = '" + dateFin +"'");
+					    result2 = select2.executeQuery();
+					    while(result2.next()) {
+						System.out.println(result2.getString(1));
+					    }
 					    erreurHeure=0;
 					    break;
 					}
