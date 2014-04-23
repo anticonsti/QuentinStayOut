@@ -79,9 +79,13 @@ public class Location {
 	if(result.next()) {
 	    System.out.println("date_debut_dispo: " + result.getDate(1));
 	    System.out.println("date_fin_dispo: " +result.getDate(2));
-	    System.out.println("sejour_min: " +String.valueOf(result.getInt(3)));
+	    int sej = result.getInt(3);
+	    if( sej !=0 )
+		System.out.println("sejour_min: " +String.valueOf(sej));
 	    System.out.println("prix/nuit: " +String.valueOf(result.getInt(4)));
-	    System.out.println("prix/mois: " +String.valueOf(result.getInt(5)));
+	    int prixM = result.getInt(5);
+	    if( prixM !=0 )
+		System.out.println("prix/mois: " +String.valueOf(result.getInt(5)));
 	}
 
 	select = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
