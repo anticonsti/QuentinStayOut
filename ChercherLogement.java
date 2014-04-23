@@ -70,8 +70,8 @@ public class ChercherLogement {
     public int afficheLogements()throws SQLException{
 
 	int resultats = 0;
-
-	select = conn.prepareStatement("SELECT * FROM logement");
+	String requete ="SELECT * FROM logement";
+	select = conn.prepareStatement(requete);
 	result = select.executeQuery();
 
 	while (result.next()) {
@@ -100,6 +100,7 @@ public class ChercherLogement {
 	    System.out.println("--------------------------------------------------------------------------");
 	}
 
+	this.nbResultat(requete, conn, select, result);
 	return resultats;
     }
 
@@ -228,11 +229,12 @@ public class ChercherLogement {
 	}
 
 	select = conn.prepareStatement(requete);
-
-	System.out.println();
-	
 	result = select.executeQuery();
 
+	// compter le nombre de résultat
+	this.nbResultat(requete, conn, select2, result2);
+	
+	// affiche les résultats
 	int resultats = 0;
 	while (result.next()) {
 	    resultats =1;
@@ -270,5 +272,15 @@ public class ChercherLogement {
 
     }
 
+
+    public void nbResultat(String requete, Connection conn, PreparedStatement select2, ResultSet result2) throws SQLException{
+	requete = requete.substring(requete.lastIndexOf("FROM")-1);
+	select2 = conn.prepareStatement( "SELECT COUNT(*) " + requete );
+	result2 = select2.executeQuery();
+	if(result2.next())
+	    System.out.println( result2.getString(1) + " logement(s) ");
+	System.out.println("");
+
+    }
 
 }
