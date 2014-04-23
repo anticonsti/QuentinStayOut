@@ -33,7 +33,8 @@ public class Location {
 		do{
 		    System.out.print("id_logement: ");
 		    id_logement = Utils.readString("[0-9]{1,5}");
-		    select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_logement = " + id_logement);
+
+		    select = conn.prepareStatement("SELECT id_logement FROM logement WHERE id_logement = "+ id_logement +" EXCEPT (SELECT id_logement FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location )");
 		    result = select.executeQuery();
 		    rsNext = result.next();
 		    if(rsNext==false)
@@ -108,7 +109,14 @@ public class Location {
 	    System.out.println("service_transport: oui");
 	    System.out.println("prix_transport: " +String.valueOf(result.getInt(1)));
 	}
-
+	
+	System.out.println("");
+	System.out.println("Période occupée: ");
+	select = conn.prepareStatement("SELECT date_debut_location, date_fin_location FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	while(result.next()) {
+	    System.out.println(result.getString(1) + " -- " + result.getString(2));
+	}
 	System.out.println("");
     }
 
