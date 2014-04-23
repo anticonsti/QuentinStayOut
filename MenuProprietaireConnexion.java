@@ -58,7 +58,7 @@ public class MenuProprietaireConnexion{
 		if( choix == 1 ){
 		    Utils.printEntete("AJOUTER UN LOGEMENT");
 
-		    System.out.print("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C.");
+		    System.out.print("Votre logement est un appartement(A) ou une chambre(C)? entrer A ou C: ");
 		    String typeLogement = Utils.readString("A|C");
 		    String nbPiece="", numChambre="";
 		    Boolean booltype=typeLogement.equals("A");

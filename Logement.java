@@ -231,12 +231,12 @@ class Logement{
 	result = select.executeQuery();
 	if(result.next()) {
 	    id_transport=result.getInt(1);
-	}
 
-	insert = conn.prepareStatement("INSERT INTO propose_transport VALUES(?,?)");	
-	insert.setInt(1, id_logement);
-	insert.setInt(2, id_transport);
-	insert.executeUpdate(); 	       
+	    insert = conn.prepareStatement("INSERT INTO propose_transport VALUES(?,?)");	
+	    insert.setInt(1, id_logement);
+	    insert.setInt(2, id_transport);
+	    insert.executeUpdate(); 
+	}	       
     }
 
 
