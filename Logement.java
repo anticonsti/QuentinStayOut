@@ -5,6 +5,7 @@ class Logement{
     
     PreparedStatement insert=null;
     PreparedStatement select=null;
+    PreparedStatement update=null;
     PreparedStatement delete=null;
     ResultSet result = null;
     Connection conn = null;
@@ -274,11 +275,11 @@ class Logement{
 	
 	req+=" WHERE id_prop=?"+id_prop;
 	
-	PreparedStatement preparedStatement = dbConnection.prepareStatement(req);
-	preparedStatement.setString(1, prix);
-	preparedStatement.setInt(2, prixMois);
+	update = conn.prepareStatement(req);
+	update.setString(1, prix);
+	update.setInt(2, prixMois);
 	// execute update SQL statement
-	preparedStatement.executeUpdate();
+	update.executeUpdate();
 	
     }
 	*/
@@ -287,11 +288,11 @@ class Logement{
 
 	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_logement="+id_logement;
 
-	PreparedStatement preparedStatement = dbConnection.prepareStatement(req);
-	preparedStatement.setDate(1, java.sql.Date.valueOf(dateDep));
-	preparedStatement.setDate(2, java.sql.Date.valueOf(dateFin));
+	update = conn.prepareStatement(req);
+	update.setDate(1, java.sql.Date.valueOf(dateDep));
+	update.setDate(2, java.sql.Date.valueOf(dateFin));
 	// execute update SQL statement
-	preparedStatement.executeUpdate();
+	update.executeUpdate();
     }
     
         */
