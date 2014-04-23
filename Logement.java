@@ -17,7 +17,7 @@ class Logement{
     public void ajouterLogement(String adr, String surface, String ville, String dateDep, String dateFin, String prix, String prixMois, String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
-
+	
 	this.ajouterLogementLogement(adr, surface, ville);
 	int id_logement=this.getIdLogement(adr, surface, ville);
 	int id_proprio=this.getIdProprietaire(pseudo);
@@ -46,7 +46,7 @@ class Logement{
 	
     }
     
-    public void modifierLogement() throws SQLException{
+    public void modifierLogement(int id_prop, String prix, String prixMois) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
     	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation,transport");
@@ -54,6 +54,13 @@ class Logement{
     	//4. apres la modification on affiche toutes les informations liees a ce logement
     	//5. qqch comme : print("0-retour, 1-modifier un autre logement");
     	//ON APPELLE LES "SOUS"FONCTIONS MODIF
+    	boolean prixB=false, prixMoisB=false;
+    	
+    	if(prix!="") prixB=true;
+    	if(prixM!="") prixM=true;
+    	
+    	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
+    	
     	
     }
 
@@ -258,10 +265,8 @@ class Logement{
 	}
     }
 	/* //A VERIFIER SI CA MARCHE !!
-    public void modifierLogementPrix(int id_prop, int prix, int prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
+    public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 	
-    	//UPDATE table_name SET column1=value1,column2=value2,... WHERE some_column=some_value;
-    	//id_dispo, id_logement,prix,prix_mois)
 	String req ="UPDATE prix_logement SET ";
 	if(prixB && prixMoisB) req +="prix=?,"+prix+"prixMois=?"+prixMois; //modif prix et prixMois
 	else if(prixB && !prixMoisB) req+="prix=?"+prix; //modif prix uniquement
@@ -272,10 +277,25 @@ class Logement{
 	PreparedStatement preparedStatement = dbConnection.prepareStatement(req);
 	preparedStatement.setString(1, prix);
 	preparedStatement.setInt(2, prixMois);
-	// execute insert SQL stetement
-	preparedStatement .executeUpdate();
+	// execute update SQL statement
+	preparedStatement.executeUpdate();
 	
     }
 	*/
+	/*
+    public void modifierLogementDispo(int id_logement, String dateDep, String dateFin, String prix, String prixMois ) throws SQLException{
+
+	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_logement="+id_logement;
+
+	PreparedStatement preparedStatement = dbConnection.prepareStatement(req);
+	preparedStatement.setDate(1, java.sql.Date.valueOf(dateDep));
+	preparedStatement.setDate(2, java.sql.Date.valueOf(dateFin));
+	// execute update SQL statement
+	preparedStatement.executeUpdate();
+    }
+    
+        */
+
+
 
 }
