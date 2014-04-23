@@ -6,9 +6,10 @@ import java.text.ParseException;
 
 public class Location {
 
-    PreparedStatement select=null;
+    PreparedStatement select=null, select2=null;
     PreparedStatement insert=null;
-    ResultSet result = null;
+    PreparedStatement delete=null;
+    ResultSet result = null, result2=null;
     Connection conn = null;
 
     public Location(Connection conn){
@@ -180,16 +181,121 @@ public class Location {
 	
 	// pour les transports, on vérifie s'il reste des véhicules disponibles
 	// comment controler les véhicules disponibles en tenant compte des réservations déjà faites
+
 	int id_transport=-1, prixTransport=0;
 	String avecTransport="";
-	select = conn.prepareStatement("SELECT id_service_transport, prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement + " AND nb_vehicule > 0 ");
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	String heure_aller="", heure_retour="";
+	Date date_aller =null, date_retour=null;
+	String rep_aller="", rep_retour="";
+
+	// on vérifie qu'il y a un service de transport
+	select = conn.prepareStatement("SELECT id_service_transport, prix_transport, nb_vehicule FROM propose_transport NATURAL JOIN service_transport WHERE id_logement =" + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.print("Avec transport? (O/N): ");
-	    if( (avecTransport=Utils.readString("O|N")).equals("O")){
-		id_transport=result.getInt(1);
-		prixTransport=result.getInt(2);
+	    id_transport =  result.getInt(1);
+	    prixTransport=result.getInt(2);
+	    int nbVehicule = result.getInt(3);
+
+	    // on supprime les réservations dépassées
+	    delete = conn.prepareStatement("DELETE FROM avec_transport WHERE date_reservation + interval ' 30 minutes ' < CURRENT_TIMESTAMP ");
+	    delete.executeUpdate();
+
+	    // vérifie le nombre de réservation
+	    select2 = conn.prepareStatement("SELECT COUNT(*) FROM avec_transport WHERE id_service_transport=" + id_transport );
+	    result2 = select2.executeQuery();
+	    if( result2.next()){
+		int nbReservations = result2.getInt(1);
+	    
+		// vérifie qu'il reste des végicules disponibles
+		if( nbReservations < nbVehicule){
+
+		    System.out.print("Avec transport? (O/N): ");
+		    if( (avecTransport=Utils.readString("O|N")).equals("O")){
+		
+			// affiche les réservations déjà faites
+			System.out.println("Liste des réservations: ");
+			select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport);
+			result2 = select2.executeQuery();
+			while(result2.next()) {
+			    System.out.println(result2.getString(1));
+			}
+
+			System.out.println("");
+			// vérifie heure aller et retour
+			int erreurHeure=1;
+			do{
+			    erreurHeure=1;
+			    System.out.print("heure_aller (O/N): ");
+			    rep_aller=Utils.readString("O|N");
+			    
+			    System.out.print("heure: ");
+			    heure_aller=Utils.readString("(\\d{2}:\\d{2})|");
+			    try{
+				date_aller = format.parse(dateDep + " " +heure_aller);
+			    } catch (ParseException ex){
+				ex.printStackTrace();
+			    }
+			    System.out.print("heure_retour (O/N): ");
+			    // on arrête si N et N
+			    if( (rep_retour=Utils.readString("O|N")).equals("N") && rep_aller.equals("N") )
+				break;
+
+			    System.out.print("heure: ");
+			    heure_retour=Utils.readString("(\\d{2}:\\d{2})|");
+			    try{
+				date_retour= format.parse(dateFin + " " +heure_retour);
+			    } catch (ParseException ex){
+				ex.printStackTrace();
+			    }
+			    // vérifie si c'est disponible
+			    result2 = select2.executeQuery();
+			    Date date_reserv= null;
+			    while(result2.next()) {
+				try{
+				    date_reserv=format.parse(result2.getString(1));
+				} catch (ParseException ex){
+				    ex.printStackTrace();
+				}
+				// si c'est à la même date
+				if(date_reserv.equals(date_aller)){
+				    long diff_aller = Math.abs( date_reserv.getTime() - date_aller.getTime() );
+				    long diffHours_aller = diff_aller / (60 * 60 * 1000) % 24;
+
+				    // si c'est à la même heure
+				    if( diffHours_aller==0){
+					long diffMinutes_aller = diff_aller / (60 * 1000) % 60;
+					
+					// indisponible si diff < 30 
+					if(diffMinutes_aller < 30){
+					    System.out.println("impossible");
+					    erreurHeure=0;
+					}
+				    }
+				}
+				// de même pour le retour 
+				if(date_reserv.equals(date_aller)){
+				    long diff_aller = Math.abs( date_reserv.getTime() - date_aller.getTime() );
+				    long diffHours_aller = diff_aller / (60 * 60 * 1000) % 24;
+
+				    // si c'est à la même heure
+				    if( diffHours_aller==0){
+					long diffMinutes_aller = diff_aller / (60 * 1000) % 60;
+					
+					// indisponible si diff < 30 
+					if(diffMinutes_aller < 30){
+					    System.out.println("impossible");
+					    erreurHeure=0;
+					}
+				    }
+				}
+			    }
+			} while(erreurHeure==0);
+
+		    }
+		}
 	    }
+
 	}
 	
 
@@ -262,12 +368,22 @@ public class Location {
 
 
 	// insertion dans la table avec_transport si nécessaire
-	if( avecTransport.equals("O")){
-	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?)");
+	if( avecTransport.equals("O") && rep_aller.equals("O") ){
+	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
+	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateDep + " " +heure_aller));
 	    insert.executeUpdate();
 	}
+
+	if( avecTransport.equals("O") && rep_retour.equals("O") ){
+	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
+	    insert.setInt(1, id_location);
+	    insert.setInt(2, id_transport);
+	    insert.setTimestamp(3, java.sql.Timestamp.valueOf(dateFin + " " +heure_retour));
+	    insert.executeUpdate();
+	}
+
 
     }
 
