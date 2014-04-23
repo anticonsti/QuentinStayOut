@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 
+
 public class Location {
 
     PreparedStatement select=null, select2=null;
@@ -168,6 +169,7 @@ public class Location {
 	// pour les prestations, on vérifie s'il y en a d'abord
 	int id_prestation=-1, prixPrestation=0;
 	String avecPrestation="";
+
 	select = conn.prepareStatement("SELECT id_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
@@ -177,10 +179,10 @@ public class Location {
 		prixPrestation=result.getInt(2);
 	    }
 	}
-
+	
 	
 	// pour les transports, on vérifie s'il reste des véhicules disponibles
-	// comment controler les véhicules disponibles en tenant compte des réservations déjà faites
+	// controler les véhicules disponibles en tenant compte des réservations déjà faites
 
 	int id_transport=-1, prixTransport=0;
 	String avecTransport="";
@@ -227,14 +229,15 @@ public class Location {
 			do{
 			    erreurHeure=1;
 			    System.out.print("heure_aller (O/N): ");
-			    rep_aller=Utils.readString("O|N");
+			    if( (rep_aller=Utils.readString("O|N")).equals("O") ){
 			    
-			    System.out.print("heure (hh:mm): ");
-			    heure_aller=Utils.readString("(\\d{2}:\\d{2})|");
-			    try{
-				date_aller = format.parse(dateDep + " " +heure_aller + ":00");
-			    } catch (ParseException ex){
-				ex.printStackTrace();
+				System.out.print("heure (hh:mm): ");
+				heure_aller=Utils.readString("(\\d{2}:\\d{2})|");
+				try{
+				    date_aller = format.parse(dateDep + " " +heure_aller + ":00");
+				} catch (ParseException ex){
+				    ex.printStackTrace();
+				}
 			    }
 			    System.out.print("heure_retour (O/N): ");
 			    // on arrête si N et N
@@ -261,31 +264,34 @@ public class Location {
 				if(date_reserv.equals(date_aller)){
 				    long diff_aller = Math.abs( date_reserv.getTime() - date_aller.getTime() );
 				    long diffHours_aller = diff_aller / (60 * 60 * 1000) % 24;
-
+				    System.out.println("diffH :" + diffHours_aller);
 				    // si c'est à la même heure
 				    if( diffHours_aller==0){
 					long diffMinutes_aller = diff_aller / (60 * 1000) % 60;
-					
+					System.out.println("diffmin :" + diffMinutes_aller);
 					// indisponible si diff < 30 
 					if(diffMinutes_aller < 30){
 					    System.out.println("impossible");
 					    erreurHeure=0;
+					    break;
 					}
 				    }
 				}
 				// de même pour le retour 
-				if(date_reserv.equals(date_aller)){
-				    long diff_aller = Math.abs( date_reserv.getTime() - date_aller.getTime() );
-				    long diffHours_aller = diff_aller / (60 * 60 * 1000) % 24;
+				if(date_reserv.equals(date_retour)){
+				    // getTime() en ms
+				    long diff_retour = Math.abs( date_reserv.getTime() - date_retour.getTime() );
+				    long diffHours_retour = diff_retour / (60 * 60 * 1000) % 24;
 
 				    // si c'est à la même heure
-				    if( diffHours_aller==0){
-					long diffMinutes_aller = diff_aller / (60 * 1000) % 60;
+				    if( diffHours_retour==0){
+					long diffMinutes_retour = diff_retour / (60 * 1000) % 60;
 					
 					// indisponible si diff < 30 
-					if(diffMinutes_aller < 30){
+					if(diffMinutes_retour < 30){
 					    System.out.println("impossible");
 					    erreurHeure=0;
+					    break;
 					}
 				    }
 				}
