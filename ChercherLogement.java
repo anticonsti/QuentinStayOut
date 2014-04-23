@@ -70,7 +70,7 @@ public class ChercherLogement {
     public int afficheLogements()throws SQLException{
 
 	int resultats = 0;
-	String requete ="SELECT * FROM logement";
+	String requete = "SELECT * FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location";
 	select = conn.prepareStatement(requete);
 	result = select.executeQuery();
 
@@ -121,13 +121,32 @@ public class ChercherLogement {
 	System.out.print("Date fin disponibilité: ");
 	String dfd = Utils.readString("(((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01]))|");
 
-	System.out.print("Suggestions: ");
-	String suggestions = Utils.readString("[A-Za-z ]{0,100}");
+	String avec_suggestions="", suggestions="";
+	System.out.print("Avec suggestions ? (O/N): ");
+	if( (avec_suggestions=Utils.readString("O|N")).equals("O")){
+	    System.out.print("nom suggestion: ");
+	    suggestions = Utils.readString("[A-Za-z ]{0,100}");
+	}
 
-	System.out.print("Prestations: ");
-	String prestations = Utils.readString("[A-Za-z ]{0,100}");
+	String avec_prestations="", prestations="";
+	System.out.print("Avec prestations ? (O/N): ");
+	if( (avec_prestations=Utils.readString("O|N")).equals("O")){
+	    System.out.print("nom prestation: ");
+	    prestations = Utils.readString("[A-Za-z ]{0,100}");
+	}
 
-	System.out.print("Prix (Inférieur[I], Supérieur[S], Egale[E]): ");
+	String avec_transport="", heure_aller="", heure_retour="";
+	System.out.print("Avec transport ? (O/N): ");
+	if( (avec_transport=Utils.readString("O|N")).equals("O")){
+
+	    System.out.print("Heure aller (hh:mm): ");
+	    heure_aller=Utils.readString("(\\d{2}:\\d{2})|");
+
+	    System.out.print("Heure retour (hh:mm): ");
+	    heure_retour=Utils.readString("(\\d{2}:\\d{2})|");
+	}
+
+	System.out.print("Prix/nuit (Inférieur[I], Supérieur[S], Egale[E]): ");
 	String rapport = Utils.readString("[ISE]{0,1}");
 	System.out.print("à: ");
 	String prix = Utils.readString("[0-9]{0,10}");
@@ -136,12 +155,12 @@ public class ChercherLogement {
 	String affichage = Utils.readString("[ON]{1}");
 	System.out.println();
 	
-	if(adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && suggestions.equals("") && prestations.equals("") && prix.equals("")){
+	if(adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && avec_suggestions.equals("N") &&  avec_prestations.equals("N")  && avec_transport.equals("N") && prix.equals("")){
 	    return 0;
 	}
 
 	String requete;
-	if( !suggestions.equals("") && prestations.equals("") ){
+	if( avec_suggestions.equals("O") && avec_prestations.equals("N") ){
 
 	    requete = "SELECT adresse_logement, surface, ville, date_debut_dispo, date_fin_dispo, nom_suggestion, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN suggestion NATURAL JOIN propose_suggestion WHERE";
 
