@@ -163,7 +163,7 @@ public class ChercherLogement {
 	    return 0;
 	}
 	
-	String requete =" SELECT id_logement FROM logement ";
+	String requete =" SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement ";
 	if ( type_log.equals("A") )
 	    requete += " NATURAL JOIN appartement ";
 
@@ -213,14 +213,14 @@ public class ChercherLogement {
 		requete.replace('=','>');
 	}
 	if(affichage.equals("O")){
-	    requete += " ORDER BY prix";
+	    requete += " ORDER BY prix ";
 	}
 
 	if( !heure_aller.equals("") && !ddd.equals("") )
-	    requete = " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
+	    requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
 
 	if( !heure_retour.equals("") && !dfd.equals("") )
-	    requete = " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
+	    requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
 
 	requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
 
