@@ -34,7 +34,7 @@ public class Location {
 		    System.out.print("id_logement: ");
 		    id_logement = Utils.readString("[0-9]{1,5}");
 
-		    select = conn.prepareStatement("SELECT id_logement FROM logement WHERE id_logement = "+ id_logement +" EXCEPT (SELECT id_logement FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location )");
+		    select = conn.prepareStatement("SELECT DISTINCT id_logement FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo != date_debut_location AND date_fin_dispo != date_fin_location AND id_logement = "+ id_logement);
 		    result = select.executeQuery();
 		    rsNext = result.next();
 		    if(rsNext==false)
