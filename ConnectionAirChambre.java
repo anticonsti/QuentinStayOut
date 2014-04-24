@@ -9,6 +9,7 @@ class ConnectionAirChambre {
     public ConnectionAirChambre(String login, String motPasse) throws SQLException, ClassNotFoundException{
 	Class.forName("org.postgresql.Driver");
 	conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb",login, motPasse);
+	//conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",login, motPasse);    
     }
 
     // fermeture de la connection

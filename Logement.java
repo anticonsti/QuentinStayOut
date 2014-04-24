@@ -57,11 +57,11 @@ class Logement{
     	//ON APPELLE LES "SOUS"FONCTIONS MODIF
     	boolean prixB=false, prixMoisB=false;
     	
-    	//if(prix!="") prixB=true;
-    	//if(prixM!="") prixMoisB=true;
+    	if(prix!="") prixB=true;
+    	if(prixMois!="") prixMoisB=true;
     	
-    	//modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
-    	//modifierLogementDispo(id_logement, dateDep, dateFin)
+    	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
+    	modifierLogementDispo(id_logement, dateDep, dateFin);
     	
     }
 
@@ -257,7 +257,7 @@ class Logement{
 	    System.out.println("| "+result.getString(4));
 	}
     }
-	/* //A VERIFIER SI CA MARCHE !!
+	 //A VERIFIER SI CA MARCHE !!
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 	
 	String req ="UPDATE prix_logement SET ";
@@ -269,13 +269,13 @@ class Logement{
 	
 	update = conn.prepareStatement(req);
 	update.setString(1, prix);
-	update.setInt(2, prixMois);
+	update.setString(2, prixMois);
 	// execute update SQL statement
 	update.executeUpdate();
 	
     }
-	*/
-	/*
+	
+	
     public void modifierLogementDispo(int id_logement, String dateDep, String dateFin) throws SQLException{
 
 	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_logement="+id_logement;
@@ -287,8 +287,7 @@ class Logement{
 	update.executeUpdate();
     }
     
-        */
+        
 
 
-//changement visible ? configuration sous windows xp eclipse.
 }
