@@ -290,5 +290,5 @@ class Logement{
         */
 
 
-
+//changement visible ? configuration sous windows xp eclipse.
 }
