@@ -345,7 +345,7 @@ public class MenuProprietaireConnexion{
 				Utils.printEntete("GESTION DES OFFRES PROMOTIONNELLES");
 				offre.printMenuOffre(id_proprio);
 				this.printMenu(pseudo);
-
+				break;
 			case 5:
 				Utils.printEntete("MODIFICATION D'UN LOGEMENT");				
 				
@@ -353,6 +353,7 @@ public class MenuProprietaireConnexion{
 
 			default:
 				this.printMenu(pseudo);
+				break;
 			}
 			choix = Utils.readInt();
 		    } // fin while
