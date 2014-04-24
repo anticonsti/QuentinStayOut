@@ -212,24 +212,22 @@ public class ChercherLogement {
 	    else if(rapport.equals("S"))
 		requete.replace('=','>');
 	}
+
+	if( !heure_aller.equals("") && !ddd.equals("") )
+	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
+
+	if( !heure_retour.equals("") && !dfd.equals("") )
+	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
+
+	requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+
+
 	if(affichage.equals("O")){
 	    requete += " ORDER BY prix ";
 	}
 
-	if( !heure_aller.equals("") && !ddd.equals("") )
-	    requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
-
-	if( !heure_retour.equals("") && !dfd.equals("") )
-	    requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
-
-	requete += " EXCEPT SELECT id_logement FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
-
-
 	select = conn.prepareStatement(requete);
 	result = select.executeQuery();
-
-	// compter le nombre de résultat
-	this.nbResultat(requete, conn, select, result);
 	
 	// affiche les résultats
 	int resultats = 0;
@@ -239,20 +237,23 @@ public class ChercherLogement {
 	    
 	    select2 = conn.prepareStatement("SELECT * FROM logement WHERE id_logement=" + id_logement);
 	    result2 = select2.executeQuery();
-	    System.out.println("id_logement: " + result2.getString(1));
-	    System.out.println("adresse_logement: " + result2.getString(2));
-	    System.out.println("surface: " + result2.getString(3));
-	    System.out.println("ville: "+result2.getString(4));
+	    if( result2.next()){
+		System.out.println("id_logement: " + result2.getString(1));
+		System.out.println("adresse_logement: " + result2.getString(2));
+		System.out.println("surface: " + result2.getString(3));
+		System.out.println("ville: "+result2.getString(4));
+	    }
 
 	    select2 = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, prix, prix_mois FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
-	    System.out.println("date_debut_dispo: " +result2.getString(1));
-	    System.out.println("date_fin_dispo: " +result2.getString(2));
-	    System.out.println("prix/nuit: " + result2.getString(3));
-	    String prixMois = result2.getString(4);
-	    if( prixMois !=null )
-		System.out.println("prix/mois: " + result2.getString(4));
-	    
+	    if( result2.next()){
+		System.out.println("date_debut_dispo: " +result2.getString(1));
+		System.out.println("date_fin_dispo: " +result2.getString(2));
+		System.out.println("prix/nuit: " + result2.getString(3));
+		String prixMois = result2.getString(4);
+		if( prixMois !=null )
+		    System.out.println("prix/mois: " + result2.getString(4));
+	    }
 
 	    select2 = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
@@ -262,7 +263,7 @@ public class ChercherLogement {
 	    }
 
 
-	    select2 = conn.prepareStatement("SELECT desc_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement=" +  id_logement);
+	    select2 = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
 	    if( result2.next() ){
 		System.out.println("prestation: " +result2.getString(1));
