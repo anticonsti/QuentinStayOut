@@ -71,13 +71,15 @@ public class Navigation {
     public static void main(String[] args) {
 
 	// Verification des parametres
-	if (args.length != 1)
+	
+    	if (args.length != 1)
 	    usage();
 	
 	try{
 
 	    // Connexion a la base
 	    String password = Utils.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
+	    
 	    connecte = new ConnectionAirChambre(args[0], password);
 
 
