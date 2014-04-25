@@ -52,7 +52,7 @@ public class Location {
 		}while( rsNext == false);
 		
 		// détails du logement
-		Utils.printEntete("VOTRE LOGEMENT");
+		Utils.printEntete("VOTRE LOGEMENT " + id_logement);
 		this.detailsLogement(id_logement);
 
 		System.out.print("Louer ? (O/N): ");
@@ -76,20 +76,23 @@ public class Location {
     
     public void detailsLogement(String id_logement) throws SQLException {
 
-	select = conn.prepareStatement("SELECT * FROM logement WHERE id_logement = " + id_logement);
+	select=conn.prepareStatement("SELECT nom_proprietaire, prenom_proprietaire FROM proprietaire NATURAL JOIN propose_logement WHERE id_logement="+ id_logement);
+	result = select.executeQuery();
+	if( result.next() ){
+	    System.out.println("propriétaire: " +result.getString(1) + " " + result.getString(2));
+	}
+
+	select = conn.prepareStatement("SELECT adresse_logement, surface, ville FROM logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("id_logement: " + String.valueOf(result.getInt(1)));
-	    System.out.println("adresse: " +result.getString(2));
-	    System.out.println("surface: " +result.getString(3));
-	    System.out.println("ville: " +result.getString(4));
+	    System.out.println("adresse: " +result.getString(1) + ", " + result.getString(3));
+	    System.out.println("surface: " +result.getString(2));
 	}
 
 	select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min, prix, prix_mois FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("date_debut_dispo: " + result.getDate(1));
-	    System.out.println("date_fin_dispo: " +result.getDate(2));
+	    System.out.println("disponibilité: " + result.getString(1) + " -- " + result.getString(2));
 	    int sej = result.getInt(3);
 	    if( sej !=0 )
 		System.out.println("sejour_min: " +String.valueOf(sej));
@@ -202,9 +205,9 @@ public class Location {
 			dateDLocat=sdf.parse(result.getString(1));
 			dateFLocat=sdf.parse(result.getString(2));
 
-			if( ( date1.after(dateDLocat) && date1.before(dateFLocat) ) || (date2.after(dateDLocat) && date2.before(dateFLocat)) ){
+			if( date1.equals(dateDLocat) || date1.equals(dateFLocat) || date2.equals(dateDLocat) || date2.equals(dateFLocat) || (date1.after(dateDLocat) && date1.before(dateFLocat) ) || (date2.after(dateDLocat) && date2.before(dateFLocat)) ){
 			    erreurDate=0;
-			    System.out.println("Erreur sur la date de location");
+			    System.out.println("Déjà occupé");
 			    break;
 			}
 		    }
