@@ -400,7 +400,7 @@ public class Location {
 	// appliquer le prix selon la durée de location
 
 	int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
-	int montant=0;
+	double montant=0;
 
 	select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
@@ -414,13 +414,20 @@ public class Location {
 		montant +=(result.getInt(1)*duree);
 	    }
 	}
+	
+	// réduction 10% 
+	select = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
+	if(result.next())
+	    if( result.getInt(1) >= 2 )
+		montant *= 0.9;
+
 	montant += prixPrestation + prixTransport;
 
 	int id_location =-1;
 	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?) RETURNING id_location " );
 	insert.setDate(1, java.sql.Date.valueOf(dateDep));
 	insert.setDate(2, java.sql.Date.valueOf(dateFin));
-	insert.setInt(3, montant);
+	insert.setDouble(3, montant);
 	result=insert.executeQuery();
 	if(result.next())
 	    id_location = result.getInt(1);
