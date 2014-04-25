@@ -15,7 +15,7 @@ public class PublierAnnonce {
 	System.out.print("\033c");
 	System.out.println("PUBLIER ANNONCE");
 	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - retour");
+	System.out.println("0 - Retour");
 	System.out.println("1 - S'inscrire");
 	System.out.println("2 - Se connecter");
 	System.out.println("-------------------------------------------------------------");
@@ -26,90 +26,77 @@ public class PublierAnnonce {
 	this.printMenu();
 	int choix = Utils.readInt();
 
-	while( choix!=0 ){
+	try{
+	    while( choix!=0 ){
 
-	    if( choix ==1 ){
-		Utils.printEntete("INSCRIPTION");
+		switch(choix){
 
-		System.out.println("Nom (1~20caracteres)");
-		String nom = Utils.readString("[A-Za-z]{1,20}");
-	   
-		System.out.println("Prenom (1~30caracteres)");
-		String prenom = Utils.readString("[A-Za-z]{1,30}");
+		case 1:
+		    Utils.printEntete("INSCRIPTION");
 
-		int verifPseudo=1;
-		String pseudo = "";
-		do {
-		    verifPseudo=1;
-		    System.out.println("Pseudo (1~30caracteres)");
-		    pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
+		    System.out.print("Nom (1~20caracteres): ");
+		    String nom = Utils.readString("[A-Za-z]{1,20}");
+		    System.out.print("Prenom (1~30caracteres): ");
+		    String prenom = Utils.readString("[A-Za-z]{1,30}");
 
-		    // vérifie si le pseudo n'existe pas
-		    try{
+		    int verifPseudo=1;
+		    String pseudo = "";
+		    do {
+			verifPseudo=1;
+			System.out.print("Pseudo (1~30caracteres): ");
+			pseudo = Utils.readString("[A-Za-z0-9]{1,30}");
+
+			// vérifie si le pseudo n'existe pas
 			select = conn.prepareStatement("SELECT pseudo FROM proprietaire");
 			result = select.executeQuery();
 			while(result.next()){
 			    if(pseudo.equals(result.getString(1))){
-				System.out.println("pseudo existant");
+				System.out.println("Pseudo existant");
 				verifPseudo=0;
 				break;
 			    }
 			}
-		    } catch (SQLException e) {
-			System.err.println(e.getMessage());
-		    }
-		}while(verifPseudo==0);
+		    }while(verifPseudo==0);
 	   
-		String mdp="",mdp2="";
-		do{
-		    System.out.println("Mot de passe (1~30caracteres)");
-		    mdp = Utils.readString("[A-Za-z0-9]{1,30}");
+		    String mdp="",mdp2="";
+		    do{
+			System.out.print("Mot de passe (1~30caracteres): ");
+			mdp = Utils.readString("[A-Za-z0-9]{1,30}");
 
-		    System.out.println("Saisir à nouveau le mot de passe");
-		    mdp2 = Utils.readString("[A-Za-z0-9]{1,30}");
-		}while(!mdp.equals(mdp2)); 
+			System.out.print("Saisir à nouveau le mot de passe: ");
+			mdp2 = Utils.readString("[A-Za-z0-9]{1,30}");
+		    }while(!mdp.equals(mdp2)); 
 
-		try{
 		    this.inscription(nom, prenom, pseudo, mdp);
-		} catch (SQLException e) {
-		    System.err.println(e.getMessage());
-		}
-
-		// affichage après 1.3s 
-		try {
 		    Thread.sleep(1300);
-		} catch (InterruptedException e) {
-		    System.err.println(e.getMessage());
-		}
-		this.printMenu();
+		    this.printMenu();
+		    break;
 
-	    } else if( choix ==2 ){
 
-		Utils.printEntete("CONNEXION");
+		case 2 :
+		    Utils.printEntete("CONNEXION");
 
-		System.out.print("Pseudo: ");
-		String id = Utils.readString("[A-Za-z0-9]{1,20}");
-		String pw = Utils.readPassword("Password: ");
-		try{
+		    System.out.print("Pseudo: ");
+		    String id = Utils.readString("[A-Za-z0-9]{1,20}");
+		    String pw = Utils.readPassword("Password: ");
+
 		    if( this.connection(id,pw) == 1 ){
 			MenuProprietaireConnexion mpc = new MenuProprietaireConnexion(conn);
 			mpc.printMenuProprietaireConnexion(id);
-		    } else{
-			try {
-			    Thread.sleep(1300);
-			} catch (InterruptedException e) {
-			    System.err.println(e.getMessage());
-			}
-		    }
-		} catch (SQLException e) {
-		    System.err.println(e.getMessage());
-		}
-		this.printMenu();
+		    } else
+			Thread.sleep(1300);
 
-	    } else {
-		this.printMenu();
+		    this.printMenu();
+		    break;
+
+		default:
+		    this.printMenu();
+		
+		}
+		choix = Utils.readInt();
 	    }
-	    choix = Utils.readInt();
+	}catch (SQLException | InterruptedException e) {
+	    System.err.println(e.getMessage());
 	}
 
     }
@@ -138,8 +125,7 @@ public class PublierAnnonce {
 	    if(result.getString(1).equals(pw)){
 		System.out.println("Connexion etablie");
 		return 1;
-	    }
-	    else
+	    } else
 		System.out.println("Le mot de passe est incorrecte");
 	}else
 	    System.out.print("Le pseudo n'existe pas");
