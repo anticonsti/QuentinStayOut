@@ -42,13 +42,13 @@ public class ModifierLogement{
 
 
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
-	
+
 	String req ="UPDATE prix_logement SET ";
-	if(prixB && prixMoisB) req +="prix=?,"+prix+"prixMois=?"+prixMois; //modif prix et prixMois
+	if(prixB && prixMoisB) req +="prix=?, "+prix+"prixMois=?"+prixMois; //modif prix et prixMois
 	else if(prixB && !prixMoisB) req+="prix=?"+prix; //modif prix uniquement
 	else req+="prixMois=?"+prixMois; //modif prixMois uniquement
 	
-	req+=" WHERE id_prop=?"+id_prop;
+	req+=" WHERE id_prop="+id_prop;
 	
 	update = conn.prepareStatement(req);
 	update.setString(1, prix);
@@ -99,7 +99,6 @@ public class ModifierLogement{
 
     public void modifierLogementChambre(int id_logement, String numero, String surface) throws SQLException{
     	String req="UPDATE chambre SET numero_chambre=? WHERE id_logement="+id_logement;
-    	//SURFACE CHAMBRE !!! ATTENTION CHAMBRE&APPARTMENT -> LOGEMENT
     	update = conn.prepareStatement(req);
     	update.setInt(1, Integer.parseInt(numero));
     	// execute update SQL statement
@@ -161,7 +160,9 @@ public class ModifierLogement{
 	System.out.print("Logement à modifier: ");
 	int id_logement = Utils.readInt();
 
-	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " AND id_logement = " + String.valueOf(id_logement) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne ");
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire ="
+			+ String.valueOf(id_prop) + " AND id_logement = "
+			+ String.valueOf(id_logement) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne ");
 
 	result = select.executeQuery();
 	if(result.next())
