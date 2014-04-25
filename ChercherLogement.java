@@ -103,7 +103,7 @@ public class ChercherLogement {
 	    if( result3.next() ){
 		System.out.println("id_logement: "+id_logement + ", chambre n°" + result3.getString(1));
 	    } else {
-		select3=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+		select3=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
 		result3 = select3.executeQuery();
 		if( result3.next() )
 		    System.out.println("id_logement: "+id_logement + ", appartement " + result3.getString(1) + " pièces ");

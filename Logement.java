@@ -4,10 +4,10 @@ import java.io.*;
 class Logement{
     
     PreparedStatement insert=null;
-    PreparedStatement select=null;
+    PreparedStatement select=null, select2=null;
     PreparedStatement update=null;
     PreparedStatement delete=null;
-    ResultSet result = null;
+    ResultSet result = null, result2=null;
     Connection conn = null;
     
     public Logement(Connection conn){
@@ -243,16 +243,30 @@ class Logement{
     public void listeLogement(int id_prop) throws SQLException{
 	
 	select = conn.prepareStatement("SELECT * FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire=" + String.valueOf(id_prop) );
-	Utils.print("id_logement", 15);
-	Utils.print("| adresse", 40);
+	Utils.print("id_logement", 10);
+	Utils.print("| type", 15);
+	Utils.print("| adresse", 15);
 	Utils.print("| surface", 9);
 	System.out.println("| ville");
 	System.out.println("--------------------------------------------------------------------------");
 
 	result = select.executeQuery();
 	while (result.next()) {
-	    Utils.print(String.valueOf(result.getInt(1)),15);
-	    Utils.print("| "+result.getString(2), 40);
+	    String id_logement = result.getString(1);
+	    Utils.print(id_logement,10);
+
+	    select2=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	    result2 = select2.executeQuery();
+	    if( result2.next() ){
+		Utils.print("| chambre n°" + result2.getString(1), 15);
+	    } else {
+		select2=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if( result2.next() )
+		    Utils.print("| apt. " + result2.getString(1) + " pièces", 15);
+	    }
+
+	    Utils.print("| "+result.getString(2), 15);
 	    Utils.print("| "+result.getString(3), 9 );
 	    System.out.println("| "+result.getString(4));
 	}

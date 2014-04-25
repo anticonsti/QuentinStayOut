@@ -87,7 +87,7 @@ public class Location {
 	if( result.next() ){
 	    System.out.println("Chambre n°" + result.getString(1));
 	} else {
-	    select=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	    select=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
 	    result = select.executeQuery();
 	    if( result.next() )
 		System.out.println("Appartement " + result.getString(1) + " pièces ");
