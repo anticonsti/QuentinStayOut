@@ -15,9 +15,7 @@ class Logement{
     }
 
 
-    public void ajouterLogement(String adr, String surface, String ville,
-    		String dateDep, String dateFin, String prix, String prixMois,
-    		String pseudo) throws SQLException{
+    public void ajouterLogement(String adr, String surface, String ville, String dateDep, String dateFin, String prix, String prixMois,String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 	
@@ -274,5 +272,49 @@ class Logement{
     }
 
 
+    public int verifLocation(int id_prop) throws SQLException{
 
+	select = conn.prepareStatement("SELECT id_logement FROM propose_logement NATURAL JOIN concerne WHERE id_proprietaire= " + String.valueOf(id_prop) );
+	result = select.executeQuery();
+	if ( result.next() )
+	    return 1;
+
+	return 0;
+    }
+
+    public void afficheListeLocation(int id_prop) throws SQLException{
+
+	select = conn.prepareStatement("SELECT id_logement, nom_locataire, prenom_locataire, adresse_locataire, num_tel, email, date_debut_location, date_fin_location, montant_total, prix, prix_mois, id_location FROM prix_logement NATURAL JOIN propose_logement NATURAL JOIN concerne NATURAL JOIN location NATURAL JOIN loge NATURAL JOIN locataire WHERE id_proprietaire= " + String.valueOf(id_prop) );
+	result = select.executeQuery();
+
+	while( result.next() ){
+	    System.out.println("");
+
+	    System.out.println("Logement: "+ result.getString(1));
+	    System.out.println("Locataire: "+ result.getString(2) + " " + result.getString(3));
+	    System.out.println("Adresse: "+ result.getString(4));
+	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
+	    System.out.println("Période: "+ result.getString(7) + " -- " +  result.getString(8));
+	    System.out.println("Montant total: "+ result.getString(9) + "€");
+	    System.out.println("dont: "+ result.getString(10) + "€ (logement)");
+
+	    String id_location =  result.getString(12);
+	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
+	    result2 = select2.executeQuery();
+	    if( result2.next() )
+		System.out.println("    + "+ result2.getString(1) + "€ (" + result2.getString(2) + ")" );
+
+
+	    select2 = conn.prepareStatement("SELECT prix_transport, date_reservation FROM service_transport NATURAL JOIN avec_transport WHERE id_location = " + id_location);
+	    result2 = select2.executeQuery();
+	    while( result2.next() )
+		System.out.println("    + "+ result2.getString(1) + "€ (" + result2.getString(2) + ")" );
+
+	    System.out.println("");
+	    System.out.println("--------------------------------------------------------------------------");
+	    
+	}
+
+    }
+    
 }

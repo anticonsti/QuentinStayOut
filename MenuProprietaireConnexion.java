@@ -201,9 +201,22 @@ public class MenuProprietaireConnexion{
 		    offre.printMenuOffre(id_proprio);
 		    this.printMenu(pseudo);
 		    break;
+
 		case 5:
 		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");				
 				
+		    break;
+
+		case 6:
+		    Utils.printEntete("LISTE DES LOCATIONS");
+		    if( lgm.verifLocation(id_proprio) == 1 ){
+			lgm.afficheListeLocation(id_proprio);
+			this.printRappelCommande();
+		    } else {
+			System.out.println("Pas de location");
+			Thread.sleep(1300);
+			this.printMenu(pseudo);
+		    }
 		    break;
 
 		default:
