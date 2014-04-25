@@ -47,7 +47,9 @@ class Logement{
 	
     }
     
-    public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois, String dateDep, String dateFin, String dateDepPromo, String dateFinPromo, String prixPromo) throws SQLException{
+    public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois,
+    			String dateDep, String dateFin, String dateDepPromo, String dateFinPromo,
+    			String prixPromo, String pieces, String numero) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
     	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation,transport");
@@ -60,9 +62,15 @@ class Logement{
     	if(prix!="") prixB=true;
     	if(prixMois!="") prixMoisB=true;
     	
+    	modifierLogementAppartement(id_logement,pieces);
+    	modifierLogementChambre(id_logement,numero);
     	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
+    	//possible que pour les logements libre
     	modifierLogementDispo(id_logement, dateDep, dateFin);
     	modifierOffrepromo(id_logement, dateDepPromo, dateFinPromo, prixPromo);
+    
+    
+    
     }
 
 
@@ -291,7 +299,6 @@ class Logement{
     }
 
 
-    //A VERIFIER SI CA MARCHE !!
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 	
 	String req ="UPDATE prix_logement SET ";
@@ -320,11 +327,38 @@ class Logement{
 	// execute update SQL statement
 	update.executeUpdate();
     }
-    
-    public void modifierOffrepromo(int id_logement, String dateDepPromo, String dateFinPromo, String prixPromo) throws SQLException{       
 
-    	
-    	
+    public void modifierOffrepromo(int id_logement, String dateDepPromo, String dateFinPromo, String prixPromo) throws SQLException{       
+    	String req="UPDATE offre_promotionnelle SET date_debut_offre_promo=?, date_fin_offre_promo=?, prix_offre_promo=? WHERE id_logement="+id_logement;
+
+    	update = conn.prepareStatement(req);
+    	update.setDate(1, java.sql.Date.valueOf(dateDepPromo));
+    	update.setDate(2, java.sql.Date.valueOf(dateFinPromo));
+    	update.setInt(3, Integer.parseInt(prixPromo));
+    	// execute update SQL statement
+    	update.executeUpdate();
+
+
     }
+  
+	public void modifierLogementAppartement(int id_logement, String pieces) throws SQLException{
+    	String req="UPDATE appartement SET nb_pieces=? WHERE id_logement="+id_logement;
+
+    	update = conn.prepareStatement(req);
+    	update.setInt(1, Integer.parseInt(pieces));
+    	// execute update SQL statement
+    	update.executeUpdate();
+		
+	}
+	public void modifierLogementChambre(int id_logement, String numero) throws SQLException{
+    	String req="UPDATE chambre SET numero_chambre=? WHERE id_logement="+id_logement;
+
+    	update = conn.prepareStatement(req);
+    	update.setInt(1, Integer.parseInt(numero));
+    	// execute update SQL statement
+    	update.executeUpdate();
+		
+	}
+    
 
 }
