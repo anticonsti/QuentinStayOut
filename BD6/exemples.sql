@@ -1,0 +1,1 @@
+INSERT INTO service_transport VALUES(1, 'service1', 30, 5, 'ville');
