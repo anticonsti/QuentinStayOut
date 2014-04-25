@@ -34,7 +34,7 @@ class Logement{
 
 	// vérifie qu'il y a des logements
 	String idl = String.valueOf(id_logement);
-	select = conn.prepareStatement("SELECT * FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement= " + idl );
+	select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement= " + idl + "EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
 	result = select.executeQuery();
 
 	if(result.next()!=false){
@@ -296,7 +296,7 @@ class Logement{
 	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
 	    System.out.println("Période: "+ result.getString(7) + " -- " +  result.getString(8));
 	    System.out.println("Montant total: "+ result.getString(9) + "€");
-	    System.out.println("dont: "+ result.getString(10) + "€ (logement)");
+	    System.out.println("dont prix/nuit: "+ result.getString(10) + "€ (logement)");
 
 	    String id_location =  result.getString(12);
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
