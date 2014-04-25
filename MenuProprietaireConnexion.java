@@ -231,6 +231,14 @@ public class MenuProprietaireConnexion{
 				System.out.print("Adresse (1~20 caracteres): ");
 				String adresse = Utils.readString("[0-9a-z]{1,20}");
 
+				// vérifie l'unicité avant de continuer
+				if( lgm.verifUniqueLogement(adresse, typeLogement, numChambre, nbPiece ) == 0 ){
+				    System.out.println("Logement déjà existant");
+				    Thread.sleep(1300);
+				    this.printMenu(pseudo);
+				    break;
+				}
+
 				System.out.print("Surface: ");
 				String surface= Utils.readString("[1-9]+[0-9]{0,5}");
 
@@ -269,6 +277,7 @@ public class MenuProprietaireConnexion{
 				System.out.print("(facultatif, appuyer sur Entree pour passer) Prix du logement par mois (cas 27 jours ou plus): ");
 				String prixMois = Utils.readString("[1-9]{0,1}+[0-9]{0,5}");
 
+				
 				// ajoute le logement
 				lgm.ajouterLogement(adresse, surface, ville, dateDep, dateFin, prix, prixMois, pseudo);
 				int idLogement = lgm.getIdLogement(adresse, surface, ville);

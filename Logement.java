@@ -68,6 +68,24 @@ class Logement{
 
     //-----------------------------------------------------------//
 
+    public int verifUniqueLogement(String adr, String typeLogement, String numChambre, String nbPiece) throws SQLException{
+
+	if(typeLogement.equals("C")){
+	    select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN chambre WHERE adresse_logement= '"+adr + "' AND numero_chambre="+ numChambre);
+	    result = select.executeQuery();
+	    if (result.next())
+		return 0;
+
+	} else {
+	    select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN appartement WHERE adresse_logement= '"+adr + "' AND nb_pieces="+ nbPiece);
+	    result = select.executeQuery();
+	    if (result.next())
+		return 0;
+	}
+
+	return 1;
+    }
+
 
     public void ajouterLogementLogement(String adr, String surface, String ville) throws SQLException{
 
