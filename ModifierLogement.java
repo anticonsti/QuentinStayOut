@@ -14,6 +14,52 @@ public class ModifierLogement{
 	this.conn=conn;
     }
 
+    public void printMenu(){
+	System.out.println("MODIFICATION");
+	System.out.println("-------------------------------------------------------------");
+	System.out.println("0 - Retour");
+	System.out.println("1 - Appartement");
+	System.out.println("2 - Chambre");
+	System.out.println("3 - Disponibilité");
+	System.out.println("4 - Prix/jour");
+	System.out.println("5 - % mois");
+	System.out.println("-------------------------------------------------------------");
+
+    }
+
+    public void modif(int id_prop) throws SQLException{
+
+
+	if( this.modifiable(id_prop)== 1){
+
+	    this.listeLogementModifiable(id_prop);
+	    this.printMenu();
+	    int choix = Utils.readInt();
+
+	    while( choix !=0 ){
+		switch(choix){
+
+		case 1:
+		    break;
+
+		case 2:
+		    break;
+
+		case 3:
+		    break;
+
+		case 4:
+		    break;
+
+		case 5:
+		    break;
+	
+		}
+		choix = Utils.readInt();
+	    }
+	}
+	
+    }
 
 
     public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois,
@@ -70,23 +116,6 @@ public class ModifierLogement{
 	update.executeUpdate();
     }
 
-
-
-    /*
-      public void modifierOffrepromo(int id_logement, String dateDepPromo, String dateFinPromo, String prixPromo) throws SQLException{       
-      String req="UPDATE offre_promotionnelle SET date_debut_offre_promo=?, date_fin_offre_promo=?, prix_offre_promo=? WHERE id_logement="+id_logement;
-
-      update = conn.prepareStatement(req);
-      update.setDate(1, java.sql.Date.valueOf(dateDepPromo));
-      update.setDate(2, java.sql.Date.valueOf(dateFinPromo));
-      update.setInt(3, Integer.parseInt(prixPromo));
-      // execute update SQL statement
-      update.executeUpdate();
-
-
-      }
-    */  
-
     public void modifierLogementAppartement(int id_logement, String pieces) throws SQLException{
     	String req="UPDATE appartement SET nb_pieces=? WHERE id_logement="+id_logement;
 
@@ -117,7 +146,7 @@ public class ModifierLogement{
     public int modifiable(int id_prop) throws SQLException{
 
 	// regarde s'il y a des logements libres, si oui retourne 1 
-	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne");
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
 
 	result = select.executeQuery();
 	if(result.next())
@@ -129,7 +158,7 @@ public class ModifierLogement{
 
     public void listeLogementModifiable(int id_prop) throws SQLException{
 
-	select = conn.prepareStatement("SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN concerne");
+	select = conn.prepareStatement("SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
 
 	result = select.executeQuery();
 	Utils.print("id_logement", 10);

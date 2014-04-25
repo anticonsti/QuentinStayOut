@@ -47,7 +47,8 @@ public class MenuProprietaireConnexion{
 	int choix = Utils.readInt();
 	Logement lgm = new Logement(conn);
 	Offre offre = new Offre(conn);
-	
+	ModifierLogement modifLogement = new ModifierLogement(conn);
+
 	try{
 
 	    int id_proprio = lgm.getIdProprietaire(pseudo);
@@ -196,8 +197,9 @@ public class MenuProprietaireConnexion{
 		    break;
 
 		case 4:
-		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");				
-				
+		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");
+		    modifLogement.modif(id_proprio);
+		    this.printMenu(pseudo);
 		    break;
 
 		case 5:
