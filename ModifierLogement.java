@@ -15,7 +15,6 @@ public class ModifierLogement{
     }
 
     public void printMenu(){
-	System.out.println("MODIFICATION");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - Retour");
 	System.out.println("1 - Appartement");
@@ -27,41 +26,72 @@ public class ModifierLogement{
 
     }
 
-    public void modif(int id_prop) throws SQLException{
+    public void modif(int id_prop) {
+
+	try {
+	    if( this.modifiable(id_prop)== 1){
+
+		this.printMenu();
+		int choix = Utils.readInt();
 
 
-	if( this.modifiable(id_prop)== 1){
+		while( choix !=0 ){
+		    switch(choix){
 
-	    this.listeLogementModifiable(id_prop);
-	    this.printMenu();
-	    int choix = Utils.readInt();
+		    case 1:
+			if(this.verifAppartementModifiable(id_prop)==1){
+			    this.listeLogementModifiable(id_prop, 1);
+			    System.out.print("Appartement à modifier: ");
+			    int id_logement = Utils.readInt();
+			    int id_modif = this.choixLogementAModifier(id_prop, 1, id_logement);
+			    if( id_modif != -1){
+				System.out.print("Nombre de pièces: ");
+				int nb =  Utils.readInt();
+				this.modifierLogementAppartement(id_logement, nb);
+				System.out.println("Modification effectuée");
+				Thread.sleep(1300);
+			    }
+			}
+			break;
 
-	    while( choix !=0 ){
-		switch(choix){
+		    case 2:
+			if(this.verifChambreModifiable(id_prop)==1){
+			    this.listeLogementModifiable(id_prop, 2);
+			    System.out.print("Chambre à modifier: ");
+			    int id_logement = Utils.readInt();
+			    int id_modif = this.choixLogementAModifier(id_prop, 2, id_logement);
+			    if( id_modif != -1){
+				System.out.print("Surface: ");
+				int surface =  Utils.readInt();
+				System.out.print("Numéro: ");
+				int num =  Utils.readInt();
+				this.modifierLogementChambre(id_logement, num, surface);
+				System.out.println("Modification effectuée");
+				Thread.sleep(1300);
+			    }
+			}
+			break;
 
-		case 1:
-		    break;
+		    case 3:
+			break;
 
-		case 2:
-		    break;
+		    case 4:
+			break;
 
-		case 3:
-		    break;
-
-		case 4:
-		    break;
-
-		case 5:
-		    break;
+		    case 5:
+			break;
 	
+		    }
+		    choix = Utils.readInt();
 		}
-		choix = Utils.readInt();
 	    }
+	}catch (SQLException | InterruptedException e) {
+	    System.err.println(e.getMessage());
 	}
-	
+		
     }
 
-
+    /*
     public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois,
 				 String dateDep, String dateFin, String dateDepPromo, String dateFinPromo,
 				 String prixPromo, String pieces, String numero, String surface) throws SQLException{
@@ -85,7 +115,7 @@ public class ModifierLogement{
     	//suggestion et prestation
     
     }
-
+    */
 
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 
@@ -116,28 +146,28 @@ public class ModifierLogement{
 	update.executeUpdate();
     }
 
-    public void modifierLogementAppartement(int id_logement, String pieces) throws SQLException{
+    public void modifierLogementAppartement(int id_logement, int pieces) throws SQLException{
     	String req="UPDATE appartement SET nb_pieces=? WHERE id_logement="+id_logement;
 
     	update = conn.prepareStatement(req);
-    	update.setInt(1, Integer.parseInt(pieces));
+    	update.setInt(1, pieces);
     	// execute update SQL statement
     	update.executeUpdate();
 		
     }
 
-    public void modifierLogementChambre(int id_logement, String numero, String surface) throws SQLException{
+    public void modifierLogementChambre(int id_logement, int numero, int surface) throws SQLException{
     	//MODIFIE le numero de la chambre
     	String req="UPDATE chambre SET numero_chambre=? WHERE id_logement="+id_logement;
     	update = conn.prepareStatement(req);
-    	update.setInt(1, Integer.parseInt(numero));
+    	update.setInt(1, numero);
     	// execute update SQL statement
     	update.executeUpdate();
 		
     	//MODIFIE la surface de la chambre = surface du logement
     	req="UPDATE logement SET surface=? WHERE id_logement="+id_logement;
     	update = conn.prepareStatement(req);
-    	update.setInt(1, Integer.parseInt(surface));
+    	update.setInt(1, surface);
     	// execute update SQL statement
     	update.executeUpdate();
     }
@@ -156,8 +186,36 @@ public class ModifierLogement{
     }
 
 
-    public void listeLogementModifiable(int id_prop) throws SQLException{
+    public int verifAppartementModifiable(int id_prop) throws SQLException{
 
+	// regarde s'il y a des logements libres, si oui retourne 1 
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN appartement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
+
+	result = select.executeQuery();
+	if(result.next())
+	    return 1;
+
+	return 0;
+    }
+
+
+    public int verifChambreModifiable(int id_prop) throws SQLException{
+
+	// regarde s'il y a des logements libres, si oui retourne 1 
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN chambre NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
+
+	result = select.executeQuery();
+	if(result.next())
+	    return 1;
+
+	return 0;
+    }
+    
+
+    public void listeLogementModifiable(int id_prop, int choix) throws SQLException{
+
+	// choix==1  type_logement=appartement , sinon type_logement=chambre
+	    
 	select = conn.prepareStatement("SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
 
 	result = select.executeQuery();
@@ -173,15 +231,16 @@ public class ModifierLogement{
 	    String id_logement = result.getString(1);
 	    Utils.print(id_logement,10);
 
-	    select2=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
-	    result2 = select2.executeQuery();
-	    if( result2.next() ){
-		Utils.print("| chambre n°" + result2.getString(1), 15);
-	    } else {
+	    if(choix == 1){
 		select2=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
 		result2 = select2.executeQuery();
 		if( result2.next() )
 		    Utils.print("| apt. " + result2.getString(1) + " pièces", 15);
+	    } else {
+		select2=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if( result2.next() )
+		    Utils.print("| chambre n°" + result2.getString(1), 15);
 	    }
 
 	    Utils.print("| "+result.getString(2), 15);
@@ -191,14 +250,11 @@ public class ModifierLogement{
     }
 
 
-    public int choixLogementAModifier(int id_prop) throws SQLException{
-	
-	System.out.print("Logement à modifier: ");
-	int id_logement = Utils.readInt();
+    public int choixLogementAModifier(int id_prop, int choix, int id_logement) throws SQLException{
 
 	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire ="
 			+ String.valueOf(id_prop) + " AND id_logement = "
-			+ String.valueOf(id_logement) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne ");
+			+ String.valueOf(id_logement) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE date_fin_location > CURRENT_TIMESTAMP");
 
 	result = select.executeQuery();
 	if(result.next())
