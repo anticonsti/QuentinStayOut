@@ -79,27 +79,38 @@ public class Location {
 	select=conn.prepareStatement("SELECT nom_proprietaire, prenom_proprietaire FROM proprietaire NATURAL JOIN propose_logement WHERE id_logement="+ id_logement);
 	result = select.executeQuery();
 	if( result.next() ){
-	    System.out.println("propriétaire: " +result.getString(1) + " " + result.getString(2));
+	    System.out.println("Propriétaire: " +result.getString(1) + " " + result.getString(2));
+	}
+
+	select=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	result = select.executeQuery();
+	if( result.next() ){
+	    System.out.println("Chambre n°" + result.getString(1));
+	} else {
+	    select=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	    result = select.executeQuery();
+	    if( result.next() )
+		System.out.println("Appartement " + result.getString(1) + " pièces ");
 	}
 
 	select = conn.prepareStatement("SELECT adresse_logement, surface, ville FROM logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("adresse: " +result.getString(1) + ", " + result.getString(3));
-	    System.out.println("surface: " +result.getString(2));
+	    System.out.println("Adresse: " +result.getString(1) + ", " + result.getString(3));
+	    System.out.println("Surface: " +result.getString(2));
 	}
 
 	select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min, prix, prix_mois FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("disponibilité: " + result.getString(1) + " -- " + result.getString(2));
+	    System.out.println("Disponibilité: " + result.getString(1) + " -- " + result.getString(2));
 	    int sej = result.getInt(3);
 	    if( sej !=0 )
-		System.out.println("sejour_min: " +String.valueOf(sej));
-	    System.out.println("prix/nuit: " +String.valueOf(result.getInt(4)));
+		System.out.println("Séjour min: " +String.valueOf(sej));
+	    System.out.println("Prix/nuit: " +String.valueOf(result.getInt(4)));
 	    int prixM = result.getInt(5);
 	    if( prixM !=0 )
-		System.out.println("prix/mois: " +String.valueOf(result.getInt(5)));
+		System.out.println("Prix/mois: " +String.valueOf(result.getInt(5)));
 	}
 
 	select = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
