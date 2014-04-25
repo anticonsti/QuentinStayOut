@@ -98,12 +98,19 @@ public class ModifierLogement{
     }
 
     public void modifierLogementChambre(int id_logement, String numero, String surface) throws SQLException{
+    	//MODIFIE le numero de la chambre
     	String req="UPDATE chambre SET numero_chambre=? WHERE id_logement="+id_logement;
     	update = conn.prepareStatement(req);
     	update.setInt(1, Integer.parseInt(numero));
     	// execute update SQL statement
     	update.executeUpdate();
 		
+    	//MODIFIE la surface de la chambre = surface du logement
+    	req="UPDATE logement SET surface=? WHERE id_logement="+id_logement;
+    	update = conn.prepareStatement(req);
+    	update.setInt(1, Integer.parseInt(surface));
+    	// execute update SQL statement
+    	update.executeUpdate();
     }
 
 
