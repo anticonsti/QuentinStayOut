@@ -406,8 +406,9 @@ public class Location {
 	result = select.executeQuery();
 	if(result.next()) {
 	    // on applique prix/mois PB comment calculer pour 1 mois et quelques jours ??
-	    if( duree > 28 ){
-		montant +=result.getInt(2);
+	    if( duree >= 27 ){
+		int prix = result.getInt(1);
+		montant += ( prix -(result.getInt(2)*prix) );
 	    } else {
 		// on applique prix/nuit
 		montant +=(result.getInt(1)*duree);
