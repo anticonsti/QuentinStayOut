@@ -91,6 +91,7 @@ public class MenuProprietaireConnexion{
 		    String dateDep="",dateFin="";
 		    Date date1 =null, date2=null;
 		    int erreurDate=1;
+		    System.out.println("Disponibilité (<=1mois: 27j)");
 		    do{
 			erreurDate=1;
 			System.out.print("Date début disponibilité (format YYYY-MM-DD): ");//format sql annee/mois/jour
@@ -101,7 +102,10 @@ public class MenuProprietaireConnexion{
 			    System.out.print("Date fin disponibilité (format YYYY-MM-DD): ");
 			    dateFin = Utils.readString("date");
 			    date2 = sdf.parse(dateFin);
-			    if(!date2.after(date1)){
+
+			    long diff = date2.getTime() - date1.getTime();
+			    long diffDays = diff / (24 * 60 * 60 * 1000);
+			    if(!date2.after(date1) || (diffDays > 27) ){
 				System.out.println("erreur sur la date");
 				erreurDate=0;
 			    }
