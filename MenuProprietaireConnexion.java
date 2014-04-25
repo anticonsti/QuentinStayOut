@@ -197,7 +197,6 @@ public class MenuProprietaireConnexion{
 		    break;
 
 		case 4:
-		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");
 		    modifLogement.modif(id_proprio);
 		    this.printMenu(pseudo);
 		    break;

@@ -15,6 +15,8 @@ public class ModifierLogement{
     }
 
     public void printMenu(){
+	System.out.print("\033c");
+	System.out.println("MODIFICATION D'UN LOGEMENT");
 	System.out.println("-------------------------------------------------------------");
 	System.out.println("0 - Retour");
 	System.out.println("1 - Appartement");
@@ -50,7 +52,12 @@ public class ModifierLogement{
 				this.modifierLogementAppartement(id_logement, nb);
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
+				this.printMenu();
 			    }
+			} else {
+			    System.out.println("Rien à modifier");
+			    Thread.sleep(1300);
+			    this.printMenu();
 			}
 			break;
 
