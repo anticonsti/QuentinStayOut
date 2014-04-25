@@ -16,7 +16,7 @@ public class Navigation {
 	System.out.print("\033c"); //nettoyage de l'ecran
 	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - fin");
+	System.out.println("0 - Fin");
 	System.out.println("1 - Publier votre annonce");
 	System.out.println("2 - Trouvez un logement");
 	System.out.println("-------------------------------------------------------------");
@@ -25,13 +25,11 @@ public class Navigation {
 	c = Utils.readInt();
 	
 	System.out.print("\033c"); //nettoyage de l'ecran
-	
-	// traitement du choix utilisateur
-
 
 	PublierAnnonce pa = new PublierAnnonce(connecte.getConnection());
 	ChercherLogement cl = new ChercherLogement(connecte.getConnection());
 
+	// traitement du choix utilisateur
 	switch(c){
 	case 1 : 
 	    pa.printMenuPublierAnnonce();
@@ -49,7 +47,7 @@ public class Navigation {
 	    System.out.print("\033c"); //nettoyage de l'ecran
 	    System.out.println("Veuillez entrer votre choix :");
 	    System.out.println("-------------------------------------------------------------");
-	    System.out.println("0 - fin");
+	    System.out.println("0 - Fin");
 	    System.out.println("1 - Publier votre annonce");
 	    System.out.println("2 - Trouvez un logement");
 	    System.out.println("-------------------------------------------------------------");
@@ -70,18 +68,15 @@ public class Navigation {
     /**Cree la connexion a la base et attend les instructions de l'utilisateur.*/
     public static void main(String[] args) {
 
-	// Verification des parametres
-	
+	// Verification des parametres	
     	if (args.length != 1)
 	    usage();
 	
 	try{
-
 	    // Connexion a la base
 	    String password = Utils.readPassword("Entrer votre mot de passe pour vous connecter a Postgres: ");
 	    
 	    connecte = new ConnectionAirChambre(args[0], password);
-
 
 	    // Impression du menu. Pour finir, tapez 0
 	    int c = -1;
@@ -97,10 +92,9 @@ public class Navigation {
 	    connecte.close();
 	    in.close();	
 	}
-	catch(Exception e)
-	    {
-		e.printStackTrace();
-	    }
+	catch(Exception e){
+	    e.printStackTrace();
+	}
     }
     
 } 
