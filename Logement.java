@@ -52,7 +52,7 @@ class Logement{
     			String prixPromo, String pieces, String numero) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
-    	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation,transport");
+    	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation");
     	//=> nbpiece et numchambre peuvent changer via les travaux. Adresse,ville NON
     	//4. apres la modification on affiche toutes les informations liees a ce logement
     	//5. qqch comme : print("0-retour, 1-modifier un autre logement");
@@ -68,7 +68,7 @@ class Logement{
     	//possible que pour les logements libre
     	modifierLogementDispo(id_logement, dateDep, dateFin);
     	modifierOffrepromo(id_logement, dateDepPromo, dateFinPromo, prixPromo);
-    
+    	//suggestion et prestation
     
     
     }
