@@ -70,10 +70,22 @@ public class ChercherLogement {
     public int afficheLogements()throws SQLException{
 
 	int resultats = 0;
-	String requete = "SELECT DISTINCT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo != date_debut_location AND date_fin_dispo != date_fin_location";
+	String requete = "SELECT * FROM concerne";
 	select = conn.prepareStatement(requete);
 	result = select.executeQuery();
+	if(result.next()!=false){
 
+	    requete = "SELECT DISTINCT id_logement, adresse_logement, surface, ville FROM logement EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+
+	    select = conn.prepareStatement(requete);
+	    result = select.executeQuery();
+
+	} else{
+	    requete ="SELECT * FROM logement";
+	    select = conn.prepareStatement(requete);
+	    result = select.executeQuery();
+
+	}
 	while (result.next()) {
 
 	    System.out.println("");
@@ -101,7 +113,7 @@ public class ChercherLogement {
 	}
 
 	// étrange que ca fonctionne ... SELECT COUNT(*)
-	this.nbResultat(requete, conn, select, result);
+	//this.nbResultat(requete, conn, select, result);
 	return resultats;
     }
 
