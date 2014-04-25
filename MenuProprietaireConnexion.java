@@ -29,15 +29,14 @@ public class MenuProprietaireConnexion{
     public void printMenu(String pseudo){
 	System.out.print("\033c");
 	System.out.println("Compte " + pseudo);
-    	System.out.println("Veuillez entrer votre choix :");
 	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - déconnexion");
-	System.out.println("1 - ajouter un logement");
-	System.out.println("2 - liste des logements");
-	System.out.println("3 - supprimer un logement");
-	System.out.println("4 - offre promotionnelle");
-	System.out.println("5 - modification d'un logement");
-	System.out.println("6 - liste des locations");
+	System.out.println("0 - Déconnexion");
+	System.out.println("1 - Ajouter un logement");
+	System.out.println("2 - Liste des logements");
+	System.out.println("3 - Supprimer un logement");
+	System.out.println("4 - Modification d'un logement");
+	System.out.println("5 - Offre promotionnelle");
+	System.out.println("6 - Liste des locations");
 	System.out.println("-------------------------------------------------------------");
 
     }
@@ -63,10 +62,10 @@ public class MenuProprietaireConnexion{
 		    String nbPiece="", numChambre="";
 		    Boolean booltype=typeLogement.equals("A");
 		    if(booltype){
-			System.out.print("nombre de pièces: ");
+			System.out.print("Nombre de pièces: ");
 			nbPiece = Utils.readString("[1-9]+[0-9]{0,5}");
 		    } else {
-			System.out.print("numéro de chambre: ");
+			System.out.print("Numéro de chambre: ");
 			numChambre = Utils.readString("[0-9]{0,5}");
 		    }
 
@@ -197,14 +196,14 @@ public class MenuProprietaireConnexion{
 		    break;
 
 		case 4:
-		    Utils.printEntete("GESTION DES OFFRES PROMOTIONNELLES");
-		    offre.printMenuOffre(id_proprio);
-		    this.printMenu(pseudo);
+		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");				
+				
 		    break;
 
 		case 5:
-		    Utils.printEntete("MODIFICATION D'UN LOGEMENT");				
-				
+		    Utils.printEntete("GESTION DES OFFRES PROMOTIONNELLES");
+		    offre.printMenuOffre(id_proprio);
+		    this.printMenu(pseudo);
 		    break;
 
 		case 6:
@@ -213,7 +212,7 @@ public class MenuProprietaireConnexion{
 			lgm.afficheListeLocation(id_proprio);
 			this.printRappelCommande();
 		    } else {
-			System.out.println("Pas de location");
+			System.out.println("Pas de locations");
 			Thread.sleep(1300);
 			this.printMenu(pseudo);
 		    }
