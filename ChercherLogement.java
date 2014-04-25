@@ -2,8 +2,8 @@ import java.sql.*;
 import java.io.*;
 
 public class ChercherLogement {
-    PreparedStatement select=null, select2=null;
-    ResultSet result = null, result2 = null;
+    PreparedStatement select=null, select2=null, select3=null;
+    ResultSet result = null, result2 = null, result3=null;
     Connection conn = null;
 
     public ChercherLogement(Connection conn){
@@ -14,9 +14,9 @@ public class ChercherLogement {
 	System.out.print("\033c");
 	System.out.println("TROUVER UN LOGEMENT :");
 	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - retour");
-	System.out.println("1 - afficher les logements disponibles");
-	System.out.println("2 - chercher un logement par critère");
+	System.out.println("0 - Retour");
+	System.out.println("1 - Les logements disponibles");
+	System.out.println("2 - Recherche par critère");
 	System.out.println("-------------------------------------------------------------");
     }
 
@@ -43,7 +43,7 @@ public class ChercherLogement {
 		    }
 
 		} else if( choix == 2){
-		    Utils.printEntete("RECHERCHE AVANCEE");
+		    Utils.printEntete("RECHERCHE AVANCEE (appuyer sur Entree pour passer)");
 
 		    if( this.chercherLogements() == 1 ){
 			loc.printLocation();
@@ -70,10 +70,22 @@ public class ChercherLogement {
     public int afficheLogements()throws SQLException{
 
 	int resultats = 0;
-	String requete = "SELECT DISTINCT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo != date_debut_location AND date_fin_dispo != date_fin_location";
+	String requete = "SELECT * FROM concerne";
 	select = conn.prepareStatement(requete);
 	result = select.executeQuery();
+	if(result.next()!=false){
 
+	    requete = "SELECT DISTINCT id_logement, adresse_logement, surface, ville FROM logement EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+
+	    select = conn.prepareStatement(requete);
+	    result = select.executeQuery();
+
+	} else{
+	    requete ="SELECT * FROM logement";
+	    select = conn.prepareStatement(requete);
+	    result = select.executeQuery();
+
+	}
 	while (result.next()) {
 
 	    System.out.println("");
@@ -83,25 +95,35 @@ public class ChercherLogement {
 	    select2=conn.prepareStatement("SELECT nom_proprietaire, prenom_proprietaire FROM proprietaire NATURAL JOIN propose_logement WHERE id_logement="+ id_logement);
 	    result2 = select2.executeQuery();
 	    if( result2.next() ){
-		System.out.println("propriétaire: " +result2.getString(1) + " " + result2.getString(2));
+		System.out.println("Propriétaire: " +result2.getString(1) + " " + result2.getString(2));
 	    }
 	    
-	    System.out.println("id_logement: "+id_logement);
-	    System.out.println("adresse: "+result.getString(2) + ", " + result.getString(4) );
-	    System.out.println("surface: " +result.getString(3));
+	    select3=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	    result3 = select3.executeQuery();
+	    if( result3.next() ){
+		System.out.println("id_logement: "+id_logement + ", chambre n°" + result3.getString(1));
+	    } else {
+		select3=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
+		result3 = select3.executeQuery();
+		if( result3.next() )
+		    System.out.println("id_logement: "+id_logement + ", appartement " + result3.getString(1) + " pièces ");
+	    }
+
+	    System.out.println("Adresse: "+result.getString(2) + ", " + result.getString(4) );
+	    System.out.println("Surface: " +result.getString(3));
 
 	    select2=conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, prix FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement="+ id_logement);
 	    result2 = select2.executeQuery();
 	    if( result2.next() ){
-		System.out.println("disponible de " + result2.getString(1) + " à " + result2.getString(2) );
-		System.out.println("prix: "+result2.getString(3));
+		System.out.println("Disponible de " + result2.getString(1) + " à " + result2.getString(2) );
+		System.out.println("Prix/nuit: "+result2.getString(3));
 	    }
 	    System.out.println("");
 	    System.out.println("--------------------------------------------------------------------------");
 	}
 
 	// étrange que ca fonctionne ... SELECT COUNT(*)
-	this.nbResultat(requete, conn, select, result);
+	//this.nbResultat(requete, conn, select, result);
 	return resultats;
     }
 
@@ -159,7 +181,7 @@ public class ChercherLogement {
 	String affichage = Utils.readString("[ON]{1}");
 	System.out.println();
 	
-	if(adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && avec_suggestions.equals("N") &&  avec_prestations.equals("N")  && avec_transport.equals("N") && prix.equals("")){
+	if( type_log.equals("") && adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && avec_suggestions.equals("N") &&  avec_prestations.equals("N")  && avec_transport.equals("N") && prix.equals("")){
 	    return 0;
 	}
 	

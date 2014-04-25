@@ -4,10 +4,10 @@ import java.io.*;
 class Logement{
     
     PreparedStatement insert=null;
-    PreparedStatement select=null;
+    PreparedStatement select=null, select2=null;
     PreparedStatement update=null;
     PreparedStatement delete=null;
-    ResultSet result = null;
+    ResultSet result = null, result2=null;
     Connection conn = null;
     
     public Logement(Connection conn){
@@ -67,6 +67,24 @@ class Logement{
 
 
     //-----------------------------------------------------------//
+
+    public int verifUniqueLogement(String adr, String typeLogement, String numChambre, String nbPiece) throws SQLException{
+
+	if(typeLogement.equals("C")){
+	    select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN chambre WHERE adresse_logement= '"+adr + "' AND numero_chambre="+ numChambre);
+	    result = select.executeQuery();
+	    if (result.next())
+		return 0;
+
+	} else {
+	    select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN appartement WHERE adresse_logement= '"+adr + "' AND nb_pieces="+ nbPiece);
+	    result = select.executeQuery();
+	    if (result.next())
+		return 0;
+	}
+
+	return 1;
+    }
 
 
     public void ajouterLogementLogement(String adr, String surface, String ville) throws SQLException{
@@ -243,21 +261,37 @@ class Logement{
     public void listeLogement(int id_prop) throws SQLException{
 	
 	select = conn.prepareStatement("SELECT * FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire=" + String.valueOf(id_prop) );
-	Utils.print("id_logement", 15);
-	Utils.print("| adresse", 40);
+	Utils.print("id_logement", 10);
+	Utils.print("| type", 15);
+	Utils.print("| adresse", 15);
 	Utils.print("| surface", 9);
 	System.out.println("| ville");
 	System.out.println("--------------------------------------------------------------------------");
 
 	result = select.executeQuery();
 	while (result.next()) {
-	    Utils.print(String.valueOf(result.getInt(1)),15);
-	    Utils.print("| "+result.getString(2), 40);
+	    String id_logement = result.getString(1);
+	    Utils.print(id_logement,10);
+
+	    select2=conn.prepareStatement("SELECT numero_chambre FROM chambre WHERE id_logement = " + id_logement);
+	    result2 = select2.executeQuery();
+	    if( result2.next() ){
+		Utils.print("| chambre n°" + result2.getString(1), 15);
+	    } else {
+		select2=conn.prepareStatement("SELECT nb_pieces FROM appartement WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if( result2.next() )
+		    Utils.print("| apt. " + result2.getString(1) + " pièces", 15);
+	    }
+
+	    Utils.print("| "+result.getString(2), 15);
 	    Utils.print("| "+result.getString(3), 9 );
 	    System.out.println("| "+result.getString(4));
 	}
     }
-	 //A VERIFIER SI CA MARCHE !!
+
+
+    //A VERIFIER SI CA MARCHE !!
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 	
 	String req ="UPDATE prix_logement SET ";
