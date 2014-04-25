@@ -295,20 +295,21 @@ class Logement{
 	    System.out.println("Adresse: "+ result.getString(4));
 	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
 	    System.out.println("Période: "+ result.getString(7) + " -- " +  result.getString(8));
-	    System.out.println("Montant total: "+ result.getString(9) + "€");
-	    System.out.println("dont prix/nuit: "+ result.getString(10) + "€ (logement)");
+	    System.out.println("Montant total: "+ result.getString(9) + "euros");
+	    System.out.println("dont: "+ result.getString(10) + "euros(logement)  (reduction: " + result.getString(11) +")");
+
 
 	    String id_location =  result.getString(12);
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
 	    if( result2.next() )
-		System.out.println("    + "+ result2.getString(1) + "€ (" + result2.getString(2) + ")" );
+		System.out.println("    + "+ result2.getString(1) + "euros(" + result2.getString(2) + ")" );
 
 
 	    select2 = conn.prepareStatement("SELECT prix_transport, date_reservation FROM service_transport NATURAL JOIN avec_transport WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
 	    while( result2.next() )
-		System.out.println("    + "+ result2.getString(1) + "€ (" + result2.getString(2) + ")" );
+		System.out.println("    + "+ result2.getString(1) + "euros(" + result2.getString(2) + ")" );
 
 	    System.out.println("");
 	    System.out.println("--------------------------------------------------------------------------");
