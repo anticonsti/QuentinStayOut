@@ -14,7 +14,7 @@ public class ModifierLogement{
 	this.conn=conn;
     }
 
-
+    
     public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois, String dateDep, String dateFin) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
@@ -34,9 +34,22 @@ public class ModifierLogement{
     }
 
 
+    public int modifiable(int id_prop) throws SQLException{
+
+	// regarde s'il y a des logements libres, si oui retourne 1 
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne");
+
+	result = select.executeQuery();
+	if(result.next())
+	    return 1;
+
+	return 0;
+    }
+
+
     public void listeLogementModifiable(int id_prop) throws SQLException{
-	
-	select = conn.prepareStatement("SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ");
+
+	select = conn.prepareStatement("SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN concerne");
 
 	result = select.executeQuery();
 	Utils.print("id_logement", 10);
@@ -47,6 +60,7 @@ public class ModifierLogement{
 	System.out.println("--------------------------------------------------------------------------");
 
 	while (result.next()) {
+
 	    String id_logement = result.getString(1);
 	    Utils.print(id_logement,10);
 
@@ -65,6 +79,21 @@ public class ModifierLogement{
 	    Utils.print("| "+result.getString(3), 9 );
 	    System.out.println("| "+result.getString(4));
 	}
+    }
+
+
+    public int choixLogementAModifier(int id_prop) throws SQLException{
+	
+	System.out.print("Logement à modifier: ");
+	int id_logement = Utils.readInt();
+
+	select = conn.prepareStatement("SELECT id_logement FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire =" + String.valueOf(id_prop) + " AND id_logement = " + String.valueOf(id_logement) + " EXCEPT SELECT id_logement FROM logement NATURAL JOIN concerne ");
+
+	result = select.executeQuery();
+	if(result.next())
+	    return result.getInt(1);
+	else
+	    return -1;
     }
 
 
