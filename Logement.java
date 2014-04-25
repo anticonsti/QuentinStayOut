@@ -15,11 +15,13 @@ class Logement{
     }
 
 
-    public void ajouterLogement(String adr, String surface, String ville, String dateDep, String dateFin, String prix, String prixMois, String pseudo) throws SQLException{
+    public void ajouterLogement(String adr, String surface, String ville,
+    		String dateDep, String dateFin, String prix, String prixMois,
+    		String pseudo, String typeLogement) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 	
-	this.ajouterLogementLogement(adr, surface, ville);
+	this.ajouterLogementLogement(typeLogement, adr, surface, ville);
 	int id_logement=this.getIdLogement(adr, surface, ville);
 	int id_proprio=this.getIdProprietaire(pseudo);
 	// ajoute dans la table propose_logement car non automatique...
@@ -49,7 +51,7 @@ class Logement{
     
     public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois,
     			String dateDep, String dateFin, String dateDepPromo, String dateFinPromo,
-    			String prixPromo, String pieces, String numero) throws SQLException{
+    			String prixPromo, String pieces, String numero, String surface) throws SQLException{
     	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
     	//2. recupere le nombre entre par l'utilisateur 
     	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation");
@@ -63,11 +65,10 @@ class Logement{
     	if(prixMois!="") prixMoisB=true;
     	
     	modifierLogementAppartement(id_logement,pieces);
-    	modifierLogementChambre(id_logement,numero);
+    	modifierLogementChambre(id_logement,numero,surface);
     	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
     	//possible que pour les logements libre
     	modifierLogementDispo(id_logement, dateDep, dateFin);
-    	modifierOffrepromo(id_logement, dateDepPromo, dateFinPromo, prixPromo);
     	//suggestion et prestation
     
     
@@ -95,13 +96,16 @@ class Logement{
     }
 
 
-    public void ajouterLogementLogement(String adr, String surface, String ville) throws SQLException{
-
-	insert = conn.prepareStatement("INSERT INTO logement(adresse_logement,surface,ville) VALUES(?,?,?)");
-	insert.setString(1, adr);
-	insert.setInt(2, Integer.parseInt(surface));
-	insert.setString(3, ville);
-	insert.executeUpdate();  
+    public void ajouterLogementLogement(String typeLogement, String adr, String surface, String ville) throws SQLException{
+    	if(typeLogement=="appartement")
+    		insert = conn.prepareStatement("INSERT INTO appartement(adresse_logement,surface,ville) VALUES(?,?,?)");
+    	else
+    		insert = conn.prepareStatement("INSERT INTO chambre(adresse_logement,surface,ville) VALUES(?,?,?)");
+    		//NAN MAIS PLEASE WTF
+    	insert.setString(1, adr);
+    	insert.setInt(2, Integer.parseInt(surface));
+    	insert.setString(3, ville);
+    	insert.executeUpdate();  
     }
 
 
@@ -328,6 +332,7 @@ class Logement{
 	update.executeUpdate();
     }
 
+    /*
     public void modifierOffrepromo(int id_logement, String dateDepPromo, String dateFinPromo, String prixPromo) throws SQLException{       
     	String req="UPDATE offre_promotionnelle SET date_debut_offre_promo=?, date_fin_offre_promo=?, prix_offre_promo=? WHERE id_logement="+id_logement;
 
@@ -340,7 +345,7 @@ class Logement{
 
 
     }
-  
+*/  
 	public void modifierLogementAppartement(int id_logement, String pieces) throws SQLException{
     	String req="UPDATE appartement SET nb_pieces=? WHERE id_logement="+id_logement;
 
@@ -350,9 +355,9 @@ class Logement{
     	update.executeUpdate();
 		
 	}
-	public void modifierLogementChambre(int id_logement, String numero) throws SQLException{
+	public void modifierLogementChambre(int id_logement, String numero, String surface) throws SQLException{
     	String req="UPDATE chambre SET numero_chambre=? WHERE id_logement="+id_logement;
-
+    	//SURFACE CHAMBRE !!! ATTENTION CHAMBRE&APPARTMENT -> LOGEMENT
     	update = conn.prepareStatement(req);
     	update.setInt(1, Integer.parseInt(numero));
     	// execute update SQL statement
