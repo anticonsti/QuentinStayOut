@@ -97,13 +97,19 @@ public class ModifierLogement{
     }
 
 
+    public void modificationDonnees(int id_logement){
+
+	
+
+    }
+
     //A VERIFIER SI CA MARCHE !!
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 	
 	String req ="UPDATE prix_logement SET ";
-	if(prixB && prixMoisB) req +="prix=?,"+prix+"prixMois=?"+prixMois; //modif prix et prixMois
-	else if(prixB && !prixMoisB) req+="prix=?"+prix; //modif prix uniquement
-	else req+="prixMois=?"+prixMois; //modif prixMois uniquement
+	if(prixB && prixMoisB) req +=" prix=?, "+prix+" prix_mois=? "+prixMois; //modif prix et prixMois
+	else if(prixB && !prixMoisB) req+=" prix=? "+prix; //modif prix uniquement
+	else req+=" prix_mois=? "+prixMois; //modif prixMois uniquement
 	
 	req+=" WHERE id_prop=?"+id_prop;
 	
