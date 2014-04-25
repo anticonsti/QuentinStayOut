@@ -76,6 +76,10 @@ public class ModifierLogement{
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
 			    }
+			}  else {
+			    System.out.println("Rien à modifier");
+			    Thread.sleep(1300);
+			    this.printMenu();
 			}
 			break;
 
