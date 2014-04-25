@@ -17,11 +17,11 @@ class Logement{
 
     public void ajouterLogement(String adr, String surface, String ville,
     		String dateDep, String dateFin, String prix, String prixMois,
-    		String pseudo, String typeLogement) throws SQLException{
+    		String pseudo) throws SQLException{
 	//il faudra appeler toutes les "sous" fonctions pour ajouter un logement.
 	//cad ajouterLogementDispo/Logemement/Prix/Suggestion/Prestation/...
 	
-	this.ajouterLogementLogement(typeLogement, adr, surface, ville);
+	this.ajouterLogementLogement(adr, surface, ville);
 	int id_logement=this.getIdLogement(adr, surface, ville);
 	int id_proprio=this.getIdProprietaire(pseudo);
 	// ajoute dans la table propose_logement car non automatique...
@@ -96,12 +96,10 @@ class Logement{
     }
 
 
-    public void ajouterLogementLogement(String typeLogement, String adr, String surface, String ville) throws SQLException{
-    	if(typeLogement=="appartement")
-    		insert = conn.prepareStatement("INSERT INTO appartement(adresse_logement,surface,ville) VALUES(?,?,?)");
-    	else
-    		insert = conn.prepareStatement("INSERT INTO chambre(adresse_logement,surface,ville) VALUES(?,?,?)");
-    		//NAN MAIS PLEASE WTF
+    public void ajouterLogementLogement(String adr, String surface, String ville) throws SQLException{
+
+    	insert = conn.prepareStatement("INSERT INTO logement(adresse_logement,surface,ville) VALUES(?,?,?)");
+    	//NAN MAIS PLEASE WTF
     	insert.setString(1, adr);
     	insert.setInt(2, Integer.parseInt(surface));
     	insert.setString(3, ville);
