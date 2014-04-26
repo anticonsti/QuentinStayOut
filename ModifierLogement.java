@@ -67,6 +67,10 @@ public class ModifierLogement{
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
 				this.printMenu();
+			    } else {
+				System.out.println("Erreur");
+				Thread.sleep(1300);
+				this.printMenu();
 			    }
 			} else {
 			    System.out.println("Rien à modifier");
@@ -106,6 +110,10 @@ public class ModifierLogement{
 
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
+			    } else {
+				System.out.println("Erreur");
+				Thread.sleep(1300);
+				this.printMenu();
 			    }
 			}  else {
 			    System.out.println("Rien à modifier");
