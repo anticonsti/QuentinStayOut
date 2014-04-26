@@ -11,7 +11,7 @@ WHERE ville = 'Pékin'
 AND EXTRACT(month FROM date_debut_dispo)=4 
 AND EXTRACT(month FROM date_fin_dispo)=4 
 AND description_prestation ='petit-déjeuner' 
-AND date_fin_dispo - date_debut_dispo >= 3
+AND date_fin_dispo - date_debut_dispo >= 3 
 GROUP BY id_logement 
 HAVING SUM(prix*3 + prix_prestation*3) < 200 ;
 
@@ -39,7 +39,7 @@ SELECT AVG(prix) FROM logement NATURAL JOIN prix_logement;
 
 
 SELECT id_logement, prix FROM logement NATURAL JOIN appartement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_transport NATURAL JOIN propose_prestation NATURAL JOIN prestation 
-WHERE ville = 'Moscou'
+WHERE ville = 'Moscou' 
 AND date_debut_dispo >= '2014-07-08' 
 AND date_fin_dispo - date_debut_dispo >= 5 
 AND description_prestation = 'repas soir' 
