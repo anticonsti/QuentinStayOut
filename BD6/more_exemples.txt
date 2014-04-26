@@ -1,0 +1,142 @@
+INSERT INTO logement VALUES (1,'17 Avenue des Gobelins', 57, 'Paris');
+INSERT INTO logement VALUES (2,'5 Avenue des Trolls', 72, 'Paris');
+INSERT INTO logement VALUES (3,'68 Avenue des Orcs', 14, 'Paris');
+INSERT INTO logement VALUES (4,'68 Avenue des Orcs', 17, 'Paris');
+INSERT INTO logement VALUES (5,'68 Avenue des Orcs', 30, 'Paris');
+INSERT INTO logement VALUES (6,'68 Avenue des Orcs', 15, 'Paris');
+INSERT INTO logement VALUES (7,'68 Avenue des Orcs', 58, 'Paris');
+
+INSERT INTO logement VALUES (8,'5 calle de las ninas', 19, 'Barcelone');
+INSERT INTO logement VALUES (9,'9 calle de los ninos', 22, 'Madrid');
+INSERT INTO logement VALUES (10,'19 calle de que tal', 20, 'Alicante');
+INSERT INTO logement VALUES (11,'19 calle de que tal', 15, 'Alicante');
+
+INSERT INTO logement VALUES (12,'7 jie xie xie', 54, 'Pekin');
+INSERT INTO logement VALUES (13,'56 jie ni hao, lao pengyou', 19, 'Pekin');
+INSERT INTO logement VALUES (14,'9 jie zaijian', 27, 'Pekin');
+
+INSERT INTO logement VALUES (15,'34 rue Dobraye ootro', 54, 'Moscou');
+INSERT INTO logement VALUES (16,'9 rue Nyezashta', 27, 'Siberia');
+INSERT INTO logement VALUES (17,'56 rue Bal'shoye spaseeba, lao pengyou', 19, 'Kremlin');
+INSERT INTO logement VALUES (18,'34 rue Prasteete', 20, 'Kremlin');
+INSERT INTO logement VALUES (19,'34 rue Prasteete', 30, 'Kremlin');
+INSERT INTO logement VALUES (20,'34 rue Prasteete', 40, 'Kremlin');
+
+INSERT INTO logement VALUES (21,'Oak Apple Court, Lee SE12', 14, 'Londres');
+INSERT INTO logement VALUES (22,'Oak Hall Road, Leytonstone E11', 25, 'Londres');
+INSERT INTO logement VALUES (23,'Old Gravel Lane, ST GEORGE IN THE EAST: ST PAUL', 36, 'Londres');
+
+INSERT INTO logement VALUES (24,'Rua do Russel, 804, Gloria', 20, 'Rio de Janeiro');
+INSERT INTO logement VALUES (25,'Rua do Shalabala, 102 ', 40, 'Rio de Janeiro');
+INSERT INTO logement VALUES (26,'Rua do Balibalou 835', 60, 'Rio de Janeiro');
+INSERT INTO logement VALUES (27,'Rua do Muljomdao 457', 30, 'Rio de Janeiro');
+INSERT INTO logement VALUES (28,'Rua do Muljomdao 457', 22, 'Rio de Janeiro');
+INSERT INTO logement VALUES (29,'Rua do Muljomdao 457', 25, 'Rio de Janeiro');
+
+INSERT INTO logement VALUES (30,'Mohrenstrasse 30, 10117', 51, 'Berlin');
+INSERT INTO logement VALUES (31,'Karl-Liebknecht-Strasse 3, 10178', 26, 'Berlin');
+INSERT INTO logement VALUES (32,'An Der Spandauer Bruecke 11, 10178', 19, 'Berlin');
+INSERT INTO logement VALUES (33,'Van der Decken 11, 23187', 20, 'Berlin');
+INSERT INTO logement VALUES (34,'Van der Decken 11, 23187', 22, 'Berlin');
+INSERT INTO logement VALUES (35,'Van der Decken 11, 23187', 17, 'Berlin');
+
+INSERT INTO appartement VALUES (1,2);
+INSERT INTO appartement VALUES (2,3);
+INSERT INTO chambre VALUES (3,1);
+INSERT INTO chambre VALUES (4,2);
+INSERT INTO chambre VALUES (5,3);
+INSERT INTO chambre VALUES (6,4);
+INSERT INTO chambre VALUES (7,5);
+
+INSERT INTO appartement VALUES (8,1);
+INSERT INTO appartement VALUES (9,1);
+INSERT INTO chambre VALUES (10,1);
+INSERT INTO chambre VALUES (11,2);
+
+INSERT INTO appartement VALUES (12,2);
+INSERT INTO appartement VALUES (13,2);
+INSERT INTO appartement VALUES (14,1);
+
+INSERT INTO appartement VALUES (15,2);
+INSERT INTO appartement VALUES (16,1);
+INSERT INTO appartement VALUES (17,1);
+INSERT INTO chambre VALUES (18,1);
+INSERT INTO chambre VALUES (19,2);
+INSERT INTO chambre VALUES (20,3);
+
+INSERT INTO chambre VALUES (21,1);
+INSERT INTO chambre VALUES (22,1);
+INSERT INTO appartement VALUES (23,2);
+
+INSERT INTO appartement VALUES (24,1);
+INSERT INTO appartement VALUES (25,2);
+INSERT INTO appartement VALUES (26,3);
+INSERT INTO chambre VALUES (27,1);
+INSERT INTO chambre VALUES (28,2);
+INSERT INTO chambre VALUES (29,3);
+
+INSERT INTO appartement VALUES (30,2);
+INSERT INTO appartement VALUES (31,1);
+INSERT INTO appartement VALUES (32,1);
+INSERT INTO chambre VALUES (33,1);
+INSERT INTO chambre VALUES (34,2);
+INSERT INTO chambre VALUES (35,3);
+
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('petit-dejeuner', 8);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('dejeuner', 13);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('diner', 17);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('gouter', 4.5);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin rouge', 7);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin blanc', 8);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vodka', 15);
+
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Tour Eiffel');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Arc de Triomphe');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La magie de La Gomera, parc national');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Dame d'Elche, musee archeologique nationale');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Palais imperial');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La grande muraille');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Lee tour de Kremlin : Vodozvodnaia');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Le palais de Terem');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','London Eye, phare');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','SEA LIFE London Aquarium');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','P');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','I');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','Z');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','Z');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','A');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','R');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','I');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','A');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','O');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','P');
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Taxi',100,35,'Paris');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinta',2,35,'Barcelone');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinto',3,25,'Madrid');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Snail',4,10,'Pekin');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Aglagla',5,39,'Kremlin');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Cheapest',6,45,'Londres');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('RicoTaco',7,20,'Rio de Janeiro');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Quelele',8,30,'Berlin');
+
+INSERT INTO proprietaire VALUES (1,'Bettencourt','Julie','BJwellplayed','bienjoue');
+INSERT INTO proprietaire VALUES (2,'Bernard de','Loic','BLblacklist','boboy');
