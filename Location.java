@@ -17,7 +17,7 @@ public class Location {
 	this.conn=conn;
     }
 
-    public void printLocation(){
+    public void printLocation() throws ParseException{
 
 	System.out.println("");
 	System.out.print("Voir un logement ? (O/N): ");
@@ -145,7 +145,7 @@ public class Location {
     }
 
 
-    public void inscriptionLocataire(String id_logement) throws SQLException {
+    public void inscriptionLocataire(String id_logement) throws SQLException, ParseException {
 
 	System.out.print("Nom: ");
 	String nom = Utils.readString("[A-Za-z]{1,20}");

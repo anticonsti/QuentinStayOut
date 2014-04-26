@@ -1,5 +1,6 @@
 import java.io.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.Scanner;
 
 
@@ -8,8 +9,9 @@ public class Navigation {
     static ConnectionAirChambre connecte;
 
 
-    /** Imprime le menu a l'ecran.*/
-    public static int printMenu() {
+    /** Imprime le menu a l'ecran.
+     * @throws ParseException */
+    public static int printMenu() throws ParseException {
 	int c = -1; // le choix de l'utilisateur
 	
 	// Impression du menu

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.text.ParseException;
 import java.io.*;
 
 public class ChercherLogement {
@@ -20,7 +21,7 @@ public class ChercherLogement {
 	System.out.println("-------------------------------------------------------------");
     }
 
-    public void printMenuChercherLogement(){
+    public void printMenuChercherLogement() throws ParseException{
 
 	this.printMenu();
 	int choix = Utils.readInt();
