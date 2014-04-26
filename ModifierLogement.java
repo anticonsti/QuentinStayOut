@@ -43,6 +43,7 @@ public class ModifierLogement{
 			    System.out.print("Appartement à modifier: ");
 			    int id_logement = Utils.readInt();
 			    int id_modif = this.choixLogementAModifier(id_prop, 1, id_logement);
+
 			    if( id_modif != -1){
 				System.out.print("Nombre de pièces: ");
 				int nb =  Utils.readInt();
@@ -57,12 +58,12 @@ public class ModifierLogement{
 
 				System.out.print("Prix/jour: ");
 				String prix = Utils.readString("[1-9]+[0-9]{0,5}");
-				this.modifierLogementPrix(id_prop, prix);
+				this.modifierLogementPrix(id_logement, prix);
 
 				System.out.print("% mois: ");
 				String prixMois = Utils.readString("[1-9]+[0-9]{0,5}|");
 				if( !prixMois.equals(""))
-				    this.modifierLogementPrixMois(id_prop, prixMois);
+				    this.modifierLogementPrixMois(id_logement, prixMois);
 
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
@@ -85,6 +86,7 @@ public class ModifierLogement{
 			    System.out.print("Chambre à modifier: ");
 			    int id_logement = Utils.readInt();
 			    int id_modif = this.choixLogementAModifier(id_prop, 2, id_logement);
+
 			    if( id_modif != -1){
 				System.out.print("Surface: ");
 				int surface =  Utils.readInt();
@@ -101,15 +103,16 @@ public class ModifierLogement{
 
 				System.out.print("Prix/jour: ");
 				String prix = Utils.readString("[1-9]+[0-9]{0,5}");
-				this.modifierLogementPrix(id_prop, prix);
+				this.modifierLogementPrix(id_logement, prix);
 
 				System.out.print("% mois: ");
 				String prixMois = Utils.readString("[1-9]+[0-9]{0,5}|");
 				if( !prixMois.equals(""))
-				    this.modifierLogementPrixMois(id_prop, prixMois);
+				    this.modifierLogementPrixMois(id_logement, prixMois);
 
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
+				this.printMenu();
 			    } else {
 				System.out.println("Erreur");
 				Thread.sleep(1300);
@@ -180,9 +183,9 @@ public class ModifierLogement{
     }
     */
 
-   public void modifierLogementPrix(int id_prop, String prix) throws SQLException{
+   public void modifierLogementPrix(int id_logement, String prix) throws SQLException{
 
-       String req ="UPDATE prix_logement SET prix=? WHERE id_prop="+String.valueOf(id_prop);
+       String req ="UPDATE prix_logement SET prix=? WHERE id_logement="+String.valueOf(id_logement);
 	
        update = conn.prepareStatement(req);
        update.setInt(1, Integer.parseInt(prix));
@@ -190,9 +193,9 @@ public class ModifierLogement{
        update.executeUpdate();
     }
 
-    public void modifierLogementPrixMois(int id_prop, String prixMois) throws SQLException{
+    public void modifierLogementPrixMois(int id_logement, String prixMois) throws SQLException{
 
-	String req ="UPDATE prix_logement SET prix_mois=? WHERE id_prop="+String.valueOf(id_prop);
+	String req ="UPDATE prix_logement SET prix_mois=? WHERE id_logement="+String.valueOf(id_logement);
 	
        update = conn.prepareStatement(req);
        update.setInt(1, Integer.parseInt(prixMois));
@@ -202,7 +205,13 @@ public class ModifierLogement{
 	
     public void modifierLogementDispo(int id_logement, String dateDep, String dateFin) throws SQLException{
 
-	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_logement="+id_logement;
+	String id_dispo="";
+	select = conn.prepareStatement("SELECT id_dispo FROM prix_logement WHERE id_logement="+id_logement);
+	result = select.executeQuery();
+	if( result.next() )
+	    id_dispo= result.getString(1);
+
+	String req="UPDATE disponibilite SET date_debut_dispo=?, date_fin_dispo=? WHERE id_dispo="+id_dispo;
 
 	update = conn.prepareStatement(req);
 	update.setDate(1, java.sql.Date.valueOf(dateDep));
