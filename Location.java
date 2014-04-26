@@ -434,7 +434,7 @@ public class Location {
 	}
 
 
-	montant += prixPrestation + prixTransport;
+	montant += prixPrestation*duree + prixTransport;
 
 	int id_location =-1;
 	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?) RETURNING id_location " );
