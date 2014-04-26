@@ -21,9 +21,6 @@ public class ModifierLogement{
 	System.out.println("0 - Retour");
 	System.out.println("1 - Appartement");
 	System.out.println("2 - Chambre");
-	System.out.println("3 - Disponibilité");
-	System.out.println("4 - Prix/jour");
-	System.out.println("5 - % mois");
 	System.out.println("-------------------------------------------------------------");
 
     }
@@ -50,6 +47,23 @@ public class ModifierLogement{
 				System.out.print("Nombre de pièces: ");
 				int nb =  Utils.readInt();
 				this.modifierLogementAppartement(id_logement, nb);
+
+				System.out.println("Disponibilité: ");
+				System.out.print("Début: ");
+				String dateDep =  Utils.readString("date");
+				System.out.print("Fin: ");
+				String dateFin =  Utils.readString("date");
+				this.modifierLogementDispo(id_logement, dateDep, dateFin);
+
+				System.out.print("Prix/jour: ");
+				String prix = Utils.readString("[1-9]+[0-9]{0,5}");
+				this.modifierLogementPrix(id_prop, prix);
+
+				System.out.print("% mois: ");
+				String prixMois = Utils.readString("[1-9]+[0-9]{0,5}|");
+				if( !prixMois.equals(""))
+				    this.modifierLogementPrixMois(id_prop, prixMois);
+
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
 				this.printMenu();
@@ -73,6 +87,23 @@ public class ModifierLogement{
 				System.out.print("Numéro: ");
 				int num =  Utils.readInt();
 				this.modifierLogementChambre(id_logement, num, surface);
+
+				System.out.println("Disponibilité: ");
+				System.out.print("Début: ");
+				String dateDep =  Utils.readString("date");
+				System.out.print("Fin: ");
+				String dateFin =  Utils.readString("date");
+				this.modifierLogementDispo(id_logement, dateDep, dateFin);
+
+				System.out.print("Prix/jour: ");
+				String prix = Utils.readString("[1-9]+[0-9]{0,5}");
+				this.modifierLogementPrix(id_prop, prix);
+
+				System.out.print("% mois: ");
+				String prixMois = Utils.readString("[1-9]+[0-9]{0,5}|");
+				if( !prixMois.equals(""))
+				    this.modifierLogementPrixMois(id_prop, prixMois);
+
 				System.out.println("Modification effectuée");
 				Thread.sleep(1300);
 			    }
@@ -83,15 +114,9 @@ public class ModifierLogement{
 			}
 			break;
 
-		    case 3:
+		    default:
+			this.printMenu();
 			break;
-
-		    case 4:
-			break;
-
-		    case 5:
-			break;
-	
 		    }
 		    choix = Utils.readInt();
 		}
@@ -128,6 +153,7 @@ public class ModifierLogement{
     }
     */
 
+    /*
     public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
 
 	String req ="UPDATE prix_logement SET ";
@@ -144,7 +170,27 @@ public class ModifierLogement{
 	update.executeUpdate();
 	
     }
+    */
 
+   public void modifierLogementPrix(int id_prop, String prix) throws SQLException{
+
+       String req ="UPDATE prix_logement SET prix=? WHERE id_prop="+String.valueOf(id_prop);
+	
+       update = conn.prepareStatement(req);
+       update.setInt(1, Integer.parseInt(prix));
+       // execute update SQL statement
+       update.executeUpdate();
+    }
+
+    public void modifierLogementPrixMois(int id_prop, String prixMois) throws SQLException{
+
+	String req ="UPDATE prix_logement SET prix_mois=? WHERE id_prop="+String.valueOf(id_prop);
+	
+       update = conn.prepareStatement(req);
+       update.setInt(1, Integer.parseInt(prixMois));
+       // execute update SQL statement
+       update.executeUpdate();
+    }
 	
     public void modifierLogementDispo(int id_logement, String dateDep, String dateFin) throws SQLException{
 
