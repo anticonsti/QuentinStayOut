@@ -211,6 +211,7 @@ public class MenuProprietaireConnexion{
 		    Utils.printEntete("LISTE DES LOCATIONS");
 		    if( lgm.verifLocation(id_proprio) == 1 ){
 			lgm.afficheListeLocation(id_proprio);
+			lgm.supprimerLocation(id_proprio);
 			this.printRappelCommande();
 		    } else {
 			System.out.println("Pas de locations");

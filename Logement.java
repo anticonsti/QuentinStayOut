@@ -284,22 +284,23 @@ class Logement{
 
     public void afficheListeLocation(int id_prop) throws SQLException{
 
-	select = conn.prepareStatement("SELECT id_logement, nom_locataire, prenom_locataire, adresse_locataire, num_tel, email, date_debut_location, date_fin_location, montant_total, prix, prix_mois, id_location FROM prix_logement NATURAL JOIN propose_logement NATURAL JOIN concerne NATURAL JOIN location NATURAL JOIN loge NATURAL JOIN locataire WHERE id_proprietaire= " + String.valueOf(id_prop) );
+	select = conn.prepareStatement("SELECT id_logement, nom_locataire, prenom_locataire, adresse_locataire, num_tel, email, date_reservation_location, date_debut_location, date_fin_location, montant_total, prix, prix_mois, id_location FROM prix_logement NATURAL JOIN propose_logement NATURAL JOIN concerne NATURAL JOIN location NATURAL JOIN loge NATURAL JOIN locataire WHERE id_proprietaire= " + String.valueOf(id_prop) );
 	result = select.executeQuery();
 
 	while( result.next() ){
 	    System.out.println("");
+	    String id_location =  result.getString(13);
 
+	    System.out.println("id_location : "+ id_location);
 	    System.out.println("Logement: "+ result.getString(1));
 	    System.out.println("Locataire: "+ result.getString(2) + " " + result.getString(3));
 	    System.out.println("Adresse: "+ result.getString(4));
 	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
-	    System.out.println("Période: "+ result.getString(7) + " -- " +  result.getString(8));
-	    System.out.println("Montant total: "+ result.getString(9) + "euros");
-	    System.out.println("dont: "+ result.getString(10) + "euros(logement)  (reduction: " + result.getString(11) +")");
+	    System.out.println("Date de réservation: "+  result.getString(7));
+	    System.out.println("Période: "+ result.getString(8) + " -- " +  result.getString(9));
+	    System.out.println("Montant total: "+ result.getString(10) + "euros");
+	    System.out.println("dont: "+ result.getString(11) + "euros(logement)  (reduction: " + result.getString(12) +")");
 
-
-	    String id_location =  result.getString(12);
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
 	    if( result2.next() )
@@ -316,6 +317,25 @@ class Logement{
 	    
 	}
 
+	
     }
     
+    public void supprimerLocation(int id_prop) throws SQLException{
+	System.out.println("Client souhaitant se rétracter (O/N)");
+	if( Utils.readString("O|N").equals("O")){
+	    System.out.print("id_location: ");
+	    int id_location = Utils.readInt();
+
+	    select = conn.prepareStatement("SELECT id_location FROM concerne NATURAL JOIN logement NATURAL JOIN propose_logement WHERE id_proprietaire= " + String.valueOf(id_prop) + "AND id_location = " + id_location );
+	    result = select.executeQuery();
+	    if( result.next() ){
+		delete = conn.prepareStatement("DELETE FROM location WHERE id_location="+id_location);
+		delete.executeUpdate();
+		System.out.println("Supprimé");
+	    }else 
+		System.out.println("Erreur");
+	    
+	}
+    }
+
 }
