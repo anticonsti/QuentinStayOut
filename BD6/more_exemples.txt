@@ -1,3 +1,6 @@
+DROP schema public CASCADE;
+CREATE schema public;
+
 INSERT INTO logement VALUES (1,'17 Avenue des Gobelins', 57, 'Paris');
 INSERT INTO logement VALUES (2,'5 Avenue des Trolls', 72, 'Paris');
 INSERT INTO logement VALUES (3,'68 Avenue des Orcs', 14, 'Paris');
@@ -17,7 +20,7 @@ INSERT INTO logement VALUES (14,'9 jie zaijian', 27, 'Pekin');
 
 INSERT INTO logement VALUES (15,'34 rue Dobraye ootro', 54, 'Moscou');
 INSERT INTO logement VALUES (16,'9 rue Nyezashta', 27, 'Siberia');
-INSERT INTO logement VALUES (17,'56 rue Bal'shoye spaseeba, lao pengyou', 19, 'Kremlin');
+INSERT INTO logement VALUES (17,'56 rue Bal'shoye spaseeba', 19, 'Kremlin');
 INSERT INTO logement VALUES (18,'34 rue Prasteete', 20, 'Kremlin');
 INSERT INTO logement VALUES (19,'34 rue Prasteete', 30, 'Kremlin');
 INSERT INTO logement VALUES (20,'34 rue Prasteete', 40, 'Kremlin');
@@ -46,7 +49,7 @@ INSERT INTO chambre VALUES (3,1);
 INSERT INTO chambre VALUES (4,2);
 INSERT INTO chambre VALUES (5,3);
 INSERT INTO chambre VALUES (6,4);
-INSERT INTO chambre VALUES (7,5);
+INSERT INTO appartement VALUES (7,2);
 
 INSERT INTO appartement VALUES (8,1);
 INSERT INTO appartement VALUES (9,1);
@@ -83,9 +86,14 @@ INSERT INTO chambre VALUES (34,2);
 INSERT INTO chambre VALUES (35,3);
 
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('petit-dejeuner', 8);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('petit-dejeuner', 11);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('petit-dejeuner', 14);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('dejeuner', 13);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('diner', 17);
-INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('gouter', 4.5);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('diner', 29);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('diner', 19);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('diner', 22);
+INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('gouter', 4);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin rouge', 7);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin blanc', 8);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vodka', 15);
@@ -111,26 +119,50 @@ INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique'
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','O');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','P');
 
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(,,);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-04-01','2015-04-30',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-04-03','2015-04-17',4);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-04-05','2015-04-19',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-03-25','2015-04-17',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-01-01','2014-01-14',7);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-02-12','2014-03-02',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-15','2014-08-15',27);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-18','2014-07-15',7);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-08-05',7);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-11-05','2014-12-05',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-03-01','2014-03-14',3);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-23','2014-05-19',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-01','2014-04-30',1);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-03-17','2015-04-17',3);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-03-05','2014-04-01',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-12-05','2015-01-03',10);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-30','2014-07-19',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-07','2014-08-05',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-01','2014-07-17',1);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-28','2014-07-21',4);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-05','2014-04-19',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-01-15','2015-02-12',7);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-03-04','2014-03-19',2);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-01-03','2014-01-19',1);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-02-06','2014-02-18',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-03-09','2014-03-17',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-12','2014-05-05',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-05-15','2015-06-12',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-06-18','2015-07-01',3);
+
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-12-15','2015-01-12',5);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-11-05','2015-11-29',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-10-05','2014-10-21',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-09-05','2014-09-19',2);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-08-05','2015-08-31',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-07-31',4);
 
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Taxi',100,35,'Paris');
-INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinta',2,35,'Barcelone');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinta',17,35,'Barcelone');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinto',3,25,'Madrid');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Snail',4,10,'Pekin');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Aglagla',5,39,'Kremlin');
@@ -140,3 +172,87 @@ INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transpor
 
 INSERT INTO proprietaire VALUES (1,'Bettencourt','Julie','BJwellplayed','bienjoue');
 INSERT INTO proprietaire VALUES (2,'Bernard de','Loic','BLblacklist','boboy');
+INSERT INTO proprietaire VALUES (3,'Bonjour','Jules','Mon','mdp');
+INSERT INTO proprietaire VALUES (4,'Adieu','Caroline','Est','tellement');
+INSERT INTO proprietaire VALUES (5,'Rebonjour','Papito','Evident','que');
+INSERT INTO proprietaire VALUES (6,'Enchante','Nicolas','Tout','lemonde');
+INSERT INTO proprietaire VALUES (7,'Lamifa','Vernes','Peut','deviner');
+INSERT INTO proprietaire VALUES (8,'Wesh','Yondaime','Ahahihohihou','kekeke');
+
+INSERT INTO prix_logement VALUES (1,1,100,1500);
+INSERT INTO prix_logement VALUES (2,2,100,1500);
+INSERT INTO prix_logement VALUES (3,3,100,1500);
+INSERT INTO prix_logement VALUES (4,4,100,1500);
+INSERT INTO prix_logement VALUES (5,5,100,1500);
+INSERT INTO prix_logement VALUES (6,6,100,1500);
+INSERT INTO prix_logement VALUES (7,7,100,1500);
+
+INSERT INTO prix_logement VALUES (8,8,100,1500);
+INSERT INTO prix_logement VALUES (9,9,100,1500);
+INSERT INTO prix_logement VALUES (10,10,100,1500);
+INSERT INTO prix_logement VALUES (11,11,100,1500);
+
+INSERT INTO prix_logement VALUES (12,12,100,1500);
+INSERT INTO prix_logement VALUES (13,13,100,1500);
+INSERT INTO prix_logement VALUES (14,14,100,1500);
+
+INSERT INTO prix_logement VALUES (15,15,100,1500);
+INSERT INTO prix_logement VALUES (16,16,100,1500);
+INSERT INTO prix_logement VALUES (17,17,100,1500);
+INSERT INTO prix_logement VALUES (18,18,100,1500);
+INSERT INTO prix_logement VALUES (19,19,100,1500);
+INSERT INTO prix_logement VALUES (20,20,100,1500);
+
+INSERT INTO prix_logement VALUES (21,21,100,1500);
+INSERT INTO prix_logement VALUES (22,22,100,1500);
+INSERT INTO prix_logement VALUES (23,23,100,1500);
+
+INSERT INTO prix_logement VALUES (24,24,100,1500);
+INSERT INTO prix_logement VALUES (25,25,100,1500);
+INSERT INTO prix_logement VALUES (26,26,100,1500);
+INSERT INTO prix_logement VALUES (27,27,100,1500);
+INSERT INTO prix_logement VALUES (28,28,100,1500);
+INSERT INTO prix_logement VALUES (29,29,100,1500);
+
+INSERT INTO prix_logement VALUES (30,30,100,1500);
+INSERT INTO prix_logement VALUES (31,31,100,1500);
+INSERT INTO prix_logement VALUES (32,32,100,1500);
+INSERT INTO prix_logement VALUES (33,33,100,1500);
+INSERT INTO prix_logement VALUES (34,34,100,1500);
+INSERT INTO prix_logement VALUES (35,35,100,1500);
+
+INSERT INTO photo (id_logement, nom_photo) VALUES (1,'photo du logement 1');
+INSERT INTO photo (id_logement, nom_photo) VALUES (2,'photo du logement 2');
+INSERT INTO photo (id_logement, nom_photo) VALUES (3,'photo du logement 3');
+INSERT INTO photo (id_logement, nom_photo) VALUES (4,'photo du logement 4');
+INSERT INTO photo (id_logement, nom_photo) VALUES (5,'photo du logement 5');
+INSERT INTO photo (id_logement, nom_photo) VALUES (6,'photo du logement 6');
+INSERT INTO photo (id_logement, nom_photo) VALUES (7,'photo du logement 7');
+INSERT INTO photo (id_logement, nom_photo) VALUES (8,'photo du logement 8');
+INSERT INTO photo (id_logement, nom_photo) VALUES (9,'photo du logement 9');
+INSERT INTO photo (id_logement, nom_photo) VALUES (10,'photo du logement 10');
+INSERT INTO photo (id_logement, nom_photo) VALUES (11,'photo du logement 11');
+INSERT INTO photo (id_logement, nom_photo) VALUES (12,'photo du logement 12');
+INSERT INTO photo (id_logement, nom_photo) VALUES (13,'photo du logement 13');
+INSERT INTO photo (id_logement, nom_photo) VALUES (14,'photo du logement 14');
+INSERT INTO photo (id_logement, nom_photo) VALUES (15,'photo du logement 15');
+INSERT INTO photo (id_logement, nom_photo) VALUES (16,'photo du logement 16');
+INSERT INTO photo (id_logement, nom_photo) VALUES (17,'photo du logement 17');
+INSERT INTO photo (id_logement, nom_photo) VALUES (18,'photo du logement 18');
+INSERT INTO photo (id_logement, nom_photo) VALUES (19,'photo du logement 19');
+INSERT INTO photo (id_logement, nom_photo) VALUES (20,'photo du logement 20');
+INSERT INTO photo (id_logement, nom_photo) VALUES (21,'photo du logement 21');
+INSERT INTO photo (id_logement, nom_photo) VALUES (22,'photo du logement 22');
+INSERT INTO photo (id_logement, nom_photo) VALUES (23,'photo du logement 23');
+INSERT INTO photo (id_logement, nom_photo) VALUES (24,'photo du logement 24');
+INSERT INTO photo (id_logement, nom_photo) VALUES (25,'photo du logement 25');
+INSERT INTO photo (id_logement, nom_photo) VALUES (26,'photo du logement 26');
+INSERT INTO photo (id_logement, nom_photo) VALUES (27,'photo du logement 27');
+INSERT INTO photo (id_logement, nom_photo) VALUES (28,'photo du logement 28');
+INSERT INTO photo (id_logement, nom_photo) VALUES (29,'photo du logement 29');
+INSERT INTO photo (id_logement, nom_photo) VALUES (30,'photo du logement 30');
+INSERT INTO photo (id_logement, nom_photo) VALUES (31,'photo du logement 31');
+INSERT INTO photo (id_logement, nom_photo) VALUES (32,'photo du logement 32');
+INSERT INTO photo (id_logement, nom_photo) VALUES (33,'photo du logement 33');
+INSERT INTO photo (id_logement, nom_photo) VALUES (34,'photo du logement 34');
+INSERT INTO photo (id_logement, nom_photo) VALUES (35,'photo du logement 35');
