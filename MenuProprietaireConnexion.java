@@ -20,8 +20,8 @@ public class MenuProprietaireConnexion{
 	System.out.print("1 - ajout | ");
 	System.out.print("2 - liste des logements | ");
 	System.out.print("3 - suppression | ");
-	System.out.print("4 - offre promotionnelle | ");
-	System.out.print("5 - modification | ");
+	System.out.print("4 - modification | ");
+	System.out.print("5 - offre | ");
 	System.out.println("6 - liste des locations  ");
 	System.out.println("-------------------------------------------------------------");
     }
