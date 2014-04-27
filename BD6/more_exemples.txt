@@ -1,47 +1,47 @@
 DROP schema public CASCADE;
 CREATE schema public;
 
-INSERT INTO logement VALUES (1,'17 Avenue des Gobelins', 57, 'Paris');
-INSERT INTO logement VALUES (2,'5 Avenue des Trolls', 72, 'Paris');
-INSERT INTO logement VALUES (3,'68 Avenue des Orcs', 14, 'Paris');
-INSERT INTO logement VALUES (4,'68 Avenue des Orcs', 17, 'Paris');
-INSERT INTO logement VALUES (5,'68 Avenue des Orcs', 30, 'Paris');
-INSERT INTO logement VALUES (6,'68 Avenue des Orcs', 15, 'Paris');
-INSERT INTO logement VALUES (7,'68 Avenue des Orcs', 58, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('17 Avenue des Gobelins', 57, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('5 Avenue des Trolls', 72, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('68 Avenue des Orcs', 14, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('68 Avenue des Orcs', 17, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('68 Avenue des Orcs', 30, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('68 Avenue des Orcs', 15, 'Paris');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('68 Avenue des Orcs', 58, 'Paris');
 
-INSERT INTO logement VALUES (8,'5 calle de las ninas', 19, 'Barcelone');
-INSERT INTO logement VALUES (9,'9 calle de los ninos', 22, 'Madrid');
-INSERT INTO logement VALUES (10,'19 calle de que tal', 20, 'Alicante');
-INSERT INTO logement VALUES (11,'19 calle de que tal', 15, 'Alicante');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('5 calle de las ninas', 19, 'Barcelone');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 calle de los ninos', 22, 'Madrid');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('19 calle de que tal', 20, 'Alicante');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('19 calle de que tal', 15, 'Alicante');
 
-INSERT INTO logement VALUES (12,'7 jie xie xie', 54, 'Pekin');
-INSERT INTO logement VALUES (13,'56 jie ni hao, lao pengyou', 19, 'Pekin');
-INSERT INTO logement VALUES (14,'9 jie zaijian', 27, 'Pekin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('7 jie xie xie', 54, 'Pekin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 jie ni hao, lao pengyou', 19, 'Pekin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 jie zaijian', 27, 'Pekin');
 
-INSERT INTO logement VALUES (15,'34 rue Dobraye ootro', 54, 'Moscou');
-INSERT INTO logement VALUES (16,'9 rue Nyezashta', 27, 'Siberia');
-INSERT INTO logement VALUES (17,'56 rue Bal'shoye spaseeba', 19, 'Kremlin');
-INSERT INTO logement VALUES (18,'34 rue Prasteete', 20, 'Kremlin');
-INSERT INTO logement VALUES (19,'34 rue Prasteete', 30, 'Kremlin');
-INSERT INTO logement VALUES (20,'34 rue Prasteete', 40, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Dobraye ootro', 54, 'Moscou');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 rue Nyezashta', 27, 'Siberia');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 rue Bal'shoye spaseeba', 19, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 20, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 30, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 40, 'Kremlin');
 
-INSERT INTO logement VALUES (21,'Oak Apple Court, Lee SE12', 14, 'Londres');
-INSERT INTO logement VALUES (22,'Oak Hall Road, Leytonstone E11', 25, 'Londres');
-INSERT INTO logement VALUES (23,'Old Gravel Lane, ST GEORGE IN THE EAST: ST PAUL', 36, 'Londres');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Oak Apple Court, Lee SE12', 14, 'Londres');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Oak Hall Road, Leytonstone E11', 25, 'Londres');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Old Gravel Lane, ST GEORGE IN THE EAST: ST PAUL', 36, 'Londres');
 
-INSERT INTO logement VALUES (24,'Rua do Russel, 804, Gloria', 20, 'Rio de Janeiro');
-INSERT INTO logement VALUES (25,'Rua do Shalabala, 102 ', 40, 'Rio de Janeiro');
-INSERT INTO logement VALUES (26,'Rua do Balibalou 835', 60, 'Rio de Janeiro');
-INSERT INTO logement VALUES (27,'Rua do Muljomdao 457', 30, 'Rio de Janeiro');
-INSERT INTO logement VALUES (28,'Rua do Muljomdao 457', 22, 'Rio de Janeiro');
-INSERT INTO logement VALUES (29,'Rua do Muljomdao 457', 25, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Russel, 804, Gloria', 20, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Shalabala, 102 ', 40, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Balibalou 835', 60, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Muljomdao 457', 30, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Muljomdao 457', 22, 'Rio de Janeiro');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Rua do Muljomdao 457', 25, 'Rio de Janeiro');
 
-INSERT INTO logement VALUES (30,'Mohrenstrasse 30, 10117', 51, 'Berlin');
-INSERT INTO logement VALUES (31,'Karl-Liebknecht-Strasse 3, 10178', 26, 'Berlin');
-INSERT INTO logement VALUES (32,'An Der Spandauer Bruecke 11, 10178', 19, 'Berlin');
-INSERT INTO logement VALUES (33,'Van der Decken 11, 23187', 20, 'Berlin');
-INSERT INTO logement VALUES (34,'Van der Decken 11, 23187', 22, 'Berlin');
-INSERT INTO logement VALUES (35,'Van der Decken 11, 23187', 17, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Mohrenstrasse 30, 10117', 51, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Karl-Liebknecht-Strasse 3, 10178', 26, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('An Der Spandauer Bruecke 11, 10178', 19, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Van der Decken 11, 23187', 20, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Van der Decken 11, 23187', 22, 'Berlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Van der Decken 11, 23187', 17, 'Berlin');
 
 INSERT INTO appartement VALUES (1,2);
 INSERT INTO appartement VALUES (2,3);
@@ -108,6 +108,7 @@ INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Lee
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Le palais de Terem');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','London Eye, phare');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','SEA LIFE London Aquarium');
+
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','P');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','I');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','Z');
@@ -125,7 +126,7 @@ INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-03-25','2015-04-17',2);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-01-01','2014-01-14',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-02-12','2014-03-02',3);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-15','2014-08-15',27);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-15','2014-08-15',14);
 
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-18','2014-07-15',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-08-05',7);
@@ -170,13 +171,13 @@ INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transpor
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('RicoTaco',7,20,'Rio de Janeiro');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Quelele',8,30,'Berlin');
 
-INSERT INTO proprietaire VALUES (1,'Bettencourt','Julie','BJwellplayed','bienjoue');
-INSERT INTO proprietaire VALUES (2,'Bernard de','Loic','BLblacklist','boboy');
-INSERT INTO proprietaire VALUES (3,'Bonjour','Jules','Mon','mdp');
-INSERT INTO proprietaire VALUES (4,'Adieu','Caroline','Est','tellement');
-INSERT INTO proprietaire VALUES (5,'Rebonjour','Papito','Evident','que');
-INSERT INTO proprietaire VALUES (6,'Enchante','Nicolas','Tout','lemonde');
-INSERT INTO proprietaire VALUES (7,'Wesh','Yondaime','Peut','deviner');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Bettencourt','Julie','BJwellplayed','bienjoue');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Bernard de','Loic','BLblacklist','boboy');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Bonjour','Jules','Mon','mdp');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Adieu','Caroline','Est','tellement');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Rebonjour','Papito','Evident','que');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Enchante','Nicolas','Tout','lemonde');
+INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Wesh','Yondaime','Peut','deviner');
 
 INSERT INTO prix_logement VALUES (1,1,100,1500);
 INSERT INTO prix_logement VALUES (2,2,100,1500);
@@ -256,35 +257,35 @@ INSERT INTO photo (id_logement, nom_photo) VALUES (33,'photo du logement 33');
 INSERT INTO photo (id_logement, nom_photo) VALUES (34,'photo du logement 34');
 INSERT INTO photo (id_logement, nom_photo) VALUES (35,'photo du logement 35');
 
-INSERT INTO offre_promotionnelle VALUES(1,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(2,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(3,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(4,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(5,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(6,id_logement,date_debut,date_fin,prix);
-INSERT INTO offre_promotionnelle VALUES(7,id_logement,date_debut,date_fin,prix);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(1,'2015-04-01','2015-04-15',990);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(7,'2014-07-15','2015-08-15',2000);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(8,'2014-06-18','2014-07-01',750);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(15,'2014-03-18','2014-04-01',690);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(22,'2015-01-15','2015-02-01',1200);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(34,'2015-08-05','2015-08-31',790);
+INSERT INTO (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) offre_promotionnelle VALUES(35,'2014-07-05','2014-07-31',700);
 
-INSERT INTO locataire VALUES (1,'Je','Suis','1 Rue Locataire 10101 LOC','0123456789','locataire1@locataire.fr');
-INSERT INTO locataire VALUES (2,'Un','Locataire','2 Rue Locataire 10101 LOC','0123456789','locataire2@locataire.fr');
-INSERT INTO locataire VALUES (3,'Qui','Voudrait','3 Rue Locataire 10101 LOC','0123456789','locataire3@locataire.fr');
-INSERT INTO locataire VALUES (4,'Louer','Un','4 Rue Locataire 10101 LOC','0123456789','locataire4@locataire.fr');
-INSERT INTO locataire VALUES (5,'Appartement','Quelque','5 Rue Locataire 10101 LOC','0123456789','locataire5@locataire.fr');
-INSERT INTO locataire VALUES (6,'Part','Dans','6 Rue Locataire 10101 LOC','0123456789','locataire6@locataire.fr');
-INSERT INTO locataire VALUES (7,'Le','Monde','7 Rue Locataire 10101 LOC','0123456789','locataire7@locataire.fr');
-INSERT INTO locataire VALUES (8,'Peu','Importe','8 Rue Locataire 10101 LOC','0123456789','locataire8@locataire.fr');
-INSERT INTO locataire VALUES (9,'Le','Prix','9 Rue Locataire 10101 LOC','0123456789','locataire9@locataire.fr');
-INSERT INTO locataire VALUES (10,'La','Surface','10 Rue Locataire 10101 LOC','0123456789','locataire10@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Je','Suis','1 Rue Locataire 10101 LOC','0123456789','locataire1@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Un','Locataire','2 Rue Locataire 10101 LOC','0123456789','locataire2@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Qui','Voudrait','3 Rue Locataire 10101 LOC','0123456789','locataire3@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Louer','Un','4 Rue Locataire 10101 LOC','0123456789','locataire4@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Appartement','Quelque','5 Rue Locataire 10101 LOC','0123456789','locataire5@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Part','Dans','6 Rue Locataire 10101 LOC','0123456789','locataire6@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Le','Monde','7 Rue Locataire 10101 LOC','0123456789','locataire7@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Peu','Importe','8 Rue Locataire 10101 LOC','0123456789','locataire8@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Le','Prix','9 Rue Locataire 10101 LOC','0123456789','locataire9@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('La','Surface','10 Rue Locataire 10101 LOC','0123456789','locataire10@locataire.fr');
 
-INSERT INTO locataire VALUES (11,'Les','Prestations','11 Rue Locataire 10101 LOC','0123456789','locataire11@locataire.fr');
-INSERT INTO locataire VALUES (12,'Ou','Bien','12 Rue Locataire 10101 LOC','0123456789','locataire12@locataire.fr');
-INSERT INTO locataire VALUES (13,'Les','Suggestions','13 Rue Locataire 10101 LOC','0123456789','locataire13@locataire.fr');
-INSERT INTO locataire VALUES (14,'Et','Encore','14 Rue Locataire 10101 LOC','0123456789','locataire14@locataire.fr');
-INSERT INTO locataire VALUES (15,'La','Duree','15 Rue Locataire 10101 LOC','0123456789','locataire15@locataire.fr');
-INSERT INTO locataire VALUES (16,'Dupond','Fondu','16 Rue Locataire 10101 LOC','0123456789','locataire16@locataire.fr');
-INSERT INTO locataire VALUES (17,'Barbecue','Est','17 Rue Locataire 10101 LOC','0123456789','locataire17@locataire.fr');
-INSERT INTO locataire VALUES (18,'Tellement','Biengrille','18 Rue Locataire 10101 LOC','0123456789','locataire18@locataire.fr');
-INSERT INTO locataire VALUES (19,'Queje','Salive','19 Rue Locataire 10101 LOC','0123456789','locataire19@locataire.fr');
-INSERT INTO locataire VALUES (20,'Meilleur','Restochef','20 Rue Locataire 10101 LOC','0123456789','locataire20@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Les','Prestations','11 Rue Locataire 10101 LOC','0123456789','locataire11@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Ou','Bien','12 Rue Locataire 10101 LOC','0123456789','locataire12@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Les','Suggestions','13 Rue Locataire 10101 LOC','0123456789','locataire13@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Et','Encore','14 Rue Locataire 10101 LOC','0123456789','locataire14@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('La','Duree','15 Rue Locataire 10101 LOC','0123456789','locataire15@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Dupond','Fondu','16 Rue Locataire 10101 LOC','0123456789','locataire16@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Barbecue','Est','17 Rue Locataire 10101 LOC','0123456789','locataire17@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Tellement','Biengrille','18 Rue Locataire 10101 LOC','0123456789','locataire18@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Queje','Salive','19 Rue Locataire 10101 LOC','0123456789','locataire19@locataire.fr');
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Meilleur','Restochef','20 Rue Locataire 10101 LOC','0123456789','locataire20@locataire.fr');
 
 INSERT INTO propose_prestation VALUES (12,1);
 INSERT INTO propose_prestation VALUES (13,2);
@@ -337,5 +338,69 @@ INSERT INTO propose_logement(7,33);
 INSERT INTO propose_logement(7,34);
 INSERT INTO propose_logement(7,35);
 
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
 
+INSERT INTO loge VALUES (1,1);
+INSERT INTO loge VALUES (2,2);
+INSERT INTO loge VALUES (3,3);
+INSERT INTO loge VALUES (4,4);
+INSERT INTO loge VALUES (5,5);
+INSERT INTO loge VALUES (6,6);
+INSERT INTO loge VALUES (7,7);
+INSERT INTO loge VALUES (8,8);
+INSERT INTO loge VALUES (9,9);
+INSERT INTO loge VALUES (10,10);
+
+INSERT INTO concerne VALUES (1,1);
+INSERT INTO concerne VALUES (2,2);
+INSERT INTO concerne VALUES (3,3);
+INSERT INTO concerne VALUES (4,4);
+INSERT INTO concerne VALUES (5,5);
+INSERT INTO concerne VALUES (6,6);
+INSERT INTO concerne VALUES (7,7);
+INSERT INTO concerne VALUES (8,8);
+INSERT INTO concerne VALUES (9,9);
+INSERT INTO concerne VALUES (10,10);
+
+INSERT INTO propose_suggestion VALUES (1,1);
+INSERT INTO propose_suggestion VALUES (2,2);
+INSERT INTO propose_suggestion VALUES (3,3);
+INSERT INTO propose_suggestion VALUES (4,4);
+INSERT INTO propose_suggestion VALUES (5,5);
+INSERT INTO propose_suggestion VALUES (6,6);
+INSERT INTO propose_suggestion VALUES (7,7);
+INSERT INTO propose_suggestion VALUES (8,8);
+INSERT INTO propose_suggestion VALUES (9,9);
+INSERT INTO propose_suggestion VALUES (10,10);
+
+INSERT INTO propose_suggestion VALUES (1,11);
+INSERT INTO propose_suggestion VALUES (2,12);
+INSERT INTO propose_suggestion VALUES (3,13);
+INSERT INTO propose_suggestion VALUES (4,14);
+INSERT INTO propose_suggestion VALUES (5,15);
+INSERT INTO propose_suggestion VALUES (6,16);
+INSERT INTO propose_suggestion VALUES (7,17);
+INSERT INTO propose_suggestion VALUES (8,18);
+INSERT INTO propose_suggestion VALUES (9,19);
+INSERT INTO propose_suggestion VALUES (10,20);
+
+INSERT INTO propose_transport VALUES (1,1);
+INSERT INTO propose_transport VALUES (2,2);
+INSERT INTO propose_transport VALUES (3,3);
+INSERT INTO propose_transport VALUES (4,4);
+INSERT INTO propose_transport VALUES (5,5);
+INSERT INTO propose_transport VALUES (6,6);
+INSERT INTO propose_transport VALUES (7,7);
+INSERT INTO propose_transport VALUES (8,8);
+INSERT INTO propose_transport VALUES (9,7);
+INSERT INTO propose_transport VALUES (10,6);
 
