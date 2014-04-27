@@ -264,7 +264,6 @@ public class Location {
 		if( nbReservations < nbVehicule){
 		    System.out.print("Avec transport aller? (O/N): ");
 		    if( (avecTransportAller=Utils.readString("O|N")).equals("O")){
-			System.out.println("");
 
 			// vérifie heure
 			int erreurHeure=1;
@@ -337,9 +336,8 @@ public class Location {
 		if( rep_aller.equals("O") )
 		    nbReservations++;
 		if( nbReservations < nbVehicule){
-		    System.out.print("Avec transport? (O/N): ");
+		    System.out.print("Avec transport retour? (O/N): ");
 		    if( (avecTransportRetour=Utils.readString("O|N")).equals("O")){
-			System.out.println("");
 			// vérifie heure 
 			int erreurHeure=1;
 			do{
@@ -450,8 +448,13 @@ public class Location {
 		montant -= (montant*(result.getInt(3)/100.0));
 	}
 
+	montant += prixPrestation*duree;
 
-	montant += prixPrestation*duree + prixTransport;
+	if(rep_aller.equals("O"))
+	   montant += prixTransport;
+
+	if(rep_retour.equals("O"))
+	    montant += prixTransport;
 
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//get current date time with Date()
