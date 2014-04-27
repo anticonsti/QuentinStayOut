@@ -1,5 +1,3 @@
-DROP schema public CASCADE;
-CREATE schema public;
 
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('17 Avenue des Gobelins', 57, 'Paris');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('5 Avenue des Trolls', 72, 'Paris');
@@ -20,7 +18,7 @@ INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 jie zaijian',
 
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Dobraye ootro', 54, 'Moscou');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 rue Nyezashta', 27, 'Siberia');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 rue Bal'shoye spaseeba', 19, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 rue Bal''shoye spaseeba', 19, 'Kremlin');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 20, 'Kremlin');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 30, 'Kremlin');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 40, 'Kremlin');
@@ -101,7 +99,7 @@ INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vodka'
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Tour Eiffel');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Arc de Triomphe');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La magie de La Gomera, parc national');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Dame d'Elche, musee archeologique nationale');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Dame d''Elche, musee archeologique nationale');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Palais imperial');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La grande muraille');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Lee tour de Kremlin : Vodozvodnaia');
@@ -296,58 +294,58 @@ INSERT INTO propose_prestation VALUES (18,6);
 INSERT INTO propose_prestation VALUES (19,7);
 INSERT INTO propose_prestation VALUES (20,8);
 
-INSERT INTO propose_logement(1,1);
-INSERT INTO propose_logement(1,2);
-INSERT INTO propose_logement(1,3);
-INSERT INTO propose_logement(1,4);
-INSERT INTO propose_logement(1,5);
-INSERT INTO propose_logement(1,6);
-INSERT INTO propose_logement(1,7);
+INSERT INTO propose_logement VALUES (1,1);
+INSERT INTO propose_logement VALUES (1,2);
+INSERT INTO propose_logement VALUES (1,3);
+INSERT INTO propose_logement VALUES (1,4);
+INSERT INTO propose_logement VALUES (1,5);
+INSERT INTO propose_logement VALUES (1,6);
+INSERT INTO propose_logement VALUES (1,7);
 
-INSERT INTO propose_logement(2,8);
-INSERT INTO propose_logement(2,9);
-INSERT INTO propose_logement(2,10);
-INSERT INTO propose_logement(2,11);
+INSERT INTO propose_logement VALUES (2,8);
+INSERT INTO propose_logement VALUES (2,9);
+INSERT INTO propose_logement VALUES (2,10);
+INSERT INTO propose_logement VALUES (2,11);
 
-INSERT INTO propose_logement(3,12);
-INSERT INTO propose_logement(3,13);
-INSERT INTO propose_logement(3,14);
+INSERT INTO propose_logement VALUES (3,12);
+INSERT INTO propose_logement VALUES (3,13);
+INSERT INTO propose_logement VALUES (3,14);
 
-INSERT INTO propose_logement(4,15);
-INSERT INTO propose_logement(4,16);
-INSERT INTO propose_logement(4,17);
-INSERT INTO propose_logement(4,18);
-INSERT INTO propose_logement(4,19);
-INSERT INTO propose_logement(4,20);
+INSERT INTO propose_logement VALUES (4,15);
+INSERT INTO propose_logement VALUES (4,16);
+INSERT INTO propose_logement VALUES (4,17);
+INSERT INTO propose_logement VALUES (4,18);
+INSERT INTO propose_logement VALUES (4,19);
+INSERT INTO propose_logement VALUES (4,20);
 
-INSERT INTO propose_logement(5,21);
-INSERT INTO propose_logement(5,22);
-INSERT INTO propose_logement(5,23);
+INSERT INTO propose_logement VALUES (5,21);
+INSERT INTO propose_logement VALUES (5,22);
+INSERT INTO propose_logement VALUES (5,23);
 
-INSERT INTO propose_logement(6,24);
-INSERT INTO propose_logement(6,25);
-INSERT INTO propose_logement(6,26);
-INSERT INTO propose_logement(6,27);
-INSERT INTO propose_logement(6,28);
-INSERT INTO propose_logement(6,29);
+INSERT INTO propose_logement VALUES (6,24);
+INSERT INTO propose_logement VALUES (6,25);
+INSERT INTO propose_logement VALUES (6,26);
+INSERT INTO propose_logement VALUES (6,27);
+INSERT INTO propose_logement VALUES (6,28);
+INSERT INTO propose_logement VALUES (6,29);
 
-INSERT INTO propose_logement(7,30);
-INSERT INTO propose_logement(7,31);
-INSERT INTO propose_logement(7,32);
-INSERT INTO propose_logement(7,33);
-INSERT INTO propose_logement(7,34);
-INSERT INTO propose_logement(7,35);
+INSERT INTO propose_logement VALUES (7,30);
+INSERT INTO propose_logement VALUES (7,31);
+INSERT INTO propose_logement VALUES (7,32);
+INSERT INTO propose_logement VALUES (7,33);
+INSERT INTO propose_logement VALUES (7,34);
+INSERT INTO propose_logement VALUES (7,35);
 
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total)  VALUES ('2014/01/01','2014/01/01',700);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
 
 INSERT INTO loge VALUES (1,1);
 INSERT INTO loge VALUES (2,2);

@@ -1,3 +1,7 @@
+DROP schema public CASCADE;
+CREATE schema public;
+
+
 CREATE TABLE proprietaire(
 id_proprietaire SERIAL PRIMARY KEY,
 nom_proprietaire VARCHAR(20) NOT NULL, 
