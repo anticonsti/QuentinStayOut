@@ -166,12 +166,11 @@ public class Location {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	String dateDep="",dateFin="";
 	Date date1 =null, date2=null, dateDProprio=null, dateFProprio=null, dateDLocat=null, dateFLocat=null;
-	int sejourMin = 0;
-	int erreurDate=1;
+	int sejourMin = 0, erreurDate=1;
 	do{
 	    erreurDate=1;
-	    System.out.print("Date début location (YYYY-MM-DD): ");
 	    try{
+		System.out.print("Date début location (YYYY-MM-DD): ");
 		dateDep = Utils.readString("date");
 		date1= sdf.parse(dateDep);
 
@@ -179,9 +178,7 @@ public class Location {
 		dateFin = Utils.readString("date");
 		date2 = sdf.parse(dateFin);
 
-
 		// vérifie la période à louer
-
 		// période proposée par le propriétaire
 		select = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
 		result = select.executeQuery();
@@ -207,8 +204,7 @@ public class Location {
 		}
 
 		if( erreurDate !=0){
-		    // puis on vérifie qu'on ne loue pas sur une période déjà prise
-		    // période occupée par les locataires
+		    // vérifie qu'on ne loue pas sur une période déjà prise
 		    select = conn.prepareStatement("SELECT date_debut_location, date_fin_location FROM logement NATURAL JOIN concerne NATURAL JOIN location WHERE id_logement = " + id_logement);
 	
 		    result = select.executeQuery();
@@ -241,17 +237,14 @@ public class Location {
 		prixPrestation=result.getInt(2);
 	    }
 	}
-	
-	
+		
 	// pour les transports, on vérifie s'il reste des véhicules disponibles
 	// controler les véhicules disponibles en tenant compte des réservations déjà faites
 
 	int id_transport=-1, prixTransport=0;
-	String avecTransport="";
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	String heure_aller="", heure_retour="";
+	String avecTransportAller="", avecTransportRetour="", heure_aller="", heure_retour="", rep_aller="", rep_retour="";
 	Date date_aller =null, date_retour=null;
-	String rep_aller="", rep_retour="";
 
 	// on vérifie qu'il y a un service de transport
 	select = conn.prepareStatement("SELECT id_service_transport, prix_transport, nb_vehicule FROM propose_transport NATURAL JOIN service_transport WHERE id_logement =" + id_logement);
@@ -261,30 +254,21 @@ public class Location {
 	    prixTransport=result.getInt(2);
 	    int nbVehicule = result.getInt(3);
 
-	    // on supprime les réservations dépassées
-	    delete = conn.prepareStatement("DELETE FROM avec_transport WHERE date_reservation + interval ' 30 minutes ' < CURRENT_TIMESTAMP ");
-	    delete.executeUpdate();
-
-	    // vérifie le nombre de réservation
-	    select2 = conn.prepareStatement("SELECT COUNT(*) FROM avec_transport WHERE id_service_transport=" + id_transport );
+	    // vérifie le nombre de réservation pour l'aller
+	    select2 = conn.prepareStatement("SELECT COUNT(id_service_transport) FROM avec_transport WHERE id_service_transport=" + id_transport + " AND date(date_reservation) = '" + dateDep +"'");
 	    result2 = select2.executeQuery();
 	    if( result2.next()){
 		int nbReservations = result2.getInt(1);
-	    
+
 		// vérifie qu'il reste des végicules disponibles
 		if( nbReservations < nbVehicule){
-
-		    System.out.print("Avec transport? (O/N): ");
-		    if( (avecTransport=Utils.readString("O|N")).equals("O")){
-		
-
+		    System.out.print("Avec transport aller? (O/N): ");
+		    if( (avecTransportAller=Utils.readString("O|N")).equals("O")){
 			System.out.println("");
-			// vérifie heure aller et retour
+
+			// vérifie heure
 			int erreurHeure=1;
 			do{
-			    // comparer avec toutes les autres réservations
-			    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport);
-
 			    erreurHeure=1;
 			    System.out.print("heure_aller (O/N): ");
 			    if( (rep_aller=Utils.readString("O|N")).equals("O") ){
@@ -296,19 +280,12 @@ public class Location {
 				} catch (ParseException ex){
 				    ex.printStackTrace();
 				}
-			    }
-			    System.out.print("heure_retour (O/N): ");
-			    // on arrête si N et N
-			    if( (rep_retour=Utils.readString("O|N")).equals("N") && rep_aller.equals("N") )
+			    } else
 				break;
 
-			    System.out.print("heure (hh:mm): ");
-			    heure_retour=Utils.readString("(\\d{2}:\\d{2})|");
-			    try{
-				date_retour= format.parse(dateFin + " " +heure_retour +":00");
-			    } catch (ParseException ex){
-				ex.printStackTrace();
-			    }
+			    // comparer avec toutes les autres réservations
+			    String requete ="SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport+ " AND date(date_reservation) = '" + dateDep +"'";
+			    select2 = conn.prepareStatement(requete);
 			    // vérifie si c'est disponible
 			    result2 = select2.executeQuery();
 			    Date date_reserv= null;
@@ -332,7 +309,7 @@ public class Location {
 					    System.out.println("impossible");
 					    // affiche les réservations déjà faites
 					    System.out.println("Liste des réservations: ");
-					    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport + " AND date(date_reservation) = '" + dateDep +"'");
+					    select2 = conn.prepareStatement(requete);
 					    result2 = select2.executeQuery();
 					    while(result2.next()) {
 						System.out.println(result2.getString(1));
@@ -343,7 +320,48 @@ public class Location {
 					}
 				    }
 				}
-				// de même pour le retour 
+			    }
+
+			} while(erreurHeure==0);
+		    }
+
+		}
+
+	    }
+
+	    // vérifie le nombre de réservation pour le retour 
+	    select2 = conn.prepareStatement("SELECT COUNT(id_service_transport) FROM avec_transport WHERE id_service_transport=" + id_transport + " AND date(date_reservation) = '" + dateFin +"'");
+	    result2 = select2.executeQuery();
+	    if( result2.next()){
+		int nbReservations = result2.getInt(1);
+		if( rep_aller.equals("O") )
+		    nbReservations++;
+		if( nbReservations < nbVehicule){
+		    System.out.print("Avec transport? (O/N): ");
+		    if( (avecTransportRetour=Utils.readString("O|N")).equals("O")){
+			System.out.println("");
+			// vérifie heure 
+			int erreurHeure=1;
+			do{
+			    erreurHeure=1;
+
+			    System.out.print("heure_retour (O/N): ");
+			    if( (rep_retour=Utils.readString("O|N")).equals("N"))
+				break;
+
+			    System.out.print("heure (hh:mm): ");
+			    heure_retour=Utils.readString("(\\d{2}:\\d{2})|");
+			    try{
+				date_retour= format.parse(dateFin + " " +heure_retour +":00");
+			    } catch (ParseException ex){
+				ex.printStackTrace();
+			    }
+			    String requete = "SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport + " AND date(date_reservation) = '" + dateFin +"'";
+			    select2 = conn.prepareStatement(requete);
+			    // vérifie si c'est disponible
+			    result2 = select2.executeQuery();
+			    Date date_reserv= null;
+			    while(result2.next()) {
 				if(date_reserv.equals(date_retour)){
 				    // getTime() en ms
 				    long diff_retour = Math.abs( date_reserv.getTime() - date_retour.getTime() );
@@ -358,7 +376,7 @@ public class Location {
 					    System.out.println("impossible");
 					    // affiche les réservations déjà faites
 					    System.out.println("Liste des réservations: ");
-					    select2 = conn.prepareStatement("SELECT date_reservation FROM avec_transport WHERE id_service_transport =" + id_transport + " AND date(date_reservation) = '" + dateFin +"'");
+					    select2 = conn.prepareStatement(requete);
 					    result2 = select2.executeQuery();
 					    while(result2.next()) {
 						System.out.println(result2.getString(1));
@@ -376,7 +394,6 @@ public class Location {
 	    }
 
 	}
-	
 
 	// insertion dans locataire, location, loge, concerne, avec_prestation, avec_transport
 	
@@ -400,7 +417,7 @@ public class Location {
 	// appliquer le prix selon la durée de location
 
 	int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
-	double montant=0;
+	float montant=0;
 
 	select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
@@ -440,7 +457,7 @@ public class Location {
 	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?) RETURNING id_location " );
 	insert.setDate(1, java.sql.Date.valueOf(dateDep));
 	insert.setDate(2, java.sql.Date.valueOf(dateFin));
-	insert.setDouble(3, montant);
+	insert.setFloat(3, montant);
 	result=insert.executeQuery();
 	if(result.next())
 	    id_location = result.getInt(1);
@@ -468,7 +485,7 @@ public class Location {
 
 
 	// insertion dans la table avec_transport si nécessaire
-	if( avecTransport.equals("O") && rep_aller.equals("O") ){
+	if( avecTransportAller.equals("O") && rep_aller.equals("O") ){
 	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
@@ -476,7 +493,7 @@ public class Location {
 	    insert.executeUpdate();
 	}
 
-	if( avecTransport.equals("O") && rep_retour.equals("O") ){
+	if( avecTransportRetour.equals("O") && rep_retour.equals("O") ){
 	    insert = conn.prepareStatement("INSERT INTO avec_transport VALUES(?,?,?)");
 	    insert.setInt(1, id_location);
 	    insert.setInt(2, id_transport);
