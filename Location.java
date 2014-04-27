@@ -3,7 +3,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
-
+import java.text.DateFormat;
 
 public class Location {
 
@@ -453,11 +453,16 @@ public class Location {
 
 	montant += prixPrestation*duree + prixTransport;
 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	//get current date time with Date()
+	Date date = new Date();
+
 	int id_location =-1;
-	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total) VALUES(?,?,?) RETURNING id_location " );
+	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total, date_reservation_location) VALUES(?,?,?) RETURNING id_location " );
 	insert.setDate(1, java.sql.Date.valueOf(dateDep));
 	insert.setDate(2, java.sql.Date.valueOf(dateFin));
 	insert.setFloat(3, montant);
+	insert.setDate(4, java.sql.Date.valueOf(dateFormat.format(date)));
 	result=insert.executeQuery();
 	if(result.next())
 	    id_location = result.getInt(1);
