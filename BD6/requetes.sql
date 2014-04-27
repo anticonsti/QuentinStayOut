@@ -112,7 +112,8 @@ CREATE TABLE location(
 id_location SERIAL PRIMARY KEY, 
 date_debut_location DATE NOT NULL,
 date_fin_location DATE NOT NULL, 
-montant_total FLOAT NOT NULL CHECK(montant_total>0),
+montant_total FLOAT NOT NULL CHECK(montant_total>0), 
+date_reservation_location DATE NOT NULL,
 CHECK ( date_fin_location >= date_debut_location )
 );
 
