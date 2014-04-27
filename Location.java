@@ -458,7 +458,7 @@ public class Location {
 	Date date = new Date();
 
 	int id_location =-1;
-	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total, date_reservation_location) VALUES(?,?,?) RETURNING id_location " );
+	insert = conn.prepareStatement("INSERT INTO location( date_debut_location, date_fin_location, montant_total, date_reservation_location) VALUES(?,?,?,?) RETURNING id_location " );
 	insert.setDate(1, java.sql.Date.valueOf(dateDep));
 	insert.setDate(2, java.sql.Date.valueOf(dateFin));
 	insert.setFloat(3, montant);
