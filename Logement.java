@@ -329,9 +329,15 @@ class Logement{
 	    select = conn.prepareStatement("SELECT id_location FROM concerne NATURAL JOIN logement NATURAL JOIN propose_logement WHERE id_proprietaire= " + String.valueOf(id_prop) + "AND id_location = " + id_location );
 	    result = select.executeQuery();
 	    if( result.next() ){
-		delete = conn.prepareStatement("DELETE FROM location WHERE id_location="+id_location);
-		delete.executeUpdate();
-		System.out.println("Supprimé");
+
+		select = conn.prepareStatement("SELECT id_location FROM location WHERE date_reservation_location >= CURRENT_DATE-7 AND date_reservation_location <= CURRENT_DATE AND id_location=" + id_location);
+		result = select.executeQuery();
+		if( result.next() ){
+		    delete = conn.prepareStatement("DELETE FROM location WHERE id_location="+id_location);
+		    delete.executeUpdate();
+		    System.out.println("Supprimé");
+		} else
+		    System.out.println("7 jours pour se rétracter");
 	    }else 
 		System.out.println("Erreur");
 	    
