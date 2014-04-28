@@ -76,9 +76,10 @@ public class ChercherLogement {
 	result = select.executeQuery();
 	if(result.next()!=false){
 
-	    requete = "WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ) SELECT DISTINCT id_logement FROM logement EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ";
+	    requete = "WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ), selectionne AS( (SELECT DISTINCT id_logement FROM logement EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ) )";
 
-	    select = conn.prepareStatement(requete);
+	    String requete2 = requete + " SELECT * FROM selectionne ";
+	    select = conn.prepareStatement(requete2);
 	    result = select.executeQuery();
 
 	} else{
@@ -127,8 +128,7 @@ public class ChercherLogement {
 	    System.out.println("--------------------------------------------------------------------------");
 	}
 
-	// étrange que ca fonctionne ... SELECT COUNT(*)
-	//this.nbResultat(requete, conn, select, result);
+	this.nbResultat(requete, conn, select, result, resultats);
 	return resultats;
     }
 
@@ -315,12 +315,14 @@ public class ChercherLogement {
     }
 
 
-    public void nbResultat(String requete, Connection conn, PreparedStatement select2, ResultSet result2) throws SQLException{
-	requete = requete.substring(requete.lastIndexOf("FROM")-1);
-	select2 = conn.prepareStatement( "SELECT COUNT(DISTINCT id_logement) " + requete );
-	result2 = select2.executeQuery();
-	if(result2.next())
-	    System.out.println( result2.getString(1) + " logement(s) ");
+    public void nbResultat(String requete, Connection conn, PreparedStatement select, ResultSet result, int resultats) throws SQLException{
+	if( resultats ==1)
+	    select =  conn.prepareStatement( requete + " SELECT COUNT(*) FROM selectionne ");
+	else 
+	    select =  conn.prepareStatement(" SELECT COUNT(*) FROM logement");
+	result = select.executeQuery();
+	if(result.next())
+	    System.out.println( result.getString(1) + " logement(s) ");
 	System.out.println("");
 
     }
