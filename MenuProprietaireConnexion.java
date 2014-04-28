@@ -14,18 +14,6 @@ public class MenuProprietaireConnexion{
 	this.conn=conn;
     }
 
-    public void printRappelCommande(){
-	System.out.println("-------------------------------------------------------------");
-	System.out.print("0 - déconnexion | ");
-	System.out.print("1 - ajout | ");
-	System.out.print("2 - liste des logements | ");
-	System.out.print("3 - suppression | ");
-	System.out.print("4 - modification | ");
-	System.out.print("5 - offre | ");
-	System.out.println("6 - liste des locations  ");
-	System.out.println("-------------------------------------------------------------");
-    }
-
     public void printMenu(String pseudo){
 	System.out.print("\033c");
 	System.out.println("Compte " + pseudo);
@@ -185,7 +173,10 @@ public class MenuProprietaireConnexion{
 		case 2:
 		    Utils.printEntete("LISTE DES LOGEMENTS");
 		    lgm.listeLogement(id_proprio);
-		    this.printRappelCommande();
+		    do{
+			System.out.println("Retour (O)?");
+		    } while( !Utils.readString("O").equals("O") );
+		    this.printMenu(pseudo);
 		    break;
 
 		case 3:
@@ -193,7 +184,8 @@ public class MenuProprietaireConnexion{
 		    System.out.print("id_logement: ");
 		    int id = Utils.readInt();
 		    lgm.supprimerLogement(id, id_proprio);
-		    this.printRappelCommande();
+		    Thread.sleep(1300);
+		    this.printMenu(pseudo);
 		    break;
 
 		case 4:
@@ -212,7 +204,8 @@ public class MenuProprietaireConnexion{
 		    if( lgm.verifLocation(id_proprio) == 1 ){
 			lgm.afficheListeLocation(id_proprio);
 			lgm.supprimerLocation(id_proprio);
-			this.printRappelCommande();
+			Thread.sleep(1300);
+			this.printMenu(pseudo);
 		    } else {
 			System.out.println("Pas de locations");
 			Thread.sleep(1300);
