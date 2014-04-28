@@ -230,16 +230,17 @@ public class ChercherLogement {
 	if(!prestations.equals(""))
 	    requete += " description_prestation = '" + prestations+"' AND ";
 
+	if(!prix.equals("")){
+	    if(rapport.equals("I"))
+		requete += " prix < " + prix + " AND ";
+	    else if(rapport.equals("S"))
+		requete += " prix > " + prix+ " AND ";
+	    else
+		requete += " prix = " + prix+ " AND ";
+	}
+
 	// on retire le AND en trop
 	requete = requete.substring(0, requete.length()-4);
-
-	if(!prix.equals("")){
-	    requete += " prix = " + prix;
-	    if(rapport.equals("I"))
-	       requete.replace('=','<');
-	    else if(rapport.equals("S"))
-		requete.replace('=','>');
-	}
 
 	if( !heure_aller.equals("") && !ddd.equals("") )
 	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
