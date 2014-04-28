@@ -190,7 +190,8 @@ public class ChercherLogement {
 	    return 0;
 	}
 	
-	String requete =" SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement ";
+	String requete =" WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ), selectionne AS( (SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement ";
+
 	if ( type_log.equals("A") )
 	    requete += " NATURAL JOIN appartement ";
 
@@ -246,14 +247,16 @@ public class ChercherLogement {
 	if( !heure_retour.equals("") && !dfd.equals("") )
 	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
 
-	requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+	requete += " EXCEPT SELECT id_logement, prix FROM prix_logement NATURAL JOIN dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ";
 
 
 	if(affichage.equals("O")){
-	    requete += " ORDER BY prix ";
-	}
-
-	select = conn.prepareStatement(requete);
+	    requete += " ORDER BY prix )) ";
+	} else
+	    requete += " ))";
+	
+	String req = requete + "SELECT * FROM selectionne ";
+	select = conn.prepareStatement(req);
 	result = select.executeQuery();
 	
 	// affiche les résultats
@@ -310,6 +313,7 @@ public class ChercherLogement {
 	    System.out.println("");
 	}
 
+	this.nbResultat(requete, conn, select, result, resultats);
 	return resultats;
 
     }
