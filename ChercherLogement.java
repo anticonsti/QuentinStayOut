@@ -76,7 +76,7 @@ public class ChercherLogement {
 	result = select.executeQuery();
 	if(result.next()!=false){
 
-	    requete = "SELECT DISTINCT id_logement, adresse_logement, surface, ville FROM logement EXCEPT SELECT id_logement, adresse_logement, surface, ville FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+	    requete = "WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ) SELECT DISTINCT id_logement FROM logement EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ";
 
 	    select = conn.prepareStatement(requete);
 	    result = select.executeQuery();
@@ -110,8 +110,12 @@ public class ChercherLogement {
 		    System.out.println("id_logement: "+id_logement + ", appartement " + result3.getString(1) + " pièces ");
 	    }
 
-	    System.out.println("Adresse: "+result.getString(2) + ", " + result.getString(4) );
-	    System.out.println("Surface: " +result.getString(3));
+	    select2=conn.prepareStatement("SELECT adresse_logement, ville, surface FROM logement WHERE id_logement="+ id_logement);
+	    result2 = select2.executeQuery();
+	    if( result2.next() ){
+		System.out.println("Adresse: "+result2.getString(1) + ", " + result2.getString(2) );
+		System.out.println("Surface: " +result2.getString(3));
+	    }
 
 	    select2=conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, prix FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement="+ id_logement);
 	    result2 = select2.executeQuery();

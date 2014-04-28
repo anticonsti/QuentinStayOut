@@ -1,9 +1,22 @@
-SELECT COUNT(id_logement) FROM logement NATURAL JOIN appartement NATURAL JOIN disponibilite 
-WHERE DATE '2015-04-04' >= date_debut_dispo 
-AND DATE '2015-04-08' <= date_fin_dispo 
-EXCEPT SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location 
-WHERE date_debut_location >= '2014-04-04' 
-AND date_fin_location <= '2015-04-08' ;
+WITH 
+dispo AS 
+(SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ),
+dureelogement AS 
+(SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ),
+logementsoccupes AS 
+(SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ),
+dureeoccupee AS 
+(SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement),
+nbreservation AS 
+(SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ),
+libre AS (
+SELECT id_logement FROM logement EXCEPT 
+SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ),
+selectionne AS (
+SELECT id_logement FROM libre 
+NATURAL JOIN logement NATURAL JOIN appartement NATURAL JOIN disponibilite NATURAL JOIN prix_logement 
+WHERE ville='Paris' AND ( DATE '2015-04-04', DATE '2015-04-08' ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) )
+SELECT COUNT(*) FROM selectionne;
 
 
 SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_prestation NATURAL JOIN prestation 

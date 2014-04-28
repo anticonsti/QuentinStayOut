@@ -14,18 +14,6 @@ public class MenuProprietaireConnexion{
 	this.conn=conn;
     }
 
-    public void printRappelCommande(){
-	System.out.println("-------------------------------------------------------------");
-	System.out.print("0 - déconnexion | ");
-	System.out.print("1 - ajout | ");
-	System.out.print("2 - liste des logements | ");
-	System.out.print("3 - suppression | ");
-	System.out.print("4 - modification | ");
-	System.out.print("5 - offre | ");
-	System.out.println("6 - liste des locations  ");
-	System.out.println("-------------------------------------------------------------");
-    }
-
     public void printMenu(String pseudo){
 	System.out.print("\033c");
 	System.out.println("Compte " + pseudo);
@@ -71,7 +59,7 @@ public class MenuProprietaireConnexion{
 		    }
 
 		    System.out.print("Adresse (1~20 caracteres): ");
-		    String adresse = Utils.readString("[0-9a-z]{1,20}");
+		    String adresse = Utils.readString("[0-9a-z ]{1,20}");
 
 		    // vérifie l'unicité avant de continuer
 		    if( lgm.verifUniqueLogement(adresse, typeLogement, numChambre, nbPiece ) == 0 ){
@@ -85,21 +73,21 @@ public class MenuProprietaireConnexion{
 		    String surface= Utils.readString("[1-9]+[0-9]{0,5}");
 
 		    System.out.print("Ville entre (1~30 caracteres): ");
-		    String ville = Utils.readString("[A-Za-z]{1,20}");
+		    String ville = Utils.readString("[A-Za-z ]{1,20}");
 
 		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		    String dateDep="",dateFin="";
 		    Date date1 =null, date2=null;
 		    int erreurDate=1;
-		    System.out.println("Disponibilité (<=1mois: 27j)");
+		    System.out.println("Disponibilité (format YYYY-MM-DD) (<=1mois: 27j)");
 		    do{
 			erreurDate=1;
-			System.out.print("Date début disponibilité (format YYYY-MM-DD): ");//format sql annee/mois/jour
+			System.out.print("Date début: ");//format sql annee/mois/jour
 			try{
 			    dateDep = Utils.readString("date");
 			    date1= sdf.parse(dateDep);
 
-			    System.out.print("Date fin disponibilité (format YYYY-MM-DD): ");
+			    System.out.print("Date fin: ");
 			    dateFin = Utils.readString("date");
 			    date2 = sdf.parse(dateFin);
 
@@ -120,7 +108,7 @@ public class MenuProprietaireConnexion{
 
 		    //IL FAUT VERIFIER QUE l'UTILISATEUR A REPONDU AUX prints FACULTATIF AVEC HASNEXT..() JE PENSE hasNextInt() hasNextLine()
 		    // Pour passer au champ suivant il faut appuyer sur Entree (gestion NextLine dans readString) + comme c'est facultatif, on met {0,...}
-		    System.out.print("(facultatif, appuyer sur Entree pour passer) Prix du logement par mois (cas 27 jours ou plus): ");
+		    System.out.print("(facultatif, appuyer sur Entree pour passer) % mois (cas 27 jours ou plus): ");
 		    String prixMois = Utils.readString("[1-9]{0,1}+[0-9]{0,5}");
 
 				
@@ -142,7 +130,7 @@ public class MenuProprietaireConnexion{
 			System.out.print("type (touristique/gastronomique): ");
 			typeSugg = Utils.readString("touristique|gastronomique");
 			System.out.print("nom: ");
-			nomSugg = Utils.readString("[A-Za-z]{1,20}");
+			nomSugg = Utils.readString("[A-Za-z ]{1,20}");
 			// ajoute dans la table suggestion et propose_suggestion
 			lgm.ajouterLogementSuggestion(typeSugg, nomSugg);
 			lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
@@ -152,7 +140,7 @@ public class MenuProprietaireConnexion{
 		    System.out.print("(facultatif) Prestations (O/N): ");
 		    if((Utils.readString("O|N")).equals("O")){
 			System.out.print("description: ");
-			prest = Utils.readString("[A-Za-z]{1,20}");
+			prest = Utils.readString("[A-Za-z ]{1,20}");
 			System.out.print("prix: ");
 			prixPrest= Utils.readString("[1-9]+[0-9]{0,5}");
 			// ajoute dans la table prestation et propose_prestation
@@ -166,7 +154,7 @@ public class MenuProprietaireConnexion{
 			rep=Utils.readString("O|N");
 			if(rep.equals("O")){
 			    System.out.print("nom: ");
-			    photo = Utils.readString("[A-Za-z]{1,20}");
+			    photo = Utils.readString("[A-Za-z ]{1,20}");
 			    // ajoute photo
 			    lgm.ajouterLogementPhoto(photo, idLogement);
 			}
@@ -185,7 +173,10 @@ public class MenuProprietaireConnexion{
 		case 2:
 		    Utils.printEntete("LISTE DES LOGEMENTS");
 		    lgm.listeLogement(id_proprio);
-		    this.printRappelCommande();
+		    do{
+			System.out.println("Retour (O)?");
+		    } while( !Utils.readString("O").equals("O") );
+		    this.printMenu(pseudo);
 		    break;
 
 		case 3:
@@ -193,7 +184,8 @@ public class MenuProprietaireConnexion{
 		    System.out.print("id_logement: ");
 		    int id = Utils.readInt();
 		    lgm.supprimerLogement(id, id_proprio);
-		    this.printRappelCommande();
+		    Thread.sleep(1300);
+		    this.printMenu(pseudo);
 		    break;
 
 		case 4:
@@ -212,7 +204,8 @@ public class MenuProprietaireConnexion{
 		    if( lgm.verifLocation(id_proprio) == 1 ){
 			lgm.afficheListeLocation(id_proprio);
 			lgm.supprimerLocation(id_proprio);
-			this.printRappelCommande();
+			Thread.sleep(1300);
+			this.printMenu(pseudo);
 		    } else {
 			System.out.println("Pas de locations");
 			Thread.sleep(1300);

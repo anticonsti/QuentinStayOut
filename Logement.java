@@ -246,8 +246,10 @@ class Logement{
 	Utils.print("| type", 15);
 	Utils.print("| adresse", 15);
 	Utils.print("| surface", 9);
-	System.out.println("| ville");
-	System.out.println("--------------------------------------------------------------------------");
+	Utils.print("| ville", 15);
+	Utils.print("| disponibilité", 23);	    
+	System.out.println("| prix");	
+	System.out.println("------------------------------------------------------------------------------------------------------");
 
 	result = select.executeQuery();
 	while (result.next()) {
@@ -267,7 +269,38 @@ class Logement{
 
 	    Utils.print("| "+result.getString(2), 15);
 	    Utils.print("| "+result.getString(3), 9 );
-	    System.out.println("| "+result.getString(4));
+	    Utils.print("| "+result.getString(4), 15);
+
+	    select2 = conn.prepareStatement("SELECT date_debut_dispo, date_fin_dispo, sejour_min, prix, prix_mois FROM disponibilite NATURAL JOIN prix_logement WHERE id_logement = " + id_logement);
+	    result2 = select2.executeQuery();
+	    if(result2.next()) {
+		Utils.print("| "+ result2.getString(1) + "-" + result2.getString(2), 23);
+		System.out.println("| "+result2.getString(4));
+		System.out.println("séjour min: " + String.valueOf(result2.getInt(3)) + ", %mois: "+  String.valueOf(result2.getInt(5)));
+
+
+		select2 = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if(result2.next()) {
+		    System.out.println("suggestion: " +result2.getString(1) + ", " + result2.getString(2));
+		}
+
+		select2 = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if(result2.next()) {
+		    System.out.println("prestation: " +result2.getString(1) +", prix: "+String.valueOf(result2.getInt(2))  );
+		}
+
+		select2 = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement);
+		result2 = select2.executeQuery();
+		if(result2.next()) {
+		    System.out.println("service_transport: oui, prix: " + String.valueOf(result2.getInt(1)) );
+		}
+
+		System.out.println("");
+		System.out.println("------------------------------------------------------------------------------------------------------");
+
+	    }
 	}
     }
 
@@ -299,18 +332,18 @@ class Logement{
 	    System.out.println("Date de réservation: "+  result.getString(7));
 	    System.out.println("Période: "+ result.getString(8) + " -- " +  result.getString(9));
 	    System.out.println("Montant total: "+ result.getString(10) + "euros");
-	    System.out.println("dont: "+ result.getString(11) + "euros(logement)  (reduction: " + result.getString(12) +")");
+	    System.out.println("dont: "+ result.getString(11) + "euros (logement)  (%mois: " + result.getString(12) +")");
 
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
 	    if( result2.next() )
-		System.out.println("    + "+ result2.getString(1) + "euros(" + result2.getString(2) + ")" );
+		System.out.println("    + "+ result2.getString(1) + "euros (" + result2.getString(2) + ")" );
 
 
 	    select2 = conn.prepareStatement("SELECT prix_transport, date_reservation FROM service_transport NATURAL JOIN avec_transport WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
 	    while( result2.next() )
-		System.out.println("    + "+ result2.getString(1) + "euros(" + result2.getString(2) + ")" );
+		System.out.println("    + "+ result2.getString(1) + "euros (" + result2.getString(2) + ")" );
 
 	    System.out.println("");
 	    System.out.println("--------------------------------------------------------------------------");
