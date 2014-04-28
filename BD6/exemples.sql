@@ -177,47 +177,47 @@ INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_
 INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Enchante','Nicolas','Tout','lemonde');
 INSERT INTO proprietaire (nom_proprietaire, prenom_proprietaire, pseudo, mot_de_passe) VALUES ('Wesh','Yondaime','Peut','deviner');
 
-INSERT INTO prix_logement VALUES (1,1,100,1500);
-INSERT INTO prix_logement VALUES (2,2,100,1500);
-INSERT INTO prix_logement VALUES (3,3,100,1500);
-INSERT INTO prix_logement VALUES (4,4,100,1500);
-INSERT INTO prix_logement VALUES (5,5,100,1500);
-INSERT INTO prix_logement VALUES (6,6,100,1500);
-INSERT INTO prix_logement VALUES (7,7,100,1500);
+INSERT INTO prix_logement VALUES (1,1,150,40);
+INSERT INTO prix_logement VALUES (2,2,210);
+INSERT INTO prix_logement VALUES (3,3,70);
+INSERT INTO prix_logement VALUES (4,4,80);
+INSERT INTO prix_logement VALUES (5,5,90);
+INSERT INTO prix_logement VALUES (6,6,70);
+INSERT INTO prix_logement VALUES (7,7,110,30);
 
-INSERT INTO prix_logement VALUES (8,8,100,1500);
-INSERT INTO prix_logement VALUES (9,9,100,1500);
-INSERT INTO prix_logement VALUES (10,10,100,1500);
-INSERT INTO prix_logement VALUES (11,11,100,1500);
+INSERT INTO prix_logement VALUES (8,8,130,30);
+INSERT INTO prix_logement VALUES (9,9,150,20);
+INSERT INTO prix_logement VALUES (10,10,90);
+INSERT INTO prix_logement VALUES (11,11,80);
 
-INSERT INTO prix_logement VALUES (12,12,100,1500);
-INSERT INTO prix_logement VALUES (13,13,100,1500);
-INSERT INTO prix_logement VALUES (14,14,100,1500);
+INSERT INTO prix_logement VALUES (12,12,100,40);
+INSERT INTO prix_logement VALUES (13,13,40);
+INSERT INTO prix_logement VALUES (14,14,50);
 
-INSERT INTO prix_logement VALUES (15,15,100,1500);
-INSERT INTO prix_logement VALUES (16,16,100,1500);
-INSERT INTO prix_logement VALUES (17,17,100,1500);
-INSERT INTO prix_logement VALUES (18,18,100,1500);
-INSERT INTO prix_logement VALUES (19,19,100,1500);
-INSERT INTO prix_logement VALUES (20,20,100,1500);
+INSERT INTO prix_logement VALUES (15,15,180);
+INSERT INTO prix_logement VALUES (16,16,90);
+INSERT INTO prix_logement VALUES (17,17,80);
+INSERT INTO prix_logement VALUES (18,18,50);
+INSERT INTO prix_logement VALUES (19,19,60);
+INSERT INTO prix_logement VALUES (20,20,70);
 
-INSERT INTO prix_logement VALUES (21,21,100,1500);
-INSERT INTO prix_logement VALUES (22,22,100,1500);
-INSERT INTO prix_logement VALUES (23,23,100,1500);
+INSERT INTO prix_logement VALUES (21,21,50);
+INSERT INTO prix_logement VALUES (22,22,80,30);
+INSERT INTO prix_logement VALUES (23,23,120);
 
-INSERT INTO prix_logement VALUES (24,24,100,1500);
-INSERT INTO prix_logement VALUES (25,25,100,1500);
-INSERT INTO prix_logement VALUES (26,26,100,1500);
-INSERT INTO prix_logement VALUES (27,27,100,1500);
-INSERT INTO prix_logement VALUES (28,28,100,1500);
-INSERT INTO prix_logement VALUES (29,29,100,1500);
+INSERT INTO prix_logement VALUES (24,24,70);
+INSERT INTO prix_logement VALUES (25,25,90);
+INSERT INTO prix_logement VALUES (26,26,120);
+INSERT INTO prix_logement VALUES (27,27,50);
+INSERT INTO prix_logement VALUES (28,28,40,30);
+INSERT INTO prix_logement VALUES (29,29,45);
 
-INSERT INTO prix_logement VALUES (30,30,100,1500);
-INSERT INTO prix_logement VALUES (31,31,100,1500);
-INSERT INTO prix_logement VALUES (32,32,100,1500);
-INSERT INTO prix_logement VALUES (33,33,100,1500);
-INSERT INTO prix_logement VALUES (34,34,100,1500);
-INSERT INTO prix_logement VALUES (35,35,100,1500);
+INSERT INTO prix_logement VALUES (30,30,180,50);
+INSERT INTO prix_logement VALUES (31,31,90);
+INSERT INTO prix_logement VALUES (32,32,80);
+INSERT INTO prix_logement VALUES (33,33,50);
+INSERT INTO prix_logement VALUES (34,34,50);
+INSERT INTO prix_logement VALUES (35,35,40);
 
 INSERT INTO photo (id_logement, nom_photo) VALUES (1,'photo du logement 1');
 INSERT INTO photo (id_logement, nom_photo) VALUES (2,'photo du logement 2');
@@ -347,6 +347,18 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
 
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/01',700,'2014/01/01');
+
+
 INSERT INTO loge VALUES (1,1);
 INSERT INTO loge VALUES (2,2);
 INSERT INTO loge VALUES (3,3);
@@ -358,16 +370,38 @@ INSERT INTO loge VALUES (8,8);
 INSERT INTO loge VALUES (9,9);
 INSERT INTO loge VALUES (10,10);
 
+INSERT INTO loge VALUES (11,11);
+INSERT INTO loge VALUES (12,12);
+INSERT INTO loge VALUES (13,13);
+INSERT INTO loge VALUES (14,14);
+INSERT INTO loge VALUES (15,15);
+INSERT INTO loge VALUES (16,16);
+INSERT INTO loge VALUES (17,17);
+INSERT INTO loge VALUES (18,18);
+INSERT INTO loge VALUES (19,19);
+INSERT INTO loge VALUES (20,20);
+
 INSERT INTO concerne VALUES (1,1);
 INSERT INTO concerne VALUES (2,2);
 INSERT INTO concerne VALUES (3,3);
 INSERT INTO concerne VALUES (4,4);
 INSERT INTO concerne VALUES (5,5);
-INSERT INTO concerne VALUES (6,6);
-INSERT INTO concerne VALUES (7,7);
-INSERT INTO concerne VALUES (8,8);
-INSERT INTO concerne VALUES (9,9);
-INSERT INTO concerne VALUES (10,10);
+INSERT INTO concerne VALUES (7,6);
+INSERT INTO concerne VALUES (9,7);
+INSERT INTO concerne VALUES (10,8);
+INSERT INTO concerne VALUES (12,9);
+INSERT INTO concerne VALUES (15,10);
+
+INSERT INTO concerne VALUES (16,11);
+INSERT INTO concerne VALUES (19,12);
+INSERT INTO concerne VALUES (20,13);
+INSERT INTO concerne VALUES (23,14);
+INSERT INTO concerne VALUES (26,15);
+INSERT INTO concerne VALUES (27,16);
+INSERT INTO concerne VALUES (29,17);
+INSERT INTO concerne VALUES (31,18);
+INSERT INTO concerne VALUES (32,19);
+INSERT INTO concerne VALUES (35,20);
 
 INSERT INTO propose_suggestion VALUES (1,1);
 INSERT INTO propose_suggestion VALUES (2,2);
