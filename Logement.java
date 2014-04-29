@@ -244,7 +244,7 @@ class Logement{
 	select = conn.prepareStatement("SELECT * FROM logement NATURAL JOIN propose_logement WHERE id_proprietaire=" + String.valueOf(id_prop) );
 	Utils.print("id_logement", 10);
 	Utils.print("| type", 15);
-	Utils.print("| adresse", 15);
+	Utils.print("| adresse", 35);
 	Utils.print("| surface", 9);
 	Utils.print("| ville", 15);
 	Utils.print("| disponibilité", 23);	    
@@ -267,7 +267,7 @@ class Logement{
 		    Utils.print("| apt. " + result2.getString(1) + " pièces", 15);
 	    }
 
-	    Utils.print("| "+result.getString(2), 15);
+	    Utils.print("| "+result.getString(2), 35);
 	    Utils.print("| "+result.getString(3), 9 );
 	    Utils.print("| "+result.getString(4), 15);
 
