@@ -314,7 +314,7 @@ public class ChercherLogement {
 	    System.out.println("");
 	}
 
-	this.nbResultat(requete, conn, select, result, resultats);
+	this.nbResultat(requete, conn, select, result, 1);
 	return resultats;
 
     }
