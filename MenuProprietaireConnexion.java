@@ -59,7 +59,7 @@ public class MenuProprietaireConnexion{
 		    }
 
 		    System.out.print("Adresse (1~20 caracteres): ");
-		    String adresse = Utils.readString("[0-9a-z ]{1,20}");
+		    String adresse = Utils.readString("[0-9a-z ,']{1,20}");
 
 		    // vérifie l'unicité avant de continuer
 		    if( lgm.verifUniqueLogement(adresse, typeLogement, numChambre, nbPiece ) == 0 ){
