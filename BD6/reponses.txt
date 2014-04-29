@@ -1,0 +1,28 @@
+Reponses aux questions du projet
+
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+
+11.	 
+SELECT DISTINCT montant_total FROM location NATURAL JOIN proprietaire NATURAL JOIN propose_logement WHERE id_location IN (SELECT id_location FROM concerne WHERE id_logement IN (SELECT id_logement FROM propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire = 'Bettencourt')) AND date_reservation_location > '2013-12-31' AND date_reservation_location < '2015-01-01';
+
+12.
