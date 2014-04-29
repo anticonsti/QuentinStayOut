@@ -28,9 +28,9 @@ public class Offre{
 	System.out.print("\033c");
     	System.out.println("OFFRE PROMOTIONNELLE:");
 	System.out.println("-------------------------------------------------------------");
-	System.out.println("0 - retour");
-	System.out.println("1 - ajouter une offre ");
-	System.out.println("2 - liste des offres ");
+	System.out.println("0 - Retour");
+	System.out.println("1 - Ajouter une offre ");
+	System.out.println("2 - Liste des offres ");
 	System.out.println("-------------------------------------------------------------");
 
     }

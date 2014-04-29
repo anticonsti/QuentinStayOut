@@ -76,9 +76,10 @@ public class ChercherLogement {
 	result = select.executeQuery();
 	if(result.next()!=false){
 
-	    requete = "WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ) SELECT DISTINCT id_logement FROM logement EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ";
+	    requete = "WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ), selectionne AS( (SELECT DISTINCT id_logement FROM logement EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ) )";
 
-	    select = conn.prepareStatement(requete);
+	    String requete2 = requete + " SELECT * FROM selectionne ";
+	    select = conn.prepareStatement(requete2);
 	    result = select.executeQuery();
 
 	} else{
@@ -127,8 +128,7 @@ public class ChercherLogement {
 	    System.out.println("--------------------------------------------------------------------------");
 	}
 
-	// étrange que ca fonctionne ... SELECT COUNT(*)
-	//this.nbResultat(requete, conn, select, result);
+	this.nbResultat(requete, conn, select, result, resultats);
 	return resultats;
     }
 
@@ -190,7 +190,8 @@ public class ChercherLogement {
 	    return 0;
 	}
 	
-	String requete =" SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement ";
+	String requete =" WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ), selectionne AS( (SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement ";
+
 	if ( type_log.equals("A") )
 	    requete += " NATURAL JOIN appartement ";
 
@@ -229,16 +230,17 @@ public class ChercherLogement {
 	if(!prestations.equals(""))
 	    requete += " description_prestation = '" + prestations+"' AND ";
 
+	if(!prix.equals("")){
+	    if(rapport.equals("I"))
+		requete += " prix < " + prix + " AND ";
+	    else if(rapport.equals("S"))
+		requete += " prix > " + prix+ " AND ";
+	    else
+		requete += " prix = " + prix+ " AND ";
+	}
+
 	// on retire le AND en trop
 	requete = requete.substring(0, requete.length()-4);
-
-	if(!prix.equals("")){
-	    requete += " prix = " + prix;
-	    if(rapport.equals("I"))
-	       requete.replace('=','<');
-	    else if(rapport.equals("S"))
-		requete.replace('=','>');
-	}
 
 	if( !heure_aller.equals("") && !ddd.equals("") )
 	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ ddd+ " " + heure_aller +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  ddd+ " " + heure_aller +":00 ' < date_reservation + interval '30 minutes' ";
@@ -246,14 +248,16 @@ public class ChercherLogement {
 	if( !heure_retour.equals("") && !dfd.equals("") )
 	    requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne WHERE TIMESTAMP '"+ dfd+ " " + heure_retour +":00 ' > date_reservation - interval '30 minutes' AND TIMESTAMP '" +  dfd + " " + heure_retour +":00 ' < date_reservation + interval '30 minutes' ";
 
-	requete += " EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE date_debut_dispo = date_debut_location AND date_fin_dispo = date_fin_location ";
+	requete += " EXCEPT SELECT id_logement, prix FROM prix_logement NATURAL JOIN dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ";
 
 
 	if(affichage.equals("O")){
-	    requete += " ORDER BY prix ";
-	}
-
-	select = conn.prepareStatement(requete);
+	    requete += " ORDER BY prix )) ";
+	} else
+	    requete += " ))";
+	
+	String req = requete + "SELECT * FROM selectionne ";
+	select = conn.prepareStatement(req);
 	result = select.executeQuery();
 	
 	// affiche les résultats
@@ -310,17 +314,20 @@ public class ChercherLogement {
 	    System.out.println("");
 	}
 
+	this.nbResultat(requete, conn, select, result, resultats);
 	return resultats;
 
     }
 
 
-    public void nbResultat(String requete, Connection conn, PreparedStatement select2, ResultSet result2) throws SQLException{
-	requete = requete.substring(requete.lastIndexOf("FROM")-1);
-	select2 = conn.prepareStatement( "SELECT COUNT(DISTINCT id_logement) " + requete );
-	result2 = select2.executeQuery();
-	if(result2.next())
-	    System.out.println( result2.getString(1) + " logement(s) ");
+    public void nbResultat(String requete, Connection conn, PreparedStatement select, ResultSet result, int resultats) throws SQLException{
+	if( resultats ==1)
+	    select =  conn.prepareStatement( requete + " SELECT COUNT(*) FROM selectionne ");
+	else 
+	    select =  conn.prepareStatement(" SELECT COUNT(*) FROM logement");
+	result = select.executeQuery();
+	if(result.next())
+	    System.out.println( result.getString(1) + " logement(s) ");
 	System.out.println("");
 
     }
