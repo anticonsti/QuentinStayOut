@@ -44,7 +44,9 @@ public class Offre{
 
 	    while( choix !=0 ){
 
-		if( choix == 1){
+		switch(choix){
+		    
+		case 1:
 		    Utils.printEntete("AJOUTER UNE OFFRE");
 
 		    select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) );
@@ -52,14 +54,18 @@ public class Offre{
 
 		    if(result.next()!=false){
 			String id_logement="";
-			boolean rsNext=false;
-			do{
-			    System.out.print("id_logement: ");
-			    id_logement = Utils.readString("[0-9]{1,5}");
-			    select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement = " + id_logement );
-			    result = select.executeQuery();
-			    rsNext = result.next();
-			}while( rsNext == false);
+
+			System.out.print("id_logement: ");
+			id_logement = Utils.readString("[0-9]{1,5}");
+			select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement = " + id_logement );
+			result = select.executeQuery();
+
+			if( result.next()==false){
+			    System.out.println("Erreur");
+			    Thread.sleep(1300);
+			    this.printMenu();
+			    break;
+			}
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String dateDep="",dateFin="";
@@ -70,7 +76,7 @@ public class Offre{
 				dateDep = Utils.readString("date");
 				date1= sdf.parse(dateDep);
 
-				System.out.print("Date fin offre_promp (format YYYY-MM-DD et date fin > date début): ");
+				System.out.print("Date fin offre_promo (format YYYY-MM-DD et date fin > date début): ");
 				dateFin = Utils.readString("date");
 				date2 = sdf.parse(dateFin);
 			    } catch (ParseException ex){
@@ -82,26 +88,32 @@ public class Offre{
 			String prix = Utils.readString("[1-9]+[0-9]{0,2}");
 
 			this.ajouterOffre(dateDep, dateFin, prix, id_logement);
-			System.out.println("offre ajoutée");
+			System.out.println("Offre ajoutée");
 			Thread.sleep(1300);
 			this.printMenu();
 
 		    } else {
-			System.out.println("ajouter un logement d'abord");
+			System.out.println("Ajouter un logement d'abord");
 			Thread.sleep(1300);
 			this.printMenu();
 		    }
+		    break;
 
-		} else if( choix == 2){
+		case 2:
 		    Utils.printEntete("LISTE DES OFFRES");
 		    this.listeOffre(id_proprio);
-		    this.printRappelCommande();
-
-		}else {
+		    do{
+			System.out.println("Retour (O)?");
+		    } while( !Utils.readString("O").equals("O") );
 		    this.printMenu();
+		    break;
+
+		default:
+		    this.printMenu();
+		    break;
 		}
 		choix = Utils.readInt();
-	    } // fin while
+	    }
 
 	} catch (SQLException | InterruptedException e) {
 	    System.err.println(e.getMessage());
