@@ -199,10 +199,10 @@ public class ChercherLogement {
 	    requete += " NATURAL JOIN chambre ";
 
 	if( avec_suggestions.equals("O") )
-	    requete += " NATURAL JOIN suggestions NATURAL JOIN propose_suggestion ";
+	    requete += " NATURAL JOIN suggestion NATURAL JOIN propose_suggestion ";
 
 	if( avec_prestations.equals("O") )
-	    requete += " NATURAL JOIN prestations NATURAL JOIN propose_prestation ";
+	    requete += " NATURAL JOIN prestation NATURAL JOIN propose_prestation ";
 
 	if( avec_transport.equals("O") ) 
 	    requete += " NATURAL JOIN avec_transport NATURAL JOIN propose_transport ";
