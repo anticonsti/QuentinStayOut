@@ -23,6 +23,17 @@ Reponses aux questions du projet
 
 
 11.	 
-WITH somme AS (SELECT DISTINCT montant_total AS montant FROM location NATURAL JOIN proprietaire NATURAL JOIN propose_logement WHERE id_location IN (SELECT id_location FROM concerne WHERE id_logement IN (SELECT id_logement FROM propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire = 'Bettencourt')) AND date_reservation_location > '2013-12-31' AND date_reservation_location < '2015-01-01') SELECT SUM(montant)*0.9/12 AS revenu_2014 FROM somme;
+WITH somme AS (SELECT DISTINCT montant_total AS montant FROM location NATURAL JOIN proprietaire NATURAL JOIN propose_logement WHERE id_location IN
+(SELECT id_location FROM concerne WHERE id_logement IN
+(SELECT id_logement FROM propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire = 'Bettencourt'))
+AND date_reservation_location > '2013-12-31'
+AND date_reservation_location < '2015-01-01')
+SELECT SUM(montant)*0.9/12 AS revenu_2014 FROM somme;
 
 12.
+WITH 
+nbtotal AS 
+(SELECT COUNT(id_logement) AS denominateur FROM logement WHERE ville = 'Berlin' ), 
+occup AS 
+(SELECT COUNT(id_logement) AS numerateur FROM logement NATURAL JOIN concerne WHERE ville = 'Berlin' )
+SELECT numerateur*1.0/( CASE denominateur WHEN 0 THEN NULL ELSE denominateur END )*1.0 AS Taux_de_remplissage FROM nbtotal, occup ;
