@@ -57,7 +57,9 @@ public class Offre{
 
 			System.out.print("id_logement: ");
 			id_logement = Utils.readString("[0-9]{1,5}");
-			select = conn.prepareStatement("SELECT id_logement FROM propose_logement WHERE id_proprietaire=" + String.valueOf(id_proprio) + " AND id_logement = " + id_logement );
+
+			select = conn.prepareStatement("WITH dispo AS (SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ), dureelogement AS (SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ), logementsoccupes AS (SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ), dureeoccupee AS (SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement), nbreservation AS (SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ) SELECT DISTINCT id_logement FROM propose_logement WHERE id_proprietaire =" + String.valueOf(id_proprio)+ " AND id_logement = " + id_logement +" EXCEPT SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ");
+
 			result = select.executeQuery();
 
 			if( result.next()==false){
