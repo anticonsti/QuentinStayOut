@@ -56,7 +56,7 @@ WHERE ville = 'Moscou'
 AND date_debut_dispo >= '2014-07-08' 
 AND date_fin_dispo - date_debut_dispo >= 5 
 AND description_prestation = 'repas soir' 
-EXCEPT SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location 
+EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location 
 WHERE date_debut_location <= '2014-07-08' 
 AND date_fin_location >= '2014-07-13' 
 EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne 
@@ -68,14 +68,41 @@ AND TIMESTAMP '2014-07-13 17:00:00' < date_reservation + interval '30 minutes'
 ORDER BY prix ;
 
 
-SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite propose_suggestion NATURAL JOIN suggestion 
+WITH 
+dispo AS 
+(SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ),
+dureelogement AS 
+(SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ),
+logementsoccupes AS 
+(SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ),
+dureeoccupee AS 
+(SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement),
+nbreservation AS 
+(SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ),
+libre AS (
+SELECT id_logement FROM logement EXCEPT 
+SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ) 
+SELECT id_logement FROM libre 
+NATURAL JOIN logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_suggestion NATURAL JOIN suggestion 
 WHERE date_debut_dispo <= CURRENT_DATE + 1 
 AND date_fin_dispo >= CURRENT_DATE + 1 
-AND type_suggestion = 'touristique' 
-EXCEPT SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location 
-WHERE date_debut_location <= CURRENT_DATE + 1 
-AND date_fin_location >= CURRENT_DATE + 1 ;
+AND type_suggestion = 'touristique';
 
 
+SELECT id_proprietaire, id_logement FROM propose_logement NATURAL JOIN logement WHERE ville='Rio de Janeiro';
+
+
+WITH
+somme AS 
+( SELECT SUM(montant_total) AS som FROM location NATURAL JOIN concerne NATURAL JOIN propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire='aa' ) 
+SELECT som*0.9 FROM somme;
+
+
+WITH 
+nbtotal AS 
+(SELECT COUNT(id_logement) AS denominateur FROM logement WHERE ville = 'Berlin' ), 
+occup AS 
+(SELECT COUNT(id_logement) AS numerateur FROM logement NATURAL JOIN concerne WHERE ville = 'Berlin' )
+SELECT numerateur/( CASE denominateur WHEN 0 THEN NULL ELSE denominateur END ) FROM nbtotal, occup ;
 
 
