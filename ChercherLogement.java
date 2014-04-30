@@ -138,7 +138,7 @@ public class ChercherLogement {
 	String type_log = Utils.readString("A|C|");
 
 	System.out.print("Adresse: ");
-	String adresse = Utils.readString("[A-Za-z ]{0,100}");
+	String adresse = Utils.readString("[A-Za-z ,']{0,100}");
 
 	System.out.print("Surface: ");
 	String surface = Utils.readString("[0-9]{0,5}");
@@ -210,13 +210,13 @@ public class ChercherLogement {
 	requete += " WHERE ";
 
 	if(!adresse.equals(""))
-	    requete += " adresse_logement ='"+adresse+"' AND ";
+	    requete += " adresse_logement LIKE '%"+adresse+"%' AND ";
 
 	if(!surface.equals(""))
 	    requete += " surface = " + surface + " AND ";
 
 	if(!ville.equals(""))
-	    requete += " ville = '" + ville+"' AND " ;
+	    requete += " ville LIKE '%" + ville+"%' AND " ;
 
 	if(!ddd.equals(""))
 	    requete += " date_debut_dispo >= DATE '" +ddd+"' AND " ;
@@ -225,10 +225,10 @@ public class ChercherLogement {
 	    requete += " date_fin_dispo >= DATE '" +dfd+"' AND " ;
 
 	if(!suggestions.equals(""))
-	    requete += " nom_suggestion = '" + suggestions +"' AND ";
+	    requete += " nom_suggestion LIKE '%" + suggestions +"%' AND ";
 
 	if(!prestations.equals(""))
-	    requete += " description_prestation = '" + prestations+"' AND ";
+	    requete += " description_prestation LIKE '%" + prestations+"%' AND ";
 
 	if(!prix.equals("")){
 	    if(rapport.equals("I"))
