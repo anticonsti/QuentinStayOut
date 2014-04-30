@@ -160,7 +160,7 @@ INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2015-08-05','2015-08-31',3);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-07-31',4);
 
-INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Taxi',100,35,'Paris');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Taxi',100,1,'Paris');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinta',17,35,'Barcelone');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinto',3,25,'Madrid');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Snail',4,10,'Pekin');
@@ -441,7 +441,8 @@ INSERT INTO propose_transport VALUES (18,5);
 INSERT INTO propose_transport VALUES (19,5);
 INSERT INTO propose_transport VALUES (20,5);
 
-INSERT INTO avec_transport VALUES (17,5,'2014-07-08 13:00:00');
+INSERT INTO avec_transport VALUES (17,5,'2015/06/18 13:00:00');
+INSERT INTO avec_transport VALUES (1,1,'2015/04/15 10:00:00');
 
 INSERT INTO avec_prestation VALUES (9,1);
 INSERT INTO avec_prestation VALUES (12,7);
