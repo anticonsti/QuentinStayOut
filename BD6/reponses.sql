@@ -51,6 +51,34 @@ SELECT AVG(date_fin_dispo - date_debut_dispo) FROM logement NATURAL JOIN prix_lo
 SELECT AVG(prix) FROM logement NATURAL JOIN prix_logement;
 
 
+WITH 
+dispo AS 
+(SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ),
+dureelogement AS 
+(SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ),
+logementsoccupes AS 
+(SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ),
+dureeoccupee AS 
+(SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement),
+nbreservation AS 
+(SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ),
+libre AS (
+SELECT id_logement FROM logement EXCEPT 
+SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog )
+SELECT id_logement, prix FROM libre NATURAL JOIN logement NATURAL JOIN appartement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_transport NATURAL JOIN propose_prestation NATURAL JOIN prestation
+WHERE ville = 'Moscou' 
+AND date_debut_dispo >= '2014-07-08' 
+AND date_fin_dispo - date_debut_dispo >= 5 
+AND description_prestation = 'repas soir'
+EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne 
+WHERE TIMESTAMP '2014-07-08 13:00:00' > date_reservation - interval '30 minutes' 
+AND TIMESTAMP '2014-07-08 13:00:00' < date_reservation + interval '30 minutes' 
+EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne 
+WHERE TIMESTAMP '2014-07-13 17:00:00' > date_reservation - interval '30 minutes' 
+AND TIMESTAMP '2014-07-13 17:00:00' < date_reservation + interval '30 minutes' 
+ORDER BY prix ;
+
+
 SELECT id_logement, prix FROM logement NATURAL JOIN appartement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_transport NATURAL JOIN propose_prestation NATURAL JOIN prestation 
 WHERE ville = 'Moscou' 
 AND date_debut_dispo >= '2014-07-08' 
@@ -94,7 +122,7 @@ SELECT id_proprietaire, id_logement FROM propose_logement NATURAL JOIN logement 
 
 WITH
 somme AS 
-( SELECT SUM(montant_total) AS som FROM location NATURAL JOIN concerne NATURAL JOIN propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire='aa' ) 
+( SELECT SUM(montant_total) AS som FROM location NATURAL JOIN concerne NATURAL JOIN propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire='Bettencourt' ) 
 SELECT som*0.9 FROM somme;
 
 
