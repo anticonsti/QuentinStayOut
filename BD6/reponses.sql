@@ -94,7 +94,7 @@ SELECT id_proprietaire, id_logement FROM propose_logement NATURAL JOIN logement 
 
 WITH
 somme AS 
-( SELECT SUM(montant_total) AS som FROM location NATURAL JOIN concerne NATURAL JOIN propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire='aa' ) 
+( SELECT SUM(montant_total) AS som FROM location NATURAL JOIN concerne NATURAL JOIN propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire='Bettencourt' ) 
 SELECT som*0.9 FROM somme;
 
 
