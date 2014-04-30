@@ -2,28 +2,75 @@ Reponses aux questions du projet
 
 
 1.
+WITH 
+dispo AS 
+(SELECT DISTINCT id_logement, date_debut_dispo, date_fin_dispo FROM disponibilite NATURAL JOIN prix_logement NATURAL JOIN concerne ),
+dureelogement AS 
+(SELECT id_logement, SUM(date_fin_dispo - date_debut_dispo ) AS dureelog FROM dispo GROUP BY id_logement ),
+logementsoccupes AS 
+(SELECT id_logement, date_debut_location, date_fin_location FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location WHERE( date_debut_location, date_fin_location ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) ),
+dureeoccupee AS 
+(SELECT id_logement, SUM(date_fin_location-date_debut_location) AS dureeoccup FROM logementsoccupes GROUP BY id_logement),
+nbreservation AS 
+(SELECT id_logement, COUNT(*) AS nb FROM logementsoccupes GROUP BY id_logement ),
+libre AS (
+SELECT id_logement FROM logement EXCEPT 
+SELECT id_logement FROM dureelogement NATURAL JOIN nbreservation NATURAL JOIN dureeoccupee WHERE dureeoccup + nb -1 = dureelog ),
+selectionne AS (
+SELECT id_logement FROM libre 
+NATURAL JOIN logement NATURAL JOIN appartement NATURAL JOIN disponibilite NATURAL JOIN prix_logement 
+WHERE ville='Paris' AND ( DATE '2015-04-04', DATE '2015-04-08' ) OVERLAPS ( date_debut_dispo, date_fin_dispo ) )
+SELECT COUNT(*) FROM selectionne;
 
 2.
+SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_prestation NATURAL JOIN prestation 
+WHERE ville = 'Pekin' 
+AND EXTRACT(month FROM date_debut_dispo)=4 
+AND EXTRACT(month FROM date_fin_dispo)=4 
+AND description_prestation ='petit-dejeuner' 
+AND date_fin_dispo - date_debut_dispo >= 3 
+GROUP BY id_logement 
+HAVING SUM(prix*3 + prix_prestation*3) < 200 ;
 
 3.
+SELECT AVG(prix) FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite 
+WHERE date_fin_dispo - date_debut_dispo >= 7 
+AND EXTRACT(year FROM date_debut_dispo) = 2014 
+AND EXTRACT(year FROM date_fin_dispo) = 2014;
 
 4.
+SELECT AVG(count) FROM 
+( SELECT id_proprietaire, COUNT(id_logement) FROM propose_logement GROUP BY id_proprietaire ) AS tmp ;
 
 5.
+SELECT COUNT(id_logement) FROM concerne NATURAL JOIN location 
+WHERE EXTRACT(month FROM date_debut_location)>=1 
+AND EXTRACT(month FROM date_fin_location) <=3 
+AND EXTRACT(year FROM date_debut_location)=2014 ;
 
 6.
+WITH
+total_date AS
+(SELECT SUM(date_fin_location - date_debut_location) AS num FROM location),
+total_location AS
+(SELECT COUNT(id_location) AS den FROM location)
+SELECT num*1.0/(CASE den WHEN 0 THEN NULL ELSE den END)*1.0 AS duree_moyenne_sejour FROM total_date,total_location;
 
 7.
+select AVG(prix) from prix_logement;
 
 8.
 
+
 9.
 
-10.
 
+10.
+SELECT id_proprietaire, id_logement FROM propose_logement NATURAL JOIN logement WHERE ville='Rio de Janeiro';
 
 11.	 
-WITH somme AS (SELECT DISTINCT montant_total AS montant FROM location NATURAL JOIN proprietaire NATURAL JOIN propose_logement WHERE id_location IN
+WITH
+somme AS (SELECT DISTINCT montant_total AS montant FROM location NATURAL JOIN proprietaire NATURAL JOIN propose_logement WHERE id_location IN
 (SELECT id_location FROM concerne WHERE id_logement IN
 (SELECT id_logement FROM propose_logement NATURAL JOIN proprietaire WHERE nom_proprietaire = 'Bettencourt'))
 AND date_reservation_location > '2013-12-31'
