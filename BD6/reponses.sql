@@ -20,10 +20,10 @@ SELECT COUNT(*) FROM selectionne;
 
 
 SELECT id_logement FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN propose_prestation NATURAL JOIN prestation 
-WHERE ville = 'Pékin' 
+WHERE ville = 'Pekin' 
 AND EXTRACT(month FROM date_debut_dispo)=4 
 AND EXTRACT(month FROM date_fin_dispo)=4 
-AND description_prestation ='petit-déjeuner' 
+AND description_prestation ='petit-dejeuner' 
 AND date_fin_dispo - date_debut_dispo >= 3 
 GROUP BY id_logement 
 HAVING SUM(prix*3 + prix_prestation*3) < 200 ;
@@ -103,6 +103,6 @@ nbtotal AS
 (SELECT COUNT(id_logement) AS denominateur FROM logement WHERE ville = 'Berlin' ), 
 occup AS 
 (SELECT COUNT(id_logement) AS numerateur FROM logement NATURAL JOIN concerne WHERE ville = 'Berlin' )
-SELECT numerateur/( CASE denominateur WHEN 0 THEN NULL ELSE denominateur END ) FROM nbtotal, occup ;
+SELECT numerateur*1.0/( CASE denominateur WHEN 0 THEN NULL ELSE denominateur END )*1.0 AS Taux_de_remplissage FROM nbtotal, occup ;
 
 
