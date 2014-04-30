@@ -255,13 +255,13 @@ INSERT INTO photo (id_logement, nom_photo) VALUES (33,'photo du logement 33');
 INSERT INTO photo (id_logement, nom_photo) VALUES (34,'photo du logement 34');
 INSERT INTO photo (id_logement, nom_photo) VALUES (35,'photo du logement 35');
 
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (1,'2015-04-01','2015-04-15',990);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (7,'2014-07-15','2015-08-15',2000);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (8,'2014-06-18','2014-07-01',750);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (15,'2014-03-18','2014-04-01',690);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (22,'2015-01-15','2015-02-01',1200);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (34,'2015-08-05','2015-08-31',790);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (35,'2014-07-05','2014-07-31',700);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (1,'2015-04-01','2015-04-15',20);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (7,'2014-07-15','2015-08-15',25);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (8,'2014-06-18','2014-07-01',30);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (15,'2014-03-18','2014-04-01',35);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (22,'2015-01-15','2015-02-01',40);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (34,'2015-08-05','2015-08-31',35);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (35,'2014-07-05','2014-07-31',30);
 
 INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Je','Suis','1 Rue Locataire 10101 LOC','0123456789','locataire1@locataire.fr');
 INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Un','Locataire','2 Rue Locataire 10101 LOC','0123456789','locataire2@locataire.fr');
