@@ -164,7 +164,7 @@ INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transpor
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinta',17,35,'Barcelone');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Sprinto',3,25,'Madrid');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Snail',4,10,'Pekin');
-INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Aglagla',5,39,'Kremlin');
+INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Aglagla',5,39,'Moscou');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Cheapest',6,45,'Londres');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('RicoTaco',7,20,'Rio de Janeiro');
 INSERT INTO service_transport (nom_service_transport, nb_vehicule, prix_transport, ville_service_transport) VALUES ('Quelele',8,30,'Berlin');
@@ -426,20 +426,21 @@ INSERT INTO propose_suggestion VALUES (9,19);
 INSERT INTO propose_suggestion VALUES (10,20);
 
 INSERT INTO propose_transport VALUES (1,1);
-INSERT INTO propose_transport VALUES (2,2);
-INSERT INTO propose_transport VALUES (3,3);
-INSERT INTO propose_transport VALUES (4,4);
-INSERT INTO propose_transport VALUES (5,5);
-INSERT INTO propose_transport VALUES (6,6);
-INSERT INTO propose_transport VALUES (7,7);
-INSERT INTO propose_transport VALUES (8,8);
-INSERT INTO propose_transport VALUES (9,7);
-INSERT INTO propose_transport VALUES (10,6);
+INSERT INTO propose_transport VALUES (2,1);
+INSERT INTO propose_transport VALUES (7,1);
+INSERT INTO propose_transport VALUES (8,2);
+INSERT INTO propose_transport VALUES (9,3);
+INSERT INTO propose_transport VALUES (12,4);
+INSERT INTO propose_transport VALUES (21,6);
+INSERT INTO propose_transport VALUES (26,7);
+INSERT INTO propose_transport VALUES (30,8);
+INSERT INTO propose_transport VALUES (35,8);
 
+INSERT INTO propose_transport VALUES (17,5);
+INSERT INTO propose_transport VALUES (18,5);
+INSERT INTO propose_transport VALUES (19,5);
+INSERT INTO propose_transport VALUES (20,5);
 
-
-
-
-
+INSERT INTO avec_transport VALUES (17,5,'2014-07-08 13:00:00');
 
 
