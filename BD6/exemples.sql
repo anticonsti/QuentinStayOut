@@ -17,11 +17,11 @@ INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 jie ni hao, 
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 jie zaijian', 27, 'Pekin');
 
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Dobraye ootro', 54, 'Moscou');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 rue Nyezashta', 27, 'Siberia');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 rue Bal''shoye spaseeba', 19, 'Kremlin');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 20, 'Kremlin');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 30, 'Kremlin');
-INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 40, 'Kremlin');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('9 rue Nyezashta', 27, 'Saint-Petersbourg');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('56 rue Bal''shoye spaseeba', 19, 'Moscou');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 20, 'Moscou');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 30, 'Moscou');
+INSERT INTO logement (adresse_logement, surface, ville) VALUES ('34 rue Prasteete', 40, 'Moscou');
 
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Oak Apple Court, Lee SE12', 14, 'Londres');
 INSERT INTO logement (adresse_logement, surface, ville) VALUES ('Oak Hall Road, Leytonstone E11', 25, 'Londres');
