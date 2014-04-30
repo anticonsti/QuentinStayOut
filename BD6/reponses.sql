@@ -69,7 +69,7 @@ SELECT id_logement, prix FROM libre NATURAL JOIN logement NATURAL JOIN apparteme
 WHERE ville = 'Moscou' 
 AND date_debut_dispo >= '2014-07-08' 
 AND date_fin_dispo - date_debut_dispo >= 5 
-AND description_prestation = 'repas soir'
+AND description_prestation = 'diner'
 EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN avec_transport NATURAL JOIN concerne 
 WHERE TIMESTAMP '2014-07-08 13:00:00' > date_reservation - interval '30 minutes' 
 AND TIMESTAMP '2014-07-08 13:00:00' < date_reservation + interval '30 minutes' 
@@ -83,7 +83,7 @@ SELECT id_logement, prix FROM logement NATURAL JOIN appartement NATURAL JOIN pri
 WHERE ville = 'Moscou' 
 AND date_debut_dispo >= '2014-07-08' 
 AND date_fin_dispo - date_debut_dispo >= 5 
-AND description_prestation = 'repas soir' 
+AND description_prestation = 'diner' 
 EXCEPT SELECT id_logement, prix FROM logement NATURAL JOIN prix_logement NATURAL JOIN disponibilite NATURAL JOIN concerne NATURAL JOIN location 
 WHERE date_debut_location <= '2014-07-08' 
 AND date_fin_location >= '2014-07-13' 

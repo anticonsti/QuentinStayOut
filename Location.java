@@ -422,20 +422,23 @@ public class Location {
 	    // on applique prix/mois PB comment calculer pour 1 mois et quelques jours ??
 	    if( duree >= 27 ){
 		int prix = result.getInt(1);
-		montant += ( prix -(result.getInt(2)*prix) );
+		montant += prix -((result.getInt(2)/100.0)*prix);
+		montant *= duree;
+		System.out.println("MontaNT 1: " + montant);
 	    } else {
 		// on applique prix/nuit
 		montant +=(result.getInt(1)*duree);
+		System.out.println("MontaNT 2: " + montant);
 	    }
 	}
-	
+	System.out.println("MontaNT 3: " + montant);
 	// réduction 10% 
 	select = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
 	result = select.executeQuery();
 	if(result.next())
 	    if( result.getInt(1) >= 2 )
 		montant *= 0.9;
-
+	System.out.println("MontaNT 4: " + montant);
 	// regarder offre spéciale 
 	Date dateDOffre=null, dateFOffre=null;
 	select = conn.prepareStatement("SELECT date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo FROM offre_promotionnelle WHERE id_logement="+id_logement);
@@ -444,11 +447,14 @@ public class Location {
 	    dateDOffre=sdf.parse(result.getString(1));
 	    dateFOffre=sdf.parse(result.getString(2));
 	    if( date1.after(dateDOffre) && date2.before(dateFOffre) )
+		System.out.println(" promo " + result.getInt(3));
 		montant -= (montant*(result.getInt(3)/100.0));
 	}
 
 	montant += prixPrestation*duree;
+	System.out.println("MontaNT 5: " + montant);
 
+	// prix transport aller/retour
 	if(rep_aller.equals("O"))
 	   montant += prixTransport;
 

@@ -443,6 +443,17 @@ INSERT INTO propose_transport VALUES (20,5);
 
 INSERT INTO avec_transport VALUES (17,5,'2014-07-08 13:00:00');
 
+<<<<<<< HEAD
 INSERT INTO avec_prestation VALUES (9,1);
 INSERT INTO avec_prestation VALUES (12,7);
 INSERT INTO avec_prestation VALUES (13,8);
+=======
+
+
+
+
+
+
+
+
+>>>>>>> 42b8a26633baeaac1185ed88d517e5c3996fd6af
