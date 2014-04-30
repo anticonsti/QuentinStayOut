@@ -56,6 +56,9 @@ total_location AS
 (SELECT COUNT(id_location) AS den FROM location)
 SELECT num*1.0/(CASE den WHEN 0 THEN NULL ELSE den END)*1.0 AS duree_moyenne_sejour FROM total_date,total_location;
 
+6bis.
+SELECT AVG(date_fin_location - date_debut_location) FROM location;
+
 7.
 SELECT AVG(prix) FROM prix_logement;
 
