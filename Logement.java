@@ -324,8 +324,8 @@ class Logement{
 	    System.out.println("");
 	    String id_location =  result.getString(13);
 	    String id_logement = result.getString(1);
-	    System.out.println("id_location : "+ id_location);
-	    System.out.println("Logement: "+ id_logement);
+	    System.out.println("id_location : "+ id_location + ", logement: " + id_logement);
+	    //System.out.println("Logement: "+ id_logement);
 	    System.out.println("Locataire: "+ result.getString(2) + " " + result.getString(3));
 	    System.out.println("Adresse: "+ result.getString(4));
 	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
