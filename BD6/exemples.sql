@@ -356,7 +356,7 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/06/18','2015/06/24',309,'2014/06/12');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/11/05','2015/11/08',270,'2015/10/17');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/10/05','2014/10/21',1280,'2015/07/01');
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/07/05','2014/07/31',700,'2014/05/08');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/07/05','2014/07/31',1040,'2014/05/08');
 
 
 INSERT INTO loge VALUES (1,1);
