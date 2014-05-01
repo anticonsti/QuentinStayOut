@@ -332,7 +332,7 @@ class Logement{
 	    System.out.println("Date de réservation: "+  result.getString(7));
 	    System.out.println("Période: "+ result.getString(8) + " -- " +  result.getString(9));
 	    System.out.println("Montant total: "+ result.getString(10) + "euros");
-	    System.out.println("dont: "+ result.getString(11) + "euros (logement)  (%mois: " + result.getString(12) +")");
+	    System.out.println("dont: "+ result.getString(11) + "euros (logement)  (%mois: " + String.valueOf(result.getInt(12)) +")");
 
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
