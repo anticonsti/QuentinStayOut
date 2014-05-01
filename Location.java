@@ -109,7 +109,12 @@ public class Location {
 	    System.out.println("Prix/nuit: " +String.valueOf(result.getInt(4)));
 	    int prixM = result.getInt(5);
 	    if( prixM !=0 )
-		System.out.println("Prix/mois: " +String.valueOf(result.getInt(5)));
+		System.out.println("%mois: " +String.valueOf(result.getInt(5)));
+
+	    select2 = conn.prepareStatement("SELECT prix_offre_promo FROM offre_promotionnelle WHERE id_logement = " + id_logement + " AND (DATE'"+ result.getString(1) +"', DATE '"+  result.getString(2) +"') OVERLAPS (date_debut_offre_promo, date_fin_offre_promo)");
+	    result2 = select2.executeQuery();
+	    if( result2.next() )
+		System.out.println("Offre promo: " +result2.getString(1) ); 
 	}
 
 	select = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
