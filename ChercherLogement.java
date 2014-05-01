@@ -163,7 +163,7 @@ public class ChercherLogement {
 	System.out.print("Avec prestations ? (O/N): ");
 	if( (avec_prestations=Utils.readString("O|N")).equals("O")){
 	    System.out.print("nom prestation: ");
-	    prestations = Utils.readString("[A-Za-z ]{0,100}");
+	    prestations = Utils.readString("[A-Za-z -]{0,100}");
 	}
 
 	String avec_transport="", heure_aller="", heure_retour="";
