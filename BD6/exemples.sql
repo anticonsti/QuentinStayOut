@@ -129,7 +129,7 @@ INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-18','2014-07-15',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-08-05',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-11-05','2014-12-05',3);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(CURRENT_DATE+1,'2014-05-31',3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(CURRENT_DATE+1,CURRENT_DATE+30,3);
 
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-23','2014-05-19',2);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-01','2014-04-30',1);
@@ -285,6 +285,8 @@ INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel
 INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Queje','Salive','19 Rue Locataire 10101 LOC','0123456789','locataire19@locataire.fr');
 INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('Meilleur','Restochef','20 Rue Locataire 10101 LOC','0123456789','locataire20@locataire.fr');
 
+INSERT INTO locataire (nom_locataire, prenom_locataire,adresse_locataire,num_tel,email) VALUES ('JaiUneReduc','DeTroisMois','21 Rue Locataire 10101 LOC','0123456789','locataire21@locataire.fr');
+
 INSERT INTO propose_prestation VALUES (12,1);
 INSERT INTO propose_prestation VALUES (13,2);
 INSERT INTO propose_prestation VALUES (14,3);
@@ -365,7 +367,9 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/06/20','2014/06/25',800,'2013/06/15');
 
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,288,CURRENT_DATE);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,320,CURRENT_DATE);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+6,CURRENT_DATE+10,320,CURRENT_DATE);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+11,CURRENT_DATE+15,288,CURRENT_DATE);
 
 
 INSERT INTO loge VALUES (1,1);
@@ -392,7 +396,9 @@ INSERT INTO loge VALUES (20,20);
 
 INSERT INTO loge VALUES (21,20);
 
-INSERT INTO loge VALUES (22,20);
+INSERT INTO loge VALUES (22,21);
+INSERT INTO loge VALUES (23,21);
+INSERT INTO loge VALUES (24,21);
 
 
 INSERT INTO concerne VALUES (1,1);
@@ -420,6 +426,8 @@ INSERT INTO concerne VALUES (35,20);
 INSERT INTO concerne VALUES (8,21);
 
 INSERT INTO concerne VALUES (11,22);
+INSERT INTO concerne VALUES (11,23);
+INSERT INTO concerne VALUES (11,24);
 
 INSERT INTO propose_suggestion VALUES (1,1);
 INSERT INTO propose_suggestion VALUES (2,2);
