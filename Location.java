@@ -440,7 +440,7 @@ public class Location {
 		}
 
 		// réduction 10% 
-		select = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
+		select = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location <= current_date AND date_debut_location >= current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
 		result = select.executeQuery();
 		if(result.next())
 			if( result.getInt(1) >= 2 )

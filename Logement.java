@@ -374,7 +374,7 @@ class Logement{
 			while( result2.next() )
 				System.out.println("    + "+ result2.getString(1) + "euros (" + result2.getString(2) + ")" );
 
-			select2 = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
+			select2 = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location <= current_date AND date_debut_location >= current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
 			result2 = select2.executeQuery();
 			if(result2.next()){
 			    if( result2.getInt(1) >= 2 ){
