@@ -448,7 +448,6 @@ public class Location {
 		montant *= 0.9;
 
 	// regarder offre spéciale 
-
 	select = conn.prepareStatement("SELECT date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo FROM offre_promotionnelle WHERE id_logement="+id_logement + " AND date_debut_offre_promo = '" + dateDep + "' AND date_fin_offre_promo = '" + dateFin +"'");
 	result = select.executeQuery();
 	if(result.next()){
