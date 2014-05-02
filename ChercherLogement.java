@@ -166,12 +166,20 @@ public class ChercherLogement {
 	    }
 	}while( avec_suggestions.equals("O") );
 
-	String avec_prestations="", prestations="";
-	System.out.print("Avec prestations ? (O/N): ");
-	if( (avec_prestations=Utils.readString("O|N")).equals("O")){
-	    System.out.print("nom prestation: ");
-	    prestations = Utils.readString("[A-Za-z -]{0,100}");
-	}
+	String avec_prestations="";
+	String [] prestations= new String[5];
+	int une_prest=0;
+	i=0;
+	do{
+	    System.out.print("Avec prestations ? (O/N): ");
+	    if( (avec_prestations=Utils.readString("O|N")).equals("O")){
+		une_prest=1;
+		System.out.print("nom prestation: ");
+		prestations[i++] = Utils.readString("[A-Za-z -]{0,100}");
+		if(i==5)
+		    avec_prestations="N";
+	    }
+	}while( avec_prestations.equals("O") );
 
 	String avec_transport="", heure_aller="", heure_retour="";
 	System.out.print("Avec transport ? (O/N): ");
@@ -247,8 +255,21 @@ public class ChercherLogement {
 	    requete += " nom_suggestion IN "+ in +" AND ";
 	}
 
-	if(!prestations.equals(""))
-	    requete += " description_prestation LIKE '%" + prestations+"%' AND ";
+	if(une_prest==1){
+	    String in ="(";
+	    for(int j=0; j<4;i++){
+		String s = prestations[j];
+		if(s!=null)
+		    in += "'" + s + "'";
+		if(prestations[j+1]!=null){
+		    in += ", ";
+		    if( j == 3)
+			in += prestations[4];
+		}
+	    }
+	    in += ")";
+	    requete += " description_prestation IN "+ in +" AND ";
+	}
 
 	if(!prix.equals("")){
 	    if(rapport.equals("I"))
