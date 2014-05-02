@@ -336,12 +336,12 @@ INSERT INTO propose_logement VALUES (7,33);
 INSERT INTO propose_logement VALUES (7,34);
 INSERT INTO propose_logement VALUES (7,35);
 
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/04/01','2015/04/15',990,'2015/01/28');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/04/01','2015/04/15',1681,'2015/01/28');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/04/03','2015/04/12',1890,'2015/03/21');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/04/05','2015/04/09',280,'2014/05/14');
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/03/25','2015/04/01',560,'2014/05/21');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2015/03/25','2015/04/01',480,'2014/05/21');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/01/01','2014/01/10',810,'2013/12/20');
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/07/15','2014/07/29',1540,'2014/05/28');
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/07/15','2014/07/29',1155,'2014/05/28');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/07/05','2014/07/11',900,'2014/06/07');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/11/05','2014/11/08',270,'2014/06/14');
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/04/23','2014/04/27',432,'2014/03/21');
