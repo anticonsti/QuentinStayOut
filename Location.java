@@ -460,7 +460,6 @@ public class Location {
 	}
 
 	montant += prixPrestation*duree;
-	System.out.println("MontaNT 5: " + montant);
 
 	// prix transport aller/retour
 	if(rep_aller.equals("O"))
