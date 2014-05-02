@@ -152,12 +152,19 @@ public class ChercherLogement {
 	System.out.print("Date fin disponibilité: ");
 	String dfd = Utils.readString("(((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01]))|");
 
-	String avec_suggestions="", suggestions="";
-	System.out.print("Avec suggestions ? (O/N): ");
-	if( (avec_suggestions=Utils.readString("O|N")).equals("O")){
-	    System.out.print("nom suggestion: ");
-	    suggestions = Utils.readString("[A-Za-z ]{0,100}");
-	}
+	String avec_suggestions="";
+	String[] suggestions = new String[5];
+	int i=0, une_sugg=0;
+	do{
+	    System.out.print("Avec suggestions ? (O/N): ");
+	    if( (avec_suggestions=Utils.readString("O|N")).equals("O")){
+		une_sugg=1;
+		System.out.print("nom suggestion: ");
+		suggestions[i++] = Utils.readString("[A-Za-z -]{0,100}");
+		if(i==5)
+		    avec_suggestions="N";
+	    }
+	}while( avec_suggestions.equals("O") );
 
 	String avec_prestations="", prestations="";
 	System.out.print("Avec prestations ? (O/N): ");
@@ -224,8 +231,21 @@ public class ChercherLogement {
 	if(!dfd.equals(""))
 	    requete += " date_fin_dispo >= DATE '" +dfd+"' AND " ;
 
-	if(!suggestions.equals(""))
-	    requete += " nom_suggestion LIKE '%" + suggestions +"%' AND ";
+	if(une_sugg==1){
+	    String in ="(";
+	    for(int j=0; j<4;i++){
+		String s = suggestions[j];
+		if(s!=null)
+		    in += "'" + s + "'";
+		if(suggestions[j+1]!=null){
+		    in += ", ";
+		    if( j == 3)
+			in += suggestions[4];
+		}
+	    }
+	    in += ")";
+	    requete += " nom_suggestion IN "+ in +" AND ";
+	}
 
 	if(!prestations.equals(""))
 	    requete += " description_prestation LIKE '%" + prestations+"%' AND ";
