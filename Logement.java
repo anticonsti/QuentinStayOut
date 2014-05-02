@@ -349,7 +349,7 @@ class Logement{
 	    System.out.println("Montant total: "+ result.getString(10) + "euros");
 	    int prix = result.getInt(11); long prix2 =  prix*diffDays;
 	    System.out.println("dont: "+ String.valueOf(prix) + "euros*" + String.valueOf(diffDays)+ " = " +String.valueOf(prix2)+ "euros (logement)");
-	    if(diffDays > 27){
+	    if(diffDays >= 27){
 		int pmois = result.getInt(12);
 		System.out.println("     = " + String.valueOf(prix2 - prix2*(pmois/100.0))  +"euros (%mois: "+ String.valueOf(pmois) +")");
 	    }
