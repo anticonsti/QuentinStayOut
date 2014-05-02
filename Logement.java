@@ -1,5 +1,8 @@
 import java.sql.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 class Logement{
     
@@ -330,22 +333,41 @@ class Logement{
 	    System.out.println("Adresse: "+ result.getString(4));
 	    System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
 	    System.out.println("Date de réservation: "+  result.getString(7));
-	    System.out.println("Période: "+ result.getString(8) + " -- " +  result.getString(9));
+
+	    String debut =  result.getString(8), fin =result.getString(9);
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    Date d1 =null, d2 =null;
+	    try{
+		d1 =format.parse(debut); d2=format.parse(fin);
+	    } catch (ParseException ex){
+		ex.printStackTrace();
+	    }
+	    long diff = d2.getTime() - d1.getTime();
+	    long diffDays = diff / (24 * 60 * 60 * 1000);
+
+	    System.out.println("Période: "+ debut + " -- " + fin + ": " + diffDays +"jours");
 	    System.out.println("Montant total: "+ result.getString(10) + "euros");
-	    System.out.print("dont: "+ result.getString(11) + "euros (logement)  (%mois: " + String.valueOf(result.getInt(12)) +")");
+	    int prix = result.getInt(11); long prix2 =  prix*diffDays;
+	    System.out.println("dont: "+ String.valueOf(prix) + "euros*" + String.valueOf(diffDays)+ " = " +String.valueOf(prix2)+ "euros (logement)");
+	    if(diffDays > 27){
+		int pmois = result.getInt(12);
+		System.out.println("     = " + String.valueOf(prix2 - prix2*(pmois/100.0))  +"euros (%mois: "+ String.valueOf(pmois) +")");
+	    }
 
-	    select2 = conn.prepareStatement("SELECT prix_offre_promo FROM offre_promotionnelle WHERE id_logement = " + id_logement + " AND (DATE'"+ result.getString(8) +"', DATE '"+  result.getString(9) +"') OVERLAPS (date_debut_offre_promo, date_fin_offre_promo)");
+	    select2 = conn.prepareStatement("SELECT prix_offre_promo FROM offre_promotionnelle WHERE id_logement = " + id_logement + " AND (DATE'"+ debut +"', DATE '"+ fin +"') OVERLAPS (date_debut_offre_promo, date_fin_offre_promo)");
 	    result2 = select2.executeQuery();
-	    if( result2.next() )
-		System.out.print("  (offre promo: " +result2.getString(1) + ")" );
-
+	    if( result2.next() ){
+		int promo = result2.getInt(1) ;
+		    System.out.println("     = " + String.valueOf(prix2 - prix2*(promo/100.0))  + "euros (offre promo: " +String.valueOf(promo)+ ")" );
+	    }
 	    System.out.println("");
 
 	    select2 = conn.prepareStatement("SELECT prix_prestation, description_prestation FROM prestation NATURAL JOIN avec_prestation WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
-	    if( result2.next() )
-		System.out.println("    + "+ result2.getString(1) + "euros (" + result2.getString(2) + ")" );
-
+	    if( result2.next() ){
+		int pprest= result2.getInt(1);
+		System.out.println("    + "+ String.valueOf(pprest) + "euros *" + diffDays +"=" + String.valueOf(pprest*diffDays) +"euros (" + result2.getString(2) + ")" );
+	    }
 
 	    select2 = conn.prepareStatement("SELECT prix_transport, date_reservation FROM service_transport NATURAL JOIN avec_transport WHERE id_location = " + id_location);
 	    result2 = select2.executeQuery();
