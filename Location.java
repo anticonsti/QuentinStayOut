@@ -119,23 +119,21 @@ public class Location {
 
 	select = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
-	if(result.next()) {
-	    System.out.println("type_suggestion: " +result.getString(1));
-	    System.out.println("nom_suggestion: " +result.getString(2));
+	while(result.next()) {
+	    System.out.println("suggestion " +result.getString(1)+ ": " + result.getString(2));
+
 	}
 
 	select = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
-	if(result.next()) {
-	    System.out.println("prestation: " +result.getString(1));
-	    System.out.println("prix: " +String.valueOf(result.getInt(2)));
+	while(result.next()) {
+	    System.out.println("prestation: " +result.getString(1) +", prix: " +String.valueOf(result.getInt(2)));
 	}
 
 	select = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    System.out.println("service_transport: oui");
-	    System.out.println("prix_transport: " +String.valueOf(result.getInt(1)));
+	    System.out.println("service_transport: oui, prix_transport: " +String.valueOf(result.getInt(1)));
 	}
 	
 	System.out.println("");
