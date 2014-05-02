@@ -171,6 +171,7 @@ public class Location {
 	String dateDep="",dateFin="";
 	Date date1 =null, date2=null, dateDProprio=null, dateFProprio=null, dateDLocat=null, dateFLocat=null;
 	int sejourMin = 0, erreurDate=1;
+	long duree = 0;
 	do{
 	    erreurDate=1;
 	    try{
@@ -194,8 +195,10 @@ public class Location {
 		    }
 		}
 		
-		// vérifie la durée minimum
-		int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
+		long diff = date2.getTime() - date1.getTime();
+		duree = diff / (24 * 60 * 60 * 1000);
+
+		//int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
 		if(duree < sejourMin ){
 		    erreurDate=0;
 		    System.out.println("Erreur sur la durée de location");
@@ -421,32 +424,29 @@ public class Location {
 	// besoin du montant total
 	// appliquer le prix selon la durée de location
 
-	int duree = Integer.parseInt(dateFin.substring(8)) - Integer.parseInt(dateDep.substring(8));
 	float montant=0;
 
 	select = conn.prepareStatement("SELECT prix, prix_mois FROM prix_logement WHERE id_logement = " + id_logement);
 	result = select.executeQuery();
 	if(result.next()) {
-	    // on applique prix/mois PB comment calculer pour 1 mois et quelques jours ??
+	    // on applique %/mois
 	    if( duree >= 27 ){
 		int prix = result.getInt(1);
 		montant += prix -((result.getInt(2)/100.0)*prix);
 		montant *= duree;
-		System.out.println("MontaNT 1: " + montant);
 	    } else {
 		// on applique prix/nuit
 		montant +=(result.getInt(1)*duree);
-		System.out.println("MontaNT 2: " + montant);
 	    }
 	}
-	System.out.println("MontaNT 3: " + montant);
+
 	// réduction 10% 
 	select = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
 	result = select.executeQuery();
 	if(result.next())
 	    if( result.getInt(1) >= 2 )
 		montant *= 0.9;
-	System.out.println("MontaNT 4: " + montant);
+
 	// regarder offre spéciale 
 	Date dateDOffre=null, dateFOffre=null;
 	select = conn.prepareStatement("SELECT date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo FROM offre_promotionnelle WHERE id_logement="+id_logement);
