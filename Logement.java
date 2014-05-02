@@ -328,11 +328,12 @@ class Logement{
 			System.out.println("");
 			String id_location =  result.getString(13),  id_logement = result.getString(1);
 			String nom =  result.getString(2), prenom =  result.getString(3);
+			String date_reserv =  result.getString(7);
 			System.out.println("id_location : "+ id_location + ", logement: " + id_logement);
 			System.out.println("Locataire: "+ nom + " " + prenom);
 			System.out.println("Adresse: "+ result.getString(4));
 			System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
-			System.out.println("Date de réservation: "+  result.getString(7));
+			System.out.println("Date de réservation: "+ date_reserv);
 
 			String debut =  result.getString(8), fin =result.getString(9);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -378,9 +379,15 @@ class Logement{
 			result2 = select2.executeQuery();
 			if(result2.next()){
 			    if( result2.getInt(1) >= 2 ){
-				prix2 *= 0.9;
-				System.out.println("");
-				System.out.println("      reduction 10 : " + prix2 + "euros"); 
+				select2 = conn.prepareStatement("WITH nonReduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom_locataire + "' ORDER BY date_reservation_location LIMIT 2 ), reduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom_locataire + "' ORDER BY date_reservation_location DESC ) SELECT date_reservation_location FROM reduc EXCEPT SELECT date_reservation_location FROM nonReduc");
+				result2 = select2.executeQuery();
+				while(result2.next()){
+				    if( date_reserv.equals(result2.getString(1))){
+					prix2 *= 0.9;
+					System.out.println("");
+					System.out.println("      reduction 10 : " + prix2 + "euros"); 
+				    }
+				}
 			    }
 			}
 
