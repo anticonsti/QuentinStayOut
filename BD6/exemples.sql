@@ -96,16 +96,16 @@ INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin ro
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vin blanc', 8);
 INSERT INTO prestation (description_prestation, prix_prestation) VALUES ('vodka', 15);
 
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Tour Eiffel');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Arc de Triomphe');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La magie de La Gomera, parc national');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Dame d''Elche, musee archeologique nationale');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Palais imperial');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','La grande muraille');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Le tour de Kremlin : Vodozvodnaia');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','Le palais de Terem');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','London Eye, phare');
-INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('tourisme','SEA LIFE London Aquarium');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Tour Eiffel');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Arc de Triomphe');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','La magie de La Gomera, parc national');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Dame d''Elche, musee archeologique nationale');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Palais imperial');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','La grande muraille');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Le tour de Kremlin : Vodozvodnaia');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','Le palais de Terem');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','London Eye, phare');
+INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('touristique','SEA LIFE London Aquarium');
 
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','P');
 INSERT INTO suggestion (type_suggestion, nom_suggestion) VALUES ('gastronomique','I');
