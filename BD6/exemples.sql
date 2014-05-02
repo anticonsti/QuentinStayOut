@@ -365,7 +365,7 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/06/20','2014/06/25',800,'2013/06/15');
 
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,320,CURRENT_DATE);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,288,CURRENT_DATE);
 
 
 
