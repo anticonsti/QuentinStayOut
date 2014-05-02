@@ -131,6 +131,9 @@ public class ModifierLogement{
 		    }
 		    choix = Utils.readInt();
 		}
+	    } else{
+		System.out.println("Rien à modifier");
+		Thread.sleep(1300);
 	    }
 	}catch (SQLException | InterruptedException e) {
 	    System.err.println(e.getMessage());

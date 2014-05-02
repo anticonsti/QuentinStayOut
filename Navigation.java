@@ -3,11 +3,9 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.Scanner;
 
-
 public class Navigation {
     static Scanner in = new Scanner(System.in);
     static ConnectionAirChambre connecte;
-
 
     /** Imprime le menu a l'ecran.
      * @throws ParseException */
