@@ -326,10 +326,10 @@ class Logement{
 
 		while( result.next() ){
 			System.out.println("");
-			String id_location =  result.getString(13);
-			String id_logement = result.getString(1);
+			String id_location =  result.getString(13),  id_logement = result.getString(1);
+			String nom =  result.getString(2), prenom =  result.getString(3);
 			System.out.println("id_location : "+ id_location + ", logement: " + id_logement);
-			System.out.println("Locataire: "+ result.getString(2) + " " + result.getString(3));
+			System.out.println("Locataire: "+ nom + " " + prenom);
 			System.out.println("Adresse: "+ result.getString(4));
 			System.out.println("Tél: "+ result.getString(5) +", email: " +  result.getString(6));
 			System.out.println("Date de réservation: "+  result.getString(7));
@@ -374,7 +374,15 @@ class Logement{
 			while( result2.next() )
 				System.out.println("    + "+ result2.getString(1) + "euros (" + result2.getString(2) + ")" );
 
-
+			select2 = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location < current_date AND date_debut_location > current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
+			result2 = select2.executeQuery();
+			if(result2.next()){
+			    if( result2.getInt(1) >= 2 ){
+				prix2 *= 0.9;
+				System.out.println("");
+				System.out.println("      reduction 10 : " + prix2 + "euros"); 
+			    }
+			}
 
 			System.out.println("");
 			System.out.println("--------------------------------------------------------------------------");
