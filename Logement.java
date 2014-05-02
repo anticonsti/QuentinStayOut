@@ -366,7 +366,7 @@ class Logement{
 	    result2 = select2.executeQuery();
 	    if( result2.next() ){
 		int pprest= result2.getInt(1);
-		System.out.println("    + "+ String.valueOf(pprest) + "euros *" + diffDays +"=" + String.valueOf(pprest*diffDays) +"euros (" + result2.getString(2) + ")" );
+		System.out.println("    + "+ String.valueOf(pprest) + "euros*" + diffDays +" = " + String.valueOf(pprest*diffDays) +"euros (" + result2.getString(2) + ")" );
 	    }
 
 	    select2 = conn.prepareStatement("SELECT prix_transport, date_reservation FROM service_transport NATURAL JOIN avec_transport WHERE id_location = " + id_location);
