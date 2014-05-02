@@ -160,7 +160,8 @@ public class ChercherLogement {
 	    if( (avec_suggestions=Utils.readString("O|N")).equals("O")){
 		une_sugg=1;
 		System.out.print("nom suggestion: ");
-		suggestions[i++] = Utils.readString("[A-Za-z -]{0,100}");
+		suggestions[i] = Utils.readString("[A-Za-z -:,]{0,100}");
+		i++;
 		if(i==5)
 		    avec_suggestions="N";
 	    }
@@ -175,7 +176,8 @@ public class ChercherLogement {
 	    if( (avec_prestations=Utils.readString("O|N")).equals("O")){
 		une_prest=1;
 		System.out.print("nom prestation: ");
-		prestations[i++] = Utils.readString("[A-Za-z -]{0,100}");
+		prestations[i] = Utils.readString("[A-Za-z -]{0,100}");
+		i++;
 		if(i==5)
 		    avec_prestations="N";
 	    }
@@ -201,7 +203,7 @@ public class ChercherLogement {
 	String affichage = Utils.readString("[ON]{1}");
 	System.out.println();
 	
-	if( type_log.equals("") && adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && avec_suggestions.equals("N") &&  avec_prestations.equals("N")  && avec_transport.equals("N") && prix.equals("")){
+	if( type_log.equals("") && adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && une_sugg==0  &&  une_prest==0  && avec_transport.equals("N") && prix.equals("")){
 	    return 0;
 	}
 	
@@ -213,10 +215,10 @@ public class ChercherLogement {
 	if ( type_log.equals("C") )
 	    requete += " NATURAL JOIN chambre ";
 
-	if( avec_suggestions.equals("O") )
+	if( une_sugg==1 )
 	    requete += " NATURAL JOIN suggestion NATURAL JOIN propose_suggestion ";
 
-	if( avec_prestations.equals("O") )
+	if( une_prest==1 )
 	    requete += " NATURAL JOIN prestation NATURAL JOIN propose_prestation ";
 
 	if( avec_transport.equals("O") ) 
@@ -241,8 +243,9 @@ public class ChercherLogement {
 
 	if(une_sugg==1){
 	    String in ="(";
-	    for(int j=0; j<4;i++){
+	    for(int j=0; j<4;j++){
 		String s = suggestions[j];
+		System.out.println("sugg" + s );
 		if(s!=null)
 		    in += "'" + s + "'";
 		if(suggestions[j+1]!=null){
@@ -257,7 +260,7 @@ public class ChercherLogement {
 
 	if(une_prest==1){
 	    String in ="(";
-	    for(int j=0; j<4;i++){
+	    for(int j=0; j<4;j++){
 		String s = prestations[j];
 		if(s!=null)
 		    in += "'" + s + "'";
