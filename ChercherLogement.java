@@ -245,7 +245,6 @@ public class ChercherLogement {
 	    String in ="(";
 	    for(int j=0; j<4;j++){
 		String s = suggestions[j];
-		System.out.println("sugg" + s );
 		if(s!=null)
 		    in += "'" + s + "'";
 		if(suggestions[j+1]!=null){
@@ -327,30 +326,27 @@ public class ChercherLogement {
 		System.out.println("prix/nuit: " + result2.getString(3));
 		String prixMois = result2.getString(4);
 		if( prixMois !=null )
-		    System.out.println("prix/mois: " + result2.getString(4));
+		    System.out.println("%/mois: " + result2.getString(4));
 	    }
 
 	    select2 = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
-	    if( result2.next() ){
-		System.out.println("type suggestion: " +result2.getString(1));
-		System.out.println("nom suggestion: " +result2.getString(2));
+	    while( result2.next() ){
+		System.out.println("suggestion: " +result2.getString(1) + ": " + result2.getString(2));
 	    }
 
 
 	    select2 = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
-	    if( result2.next() ){
-		System.out.println("prestation: " +result2.getString(1));
-		System.out.println("prix: " +result2.getString(2));
+	    while( result2.next() ){
+		System.out.println("prestation: " +result2.getString(1) + ", prix: " +result2.getString(2));
 	    }
 
 
 	    select2 = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement=" +  id_logement);
 	    result2 = select2.executeQuery();
 	    if( result2.next() ){
-		System.out.println("transport disponible: oui");
-		System.out.println("prix: " +result2.getString(1));
+		System.out.println("transport disponible: oui, prix: " +result2.getString(1));
 	    }
 	    
 
