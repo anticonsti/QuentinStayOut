@@ -4,8 +4,8 @@ Nous avons utilise postgresql-9.3-1101.
 Travaille sous Linux et Windows XP.
 Nous avons utilise GIT pour communiquer efficacement:
 
-Le fichier requetes.sql permette d'initialiser notre base de donnee : 21 tables.
-Le fichier exemples.sql permette d'initialiser les exemples pour la soutenance.
+Le fichier requetes.sql permet d'initialiser notre base de donnee : 21 tables.
+Le fichier exemples.sql permet d'initialiser les exemples pour la soutenance.
 Le fichier reponses.txt contient les reponses aux 12questions du projet.
 
 
