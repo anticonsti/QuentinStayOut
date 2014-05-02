@@ -370,6 +370,7 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-30,CURRENT_DATE-26,320,CURRENT_DATE-35);
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-25,CURRENT_DATE-21,320,CURRENT_DATE-34);
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-20,CURRENT_DATE-16,288,CURRENT_DATE-33);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-15,CURRENT_DATE-11,288,CURRENT_DATE-32);
 
 
 INSERT INTO loge VALUES (1,1);
@@ -399,7 +400,7 @@ INSERT INTO loge VALUES (21,20);
 INSERT INTO loge VALUES (22,21);
 INSERT INTO loge VALUES (23,21);
 INSERT INTO loge VALUES (24,21);
-
+INSERT INTO loge VALUES (25,21);
 
 INSERT INTO concerne VALUES (1,1);
 INSERT INTO concerne VALUES (2,2);
@@ -428,6 +429,7 @@ INSERT INTO concerne VALUES (8,21);
 INSERT INTO concerne VALUES (11,22);
 INSERT INTO concerne VALUES (11,23);
 INSERT INTO concerne VALUES (11,24);
+INSERT INTO concerne VALUES (11,25);
 
 INSERT INTO propose_suggestion VALUES (1,1);
 INSERT INTO propose_suggestion VALUES (2,2);
