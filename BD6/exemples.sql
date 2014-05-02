@@ -129,7 +129,7 @@ INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-06-18','2014-07-15',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-07-05','2014-08-05',7);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-11-05','2014-12-05',3);
-INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(CURRENT_DATE+1,CURRENT_DATE+30,3);
+INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES(CURRENT_DATE-30,CURRENT_DATE,3);
 
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-23','2014-05-19',2);
 INSERT INTO disponibilite (date_debut_dispo, date_fin_dispo, sejour_min) VALUES('2014-04-01','2014-04-30',1);
@@ -367,9 +367,9 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES ('2014/06/20','2014/06/25',800,'2013/06/15');
 
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,320,CURRENT_DATE);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+6,CURRENT_DATE+10,320,CURRENT_DATE);
-INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+11,CURRENT_DATE+15,288,CURRENT_DATE);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-30,CURRENT_DATE-26,320,CURRENT_DATE-35);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-25,CURRENT_DATE-21,320,CURRENT_DATE-34);
+INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE-20,CURRENT_DATE-16,288,CURRENT_DATE-33);
 
 
 INSERT INTO loge VALUES (1,1);
