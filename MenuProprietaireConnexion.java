@@ -143,7 +143,8 @@ public class MenuProprietaireConnexion{
 					int maxSugg=0;
 					do{
 						System.out.print("(facultatif) Suggestions (O/N): ");
-						if(repSugg.equals("O") && maxSugg<5){
+						repSugg=Utils.readString("O|N");
+						if(repSugg.equals("O")){
 							System.out.print("type (touristique/gastronomique): ");
 							typeSugg = Utils.readString("touristique|gastronomique");
 							System.out.print("nom: ");
@@ -153,6 +154,8 @@ public class MenuProprietaireConnexion{
 							lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
 							maxSugg++;//On peut ajouter maximum 5 suggestions
 						}
+						if(maxSugg==5)
+						    repSugg="N";
 					}while(repSugg.equals("O"));
 					//----------------------------AJOUT BOUCLE WHILE [END]
 
@@ -178,7 +181,7 @@ public class MenuProprietaireConnexion{
 					do{
 						System.out.print("(facultatif) Prestations (O/N): ");//boucle infini jusqu'a ce que l'utilisateur dit N
 						repPrest=Utils.readString("O|N");
-						if(repPrest.equals("O") && maxPrest<5){
+						if(repPrest.equals("O")){
 							System.out.print("description: ");
 							prest = Utils.readString("[A-Za-z ]{1,20}");
 							System.out.print("prix: ");
@@ -188,6 +191,8 @@ public class MenuProprietaireConnexion{
 							lgm.tableProposePrestation(prest, prixPrest, idLogement);
 							maxPrest++;//On peut ajouter maximum 5 prestations
 						}
+						if(maxPrest==5)
+						    repPrest="N";
 					}while(repPrest.equals("O"));
 					//----------------------------AJOUT BOUCLE WHILE [END]
 
