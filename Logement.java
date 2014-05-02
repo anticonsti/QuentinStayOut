@@ -286,7 +286,7 @@ class Logement{
 				select2 = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement = " + id_logement);
 				result2 = select2.executeQuery();
 				while(result2.next()) {
-					System.out.println("suggestion: " +result2.getString(1) + ", " + result2.getString(2));
+					System.out.println("suggestion " +result2.getString(1) + ": " + result2.getString(2));
 				}
 
 				select2 = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
