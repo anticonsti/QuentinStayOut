@@ -1,23 +1,23 @@
 import java.io.*;
 import java.sql.*;
-//import java.util.Scanner;
+//indente le 2 mai 2014
 
 class ConnectionAirChambre {
-    Connection conn;
-  
-    // connection a la base
-    public ConnectionAirChambre(String login, String motPasse) throws SQLException, ClassNotFoundException{
-	Class.forName("org.postgresql.Driver");
-	conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb",login, motPasse);
+	Connection conn;
+
+	// connection a la base
+	public ConnectionAirChambre(String login, String motPasse) throws SQLException, ClassNotFoundException{
+		Class.forName("org.postgresql.Driver");
+		conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb",login, motPasse);
 	}
 
-    // fermeture de la connection
-    public void close() throws SQLException{ 
-	conn.close();
-    }
+	// fermeture de la connection
+	public void close() throws SQLException{ 
+		conn.close();
+	}
 
-    public Connection getConnection(){
-	return conn;
-    }
-	   
+	public Connection getConnection(){
+		return conn;
+	}
+
 } 
