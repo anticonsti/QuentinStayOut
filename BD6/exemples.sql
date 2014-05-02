@@ -368,7 +368,6 @@ INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_
 INSERT INTO location (date_debut_location, date_fin_location,montant_total,date_reservation_location)  VALUES (CURRENT_DATE+1,CURRENT_DATE+5,288,CURRENT_DATE);
 
 
-
 INSERT INTO loge VALUES (1,1);
 INSERT INTO loge VALUES (2,2);
 INSERT INTO loge VALUES (3,3);
