@@ -256,7 +256,7 @@ INSERT INTO photo (id_logement, nom_photo) VALUES (34,'photo du logement 34');
 INSERT INTO photo (id_logement, nom_photo) VALUES (35,'photo du logement 35');
 
 INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (1,'2015-04-01','2015-04-15',20);
-INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (7,'2014-07-15','2015-08-15',25);
+INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (7,'2014-07-15','2014-08-15',25);
 INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (8,'2014-06-18','2014-07-01',30);
 INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (15,'2014-03-18','2014-04-01',35);
 INSERT INTO offre_promotionnelle (id_logement, date_debut_offre_promo, date_fin_offre_promo, prix_offre_promo) VALUES (22,'2015-01-15','2015-02-01',40);
