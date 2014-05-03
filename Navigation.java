@@ -97,7 +97,8 @@ public class Navigation {
 			in.close();	
 		}
 		catch(Exception e){
-			e.printStackTrace();
+		    //e.printStackTrace();
+		    System.out.println("Erreur");
 		}
 	}
 
