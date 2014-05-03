@@ -139,7 +139,7 @@ public class ChercherLogement {
 		String type_log = Utils.readString("A|C|");
 
 		System.out.print("Adresse: ");
-		String adresse = Utils.readString("[A-Za-z ,']{0,100}");
+		String adresse = Utils.readString("[A-Za-z0-9 ,']{0,100}");
 
 		System.out.print("Surface: ");
 		String surface = Utils.readString("[0-9]{0,5}");

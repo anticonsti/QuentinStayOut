@@ -61,7 +61,7 @@ public class MenuProprietaireConnexion{
 					}
 
 					System.out.print("Adresse (1~20 caracteres): ");
-					String adresse = Utils.readString("[0-9a-z ,']{1,20}");
+					String adresse = Utils.readString("[0-9a-zA-Z ,']{1,20}");
 
 					// vérifie l'unicité avant de continuer
 					if( lgm.verifUniqueLogement(adresse, typeLogement, numChambre, nbPiece ) == 0 ){
@@ -135,7 +135,7 @@ public class MenuProprietaireConnexion{
 							System.out.print("type (touristique/gastronomique): ");
 							typeSugg = Utils.readString("touristique|gastronomique");
 							System.out.print("nom: ");
-							nomSugg = Utils.readString("[A-Za-z ]{1,20}");
+							nomSugg = Utils.readString("[A-Za-z -:,]{1,20}");
 							// ajoute dans la table suggestion et propose_suggestion
 							lgm.ajouterLogementSuggestion(typeSugg, nomSugg);
 							lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
@@ -153,7 +153,7 @@ public class MenuProprietaireConnexion{
 						repPrest=Utils.readString("O|N");
 						if(repPrest.equals("O")){
 							System.out.print("description: ");
-							prest = Utils.readString("[A-Za-z ]{1,20}");
+							prest = Utils.readString("[A-Za-z -]{1,20}");
 							System.out.print("prix: ");
 							prixPrest= Utils.readString("[1-9]+[0-9]{0,5}");
 							// ajoute dans la table prestation et propose_prestation
