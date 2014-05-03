@@ -232,16 +232,19 @@ public class Location {
 		}while(erreurDate==0);
 
 		// pour les prestations, on vérifie s'il y en a d'abord
-		int id_prestation=-1, prixPrestation=0;
+		int prixPrestation=0;
 		String avecPrestation="";
+		int[] id_prest= new int[5];
+		int k = 0;
 
-		select = conn.prepareStatement("SELECT id_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
+		select = conn.prepareStatement("SELECT id_prestation, prix_prestation, description_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement = " + id_logement);
 		result = select.executeQuery();
-		if(result.next()) {
-			System.out.print("Avec prestations? (O/N): ");
+		while(result.next()) {
+			System.out.print("Avec "+ result.getString(3) +" ? (O/N): ");
 			if( (avecPrestation=Utils.readString("O|N")).equals("O")){
-				id_prestation=result.getInt(1);
-				prixPrestation=result.getInt(2);
+				id_prest[k]= result.getInt(1);
+				prixPrestation +=result.getInt(2);
+				k++;
 			}
 		}
 
@@ -491,11 +494,13 @@ public class Location {
 		insert.executeUpdate();
 
 		// insertion dans la table avec_prestation si nécessaire
-		if( avecPrestation.equals("O")){
+		for(int l=0; l<5; l++){
+		    if(id_prest[l]!=0){
 			insert = conn.prepareStatement("INSERT INTO avec_prestation VALUES(?,?)");
 			insert.setInt(1, id_location);
-			insert.setInt(2, id_prestation);
+			insert.setInt(2, id_prest[l]);
 			insert.executeUpdate();
+		    }
 		}
 
 
