@@ -155,13 +155,15 @@ public class ChercherLogement {
 
 		String avec_suggestions="";
 		String[] suggestions = new String[5];
-		int i=0, une_sugg=0;
+		int i=0, oui_sugg=0, une_sugg=0;
 		do{
 			System.out.print("Avec suggestions ? (O/N): ");
 			if( (avec_suggestions=Utils.readString("O|N")).equals("O")){
-				une_sugg=1;
+				oui_sugg=1;
 				System.out.print("nom suggestion: ");
 				suggestions[i] = Utils.readString("[A-Za-z -:,]{0,100}");
+				if (!suggestions[i].equals(""))
+				    une_sugg=1;
 				i++;
 				if(i==5)
 					avec_suggestions="N";
@@ -170,14 +172,16 @@ public class ChercherLogement {
 
 		String avec_prestations="";
 		String [] prestations= new String[5];
-		int une_prest=0;
+		int oui_prest=0, une_prest=0;
 		i=0;
 		do{
 			System.out.print("Avec prestations ? (O/N): ");
 			if( (avec_prestations=Utils.readString("O|N")).equals("O")){
-				une_prest=1;
+				oui_prest=1;
 				System.out.print("nom prestation: ");
 				prestations[i] = Utils.readString("[A-Za-z -]{0,100}");
+				if (!prestations[i].equals(""))
+				    une_prest=1;
 				i++;
 				if(i==5)
 					avec_prestations="N";
@@ -204,7 +208,7 @@ public class ChercherLogement {
 		String affichage = Utils.readString("[ON]{1}");
 		System.out.println();
 
-		if( type_log.equals("") && adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && une_sugg==0  &&  une_prest==0  && avec_transport.equals("N") && prix.equals("")){
+		if( type_log.equals("") && adresse.equals("") && surface.equals("") && ville.equals("") && ddd.equals("") && dfd.equals("") && oui_sugg==0  &&  oui_prest==0  && avec_transport.equals("N") && prix.equals("")){
 			return 0;
 		}
 
@@ -216,14 +220,14 @@ public class ChercherLogement {
 		if ( type_log.equals("C") )
 			requete += " NATURAL JOIN chambre ";
 
-		if( une_sugg==1 )
+		if( oui_sugg==1 )
 			requete += " NATURAL JOIN suggestion NATURAL JOIN propose_suggestion ";
 
-		if( une_prest==1 )
+		if( oui_prest==1 )
 			requete += " NATURAL JOIN prestation NATURAL JOIN propose_prestation ";
 
 		if( avec_transport.equals("O") ) 
-			requete += " NATURAL JOIN avec_transport NATURAL JOIN propose_transport ";
+			requete += " NATURAL JOIN propose_transport ";
 
 		requete += " WHERE ";
 
@@ -246,7 +250,7 @@ public class ChercherLogement {
 			String in ="(";
 			for(int j=0; j<4;j++){
 				String s = suggestions[j];
-				if(s!=null)
+				if(s!=null && !s.equals(""))
 					in += "'" + s + "'";
 				if(suggestions[j+1]!=null){
 					in += ", ";
@@ -324,30 +328,30 @@ public class ChercherLogement {
 			if( result2.next()){
 				System.out.println("date_debut_dispo: " +result2.getString(1));
 				System.out.println("date_fin_dispo: " +result2.getString(2));
-				System.out.println("prix/nuit: " + result2.getString(3));
+				System.out.println("prix/nuit: " + result2.getString(3) + "euros");
 				String prixMois = result2.getString(4);
 				if( prixMois !=null )
-					System.out.println("%/mois: " + result2.getString(4));
+					System.out.println("%mois: " + result2.getString(4));
 			}
 
 			select2 = conn.prepareStatement("SELECT type_suggestion, nom_suggestion FROM suggestion NATURAL JOIN propose_suggestion WHERE id_logement=" +  id_logement);
 			result2 = select2.executeQuery();
 			while( result2.next() ){
-				System.out.println("suggestion: " +result2.getString(1) + ": " + result2.getString(2));
+				System.out.println("suggestion " +result2.getString(1) + ": " + result2.getString(2));
 			}
 
 
 			select2 = conn.prepareStatement("SELECT description_prestation, prix_prestation FROM prestation NATURAL JOIN propose_prestation WHERE id_logement=" +  id_logement);
 			result2 = select2.executeQuery();
 			while( result2.next() ){
-				System.out.println("prestation: " +result2.getString(1) + ", prix: " +result2.getString(2));
+				System.out.println("prestation: " +result2.getString(1) + ", prix: " +result2.getString(2) +"euros");
 			}
 
 
 			select2 = conn.prepareStatement("SELECT prix_transport FROM service_transport NATURAL JOIN propose_transport WHERE id_logement=" +  id_logement);
 			result2 = select2.executeQuery();
 			if( result2.next() ){
-				System.out.println("transport disponible: oui, prix: " +result2.getString(1));
+				System.out.println("transport disponible: oui, prix: " +result2.getString(1) +"euros");
 			}
 
 
