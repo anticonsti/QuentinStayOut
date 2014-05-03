@@ -378,8 +378,8 @@ class Logement{
 			select2 = conn.prepareStatement("SELECT COUNT(*) FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE date_debut_location <= current_date AND date_debut_location >= current_date - interval '6 months' AND nom_locataire='" + nom +"' AND prenom_locataire='"+ prenom +"'");
 			result2 = select2.executeQuery();
 			if(result2.next()){
-			    if( result2.getInt(1) >= 2 ){
-				select2 = conn.prepareStatement("WITH nonReduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom_locataire + "' ORDER BY date_reservation_location LIMIT 2 ), reduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom_locataire + "' ORDER BY date_reservation_location DESC ) SELECT date_reservation_location FROM reduc EXCEPT SELECT date_reservation_location FROM nonReduc");
+			    if( result2.getInt(1) >= 3 ){
+				select2 = conn.prepareStatement("WITH nonReduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom + "' ORDER BY date_reservation_location LIMIT 2 ), reduc AS ( SELECT * FROM location NATURAL JOIN loge NATURAL JOIN locataire WHERE nom_locataire = '" + nom + "' AND prenom_locataire ='" + prenom + "' ORDER BY date_reservation_location DESC ) SELECT date_reservation_location FROM reduc EXCEPT SELECT date_reservation_location FROM nonReduc");
 				result2 = select2.executeQuery();
 				while(result2.next()){
 				    if( date_reserv.equals(result2.getString(1))){
