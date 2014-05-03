@@ -3,7 +3,9 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
-//indente le 2 mai 2014
+
+
+
 public class MenuProprietaireConnexion{
 	PreparedStatement insert=null;
 	PreparedStatement select=null;
@@ -124,21 +126,6 @@ public class MenuProprietaireConnexion{
 
 
 					// Pour ce qui suit, répondre par O ou N
-					/*
-		    String typeSugg="", nomSugg="";
-		    System.out.print("(facultatif) Suggestions (O/N): ");
-		    if((Utils.readString("O|N")).equals("O")){
-			System.out.print("type (touristique/gastronomique): ");
-			typeSugg = Utils.readString("touristique|gastronomique");
-			System.out.print("nom: ");
-			nomSugg = Utils.readString("[A-Za-z ]{1,20}");
-			// ajoute dans la table suggestion et propose_suggestion
-			lgm.ajouterLogementSuggestion(typeSugg, nomSugg);
-			lgm.tableProposeSuggestion(typeSugg, nomSugg, idLogement);
-		    }
-					 */
-
-					//----------------------------AJOUT BOUCLE WHILE [BEGIN] 
 					String repSugg="N", typeSugg="",nomSugg="";
 					int maxSugg=0;
 					do{
@@ -157,25 +144,8 @@ public class MenuProprietaireConnexion{
 						if(maxSugg==5)
 						    repSugg="N";
 					}while(repSugg.equals("O"));
-					//----------------------------AJOUT BOUCLE WHILE [END]
 
 
-
-					/*
-		    String prest="", prixPrest="";
-		    System.out.print("(facultatif) Prestations (O/N): ");
-		    if((Utils.readString("O|N")).equals("O")){
-			System.out.print("description: ");
-			prest = Utils.readString("[A-Za-z ]{1,20}");
-			System.out.print("prix: ");
-			prixPrest= Utils.readString("[1-9]+[0-9]{0,5}");
-			// ajoute dans la table prestation et propose_prestation
-			lgm.ajouterLogementPrestation(prest, prixPrest);
-			lgm.tableProposePrestation(prest, prixPrest, idLogement);
-		    }
-					 */
-
-					//----------------------------AJOUT BOUCLE WHILE [BEGIN] 
 					String repPrest="N", prixPrest="",prest="";
 					int maxPrest=0;
 					do{
@@ -194,8 +164,9 @@ public class MenuProprietaireConnexion{
 						if(maxPrest==5)
 						    repPrest="N";
 					}while(repPrest.equals("O"));
-					//----------------------------AJOUT BOUCLE WHILE [END]
 
+
+					
 					String photo="", rep="N";
 					int maxPhoto=0;
 					do{

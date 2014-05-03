@@ -1,7 +1,8 @@
 import java.sql.*;
 import java.text.ParseException;
 import java.io.*;
-//indente le 2 mai 2014
+
+
 public class ChercherLogement {
 	PreparedStatement select=null, select2=null, select3=null;
 	ResultSet result = null, result2 = null, result3=null;

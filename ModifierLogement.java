@@ -1,6 +1,6 @@
 import java.sql.*;
 import java.io.*;
-//indente le 2 mai 2014
+
 
 public class ModifierLogement{
 
@@ -139,50 +139,7 @@ public class ModifierLogement{
 
 	}
 
-	/*
-    public void modifierLogement(int id_prop,int id_logement, String prix, String prixMois,
-				 String dateDep, String dateFin, String dateDepPromo, String dateFinPromo,
-				 String prixPromo, String pieces, String numero, String surface) throws SQLException{
-    	//1. affiche les logements du proprio, affichage de 1,2,3... suivi d'adresse
-    	//2. recupere le nombre entre par l'utilisateur 
-    	//3. demande ce qu'il veut modifier, print("Disponibilite, prix, offrepromo, nbpiece, numchambre,suggestion,prestation");
-    	//=> nbpiece et numchambre peuvent changer via les travaux. Adresse,ville NON
-    	//4. apres la modification on affiche toutes les informations liees a ce logement
-    	//5. qqch comme : print("0-retour, 1-modifier un autre logement");
-    	//ON APPELLE LES "SOUS"FONCTIONS MODIF
-    	boolean prixB=false, prixMoisB=false;
 
-    	if(prix!="") prixB=true;
-    	if(prixMois!="") prixMoisB=true;
-
-    	modifierLogementAppartement(id_logement,pieces);
-    	modifierLogementChambre(id_logement,numero,surface);
-    	modifierLogementPrix(id_prop, prix, prixMois, prixB, prixMoisB);
-    	//possible que pour les logements libre
-    	modifierLogementDispo(id_logement, dateDep, dateFin);
-    	//suggestion et prestation
-
-    }
-	 */
-
-	/*
-    public void modifierLogementPrix(int id_prop, String prix, String prixMois,boolean prixB, boolean prixMoisB) throws SQLException{
-
-	String req ="UPDATE prix_logement SET ";
-	if(prixB && prixMoisB) req +="prix=?, "+prix+"prixMois=?"+prixMois; //modif prix et prixMois
-	else if(prixB && !prixMoisB) req+="prix=?"+prix; //modif prix uniquement
-	else req+="prixMois=?"+prixMois; //modif prixMois uniquement
-
-	req+=" WHERE id_prop="+id_prop;
-
-	update = conn.prepareStatement(req);
-	update.setString(1, prix);
-	update.setString(2, prixMois);
-	// execute update SQL statement
-	update.executeUpdate();
-
-    }
-	 */
 
 	public void modifierLogementPrix(int id_logement, String prix) throws SQLException{
 

@@ -1,6 +1,6 @@
 import java.sql.*;
 import java.io.*;
-//indente le 2 mai 2014
+
 
 public class PublierAnnonce {
 	PreparedStatement insert=null;
