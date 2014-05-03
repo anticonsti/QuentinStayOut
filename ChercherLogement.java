@@ -45,7 +45,7 @@ public class ChercherLogement {
 					}
 
 				} else if( choix == 2){
-					Utils.printEntete("RECHERCHE AVANCEE (appuyer sur Entree pour passer)");
+					Utils.printEntete("RECHERCHE SIMPLE (appuyer sur Entree pour passer)");
 
 					if( this.chercherLogements() == 1 ){
 						loc.printLocation();
@@ -240,7 +240,7 @@ public class ChercherLogement {
 			requete += " date_debut_dispo >= DATE '" +ddd+"' AND " ;
 
 		if(!dfd.equals(""))
-			requete += " date_fin_dispo >= DATE '" +dfd+"' AND " ;
+			requete += " date_fin_dispo <= DATE '" +dfd+"' AND " ;
 
 		if(une_sugg==1){
 			String in ="(";
